@@ -9,6 +9,9 @@ const navLinks = [
 ];
 
 const currentPath = Astro.url.pathname;
+
+const isCurrent = (href: string) =>
+  currentPath === href || (href !== "/" && currentPath.startsWith(href));
 ---
 
 <header class="sticky top-0 z-50 border-b border-frozen-water/60 bg-vintage-berry/95 backdrop-blur-sm">
@@ -16,10 +19,11 @@ const currentPath = Astro.url.pathname;
     <a href="/" class="shrink-0" aria-label={`${site.name} home`}>
       <img
         src={site.logos.header}
-        alt={site.name}
+        alt=""
         class="h-10 w-auto sm:h-14"
         width="200"
         height="56"
+        aria-hidden="true"
       />
     </a>
 
@@ -28,9 +32,10 @@ const currentPath = Astro.url.pathname;
         navLinks.map(({ href, label }) => (
           <a
             href={href}
+            aria-current={isCurrent(href) ? "page" : undefined}
             class:list={[
               "text-sm font-medium uppercase tracking-wide",
-              currentPath === href || (href !== "/" && currentPath.startsWith(href))
+              isCurrent(href)
                 ? "text-soft-blossom"
                 : "text-frozen-water hover:text-soft-blossom",
             ]}
@@ -39,11 +44,23 @@ const currentPath = Astro.url.pathname;
           </a>
         ))
       }
-      <a href="/order" class="btn-primary ml-2">Order</a>
+      <a
+        href="/order"
+        class="btn-primary ml-2"
+        aria-current={isCurrent("/order") ? "page" : undefined}
+      >
+        Order
+      </a>
     </nav>
 
     <div class="flex items-center gap-2 sm:gap-3 md:hidden">
-      <a href="/order" class="btn-primary px-4 py-2 text-xs">Order</a>
+      <a
+        href="/order"
+        class="btn-primary px-4 py-2 text-xs"
+        aria-current={isCurrent("/order") ? "page" : undefined}
+      >
+        Order
+      </a>
       <button
         type="button"
         id="mobile-menu-button"
@@ -89,9 +106,10 @@ const currentPath = Astro.url.pathname;
           <a
             href={href}
             data-mobile-nav-link
+            aria-current={isCurrent(href) ? "page" : undefined}
             class:list={[
               "rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-wide",
-              currentPath === href || (href !== "/" && currentPath.startsWith(href))
+              isCurrent(href)
                 ? "bg-soft-blossom/40 text-vintage-berry"
                 : "text-blue-slate hover:bg-soft-blossom/20",
             ]}

@@ -7,10 +7,11 @@ import { site } from "../content/site";
     <div class="flex flex-col items-center sm:items-start">
       <img
         src={site.logos.secondary}
-        alt={site.name}
+        alt=""
         class="mb-4 h-12 w-auto"
         width="180"
         height="48"
+        aria-hidden="true"
       />
       {site.tagline && (
         <p class="tagline mb-2 text-lg text-soft-blossom">{site.tagline}</p>
@@ -51,6 +52,7 @@ import { site } from "../content/site";
         href={site.social.instagram}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`${site.social.handle} on Instagram (opens in new tab)`}
         class="inline-flex min-h-11 items-center justify-center gap-2 text-sm hover:text-soft-blossom sm:justify-start"
       >
         {site.social.handle}

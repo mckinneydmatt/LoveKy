@@ -18,6 +18,12 @@
     overflow-x: clip;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     @apply bg-frozen-water text-blue-slate antialiased;
     font-family: var(--font-sans);
@@ -33,6 +39,10 @@
   a {
     @apply transition-colors duration-200;
   }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-vintage-berry;
+  }
 }
 
 @layer components {
@@ -40,8 +50,12 @@
     @apply mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8;
   }
 
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-blue-slate focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-frozen-water;
+  }
+
   .btn-primary {
-    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-nail-polish px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-frozen-water transition hover:bg-vintage-berry;
+    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-nail-polish px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-frozen-water transition hover:bg-vintage-berry focus-visible:outline-frozen-water;
   }
 
   .btn-secondary {

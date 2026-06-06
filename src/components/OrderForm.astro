@@ -9,9 +9,14 @@ const priceDisplay = site.order.price ?? "Price TBD";
   class="space-y-6 rounded-2xl border border-soft-blossom bg-frozen-water/70 p-4 shadow-sm sm:p-8"
   method="POST"
   action={formAction}
+  aria-labelledby="order-form-heading"
 >
   {!formAction && (
-    <p class="rounded-lg bg-frozen-water/30 px-4 py-3 text-sm break-words text-blue-slate">
+    <p
+      id="form-config-notice"
+      role="status"
+      class="rounded-lg bg-frozen-water/30 px-4 py-3 text-sm break-words text-blue-slate"
+    >
       Formspree is not configured yet. Add your endpoint URL to{" "}
       <code class="break-all text-vintage-berry">site.formEndpoints.order</code> in{" "}
       <code class="break-all text-vintage-berry">src/content/site.ts</code>.
@@ -19,29 +24,37 @@ const priceDisplay = site.order.price ?? "Price TBD";
   )}
 
   <div class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4">
-    <h2 class="text-lg font-semibold text-blue-slate">{site.order.product}</h2>
+    <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
+      {site.order.product}
+    </h2>
     <p class="mt-1 text-sm text-blue-slate/80">{priceDisplay}</p>
     <p class="mt-2 text-sm text-blue-slate/70">{site.order.pickupNote}</p>
   </div>
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <label for="name" class="mb-1 block text-sm font-medium text-blue-slate">Name *</label>
+      <label for="name" class="mb-1 block text-sm font-medium text-blue-slate">
+        Name <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+      </label>
       <input
         type="text"
         id="name"
         name="name"
         required
+        autocomplete="name"
         class="form-input"
       />
     </div>
     <div>
-      <label for="email" class="mb-1 block text-sm font-medium text-blue-slate">Email *</label>
+      <label for="email" class="mb-1 block text-sm font-medium text-blue-slate">
+        Email <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+      </label>
       <input
         type="email"
         id="email"
         name="email"
         required
+        autocomplete="email"
         class="form-input"
       />
     </div>
@@ -49,18 +62,21 @@ const priceDisplay = site.order.price ?? "Price TBD";
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <label for="phone" class="mb-1 block text-sm font-medium text-blue-slate">Phone *</label>
+      <label for="phone" class="mb-1 block text-sm font-medium text-blue-slate">
+        Phone <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+      </label>
       <input
         type="tel"
         id="phone"
         name="phone"
         required
+        autocomplete="tel"
         class="form-input"
       />
     </div>
     <div>
       <label for="pickup-date" class="mb-1 block text-sm font-medium text-blue-slate">
-        Preferred pickup date *
+        Preferred pickup date <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
       <input
         type="date"
@@ -80,6 +96,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
       name="quantity"
       min="1"
       value="1"
+      inputmode="numeric"
       class="form-input max-w-xs"
     />
   </div>
@@ -111,21 +128,30 @@ const priceDisplay = site.order.price ?? "Price TBD";
   }
 
   <div class="rounded-lg border border-blue-slate/10 bg-soft-blossom/20 p-4">
-    <p class="text-sm font-medium text-blue-slate">{site.order.disclaimer}</p>
-    <label class="mt-3 flex cursor-pointer items-start gap-3">
+    <p id="order-disclaimer" class="text-sm font-medium text-blue-slate">
+      {site.order.disclaimer}
+    </p>
+    <div class="mt-3 flex items-start gap-3">
       <input
         type="checkbox"
+        id="disclaimer-ack"
         name="disclaimer-ack"
         required
+        aria-describedby="order-disclaimer"
         class="mt-1 h-5 w-5 shrink-0 rounded border-soft-blossom text-vintage-berry focus:ring-vintage-berry"
       />
-      <span class="text-sm text-blue-slate/90">
-        I understand and agree to the above disclaimer. *
-      </span>
-    </label>
+      <label for="disclaimer-ack" class="cursor-pointer text-sm text-blue-slate/90">
+        I understand and agree to the above disclaimer. <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+      </label>
+    </div>
   </div>
 
-  <button type="submit" class="btn-primary w-full sm:w-auto" disabled={!formAction}>
+  <button
+    type="submit"
+    class="btn-primary w-full sm:w-auto"
+    disabled={!formAction}
+    aria-describedby={!formAction ? "form-config-notice" : undefined}
+  >
     Submit Order Request
   </button>
 </form>

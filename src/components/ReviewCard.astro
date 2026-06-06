@@ -19,10 +19,11 @@ const { quote, author, isPlaceholder = false } = Astro.props;
   />
   <p class="mb-4 text-blue-slate/90 italic">&ldquo;{quote}&rdquo;</p>
   <footer class="text-sm font-medium text-blue-slate">
-    — {author}
+    <cite class="not-italic">— {author}</cite>
     {isPlaceholder && (
       <span class="ml-2 text-xs font-normal uppercase tracking-wide text-powder-blush">
-        Placeholder
+        <span class="sr-only">Placeholder review. </span>
+        <span aria-hidden="true">Placeholder</span>
       </span>
     )}
   </footer>
