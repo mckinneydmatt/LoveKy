@@ -15,6 +15,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   body {
@@ -40,11 +41,25 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-nail-polish px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-frozen-water transition hover:bg-vintage-berry;
+    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-nail-polish px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-frozen-water transition hover:bg-vintage-berry;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border-2 border-blue-slate px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:border-vintage-berry hover:text-vintage-berry;
+    @apply inline-flex min-h-11 items-center justify-center rounded-full border-2 border-blue-slate px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:border-vintage-berry hover:text-vintage-berry;
+  }
+
+  .form-input {
+    @apply min-h-11 w-full rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-base text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry;
+  }
+
+  .instagram-embed {
+    @apply w-full max-w-[540px] overflow-hidden;
+  }
+
+  .instagram-embed .instagram-media {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .section-heading {

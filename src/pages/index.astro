@@ -10,7 +10,7 @@ const featuredReviews = site.reviews.slice(0, 2);
 <BaseLayout title="Home">
   <section class="relative overflow-hidden border-b border-soft-blossom/60">
     <div class="absolute inset-0 pattern-bg pointer-events-none" aria-hidden="true"></div>
-    <div class="container-page relative grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+    <div class="container-page relative grid items-center gap-8 py-12 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:py-24">
       <div>
         <img
           src={site.logos.primary}
@@ -27,9 +27,9 @@ const featuredReviews = site.reviews.slice(0, 2);
         <p class="mb-8 max-w-md text-lg text-blue-slate/90">
           {site.description}
         </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="/order" class="btn-primary">Order a Cake</a>
-          <a href="/about" class="btn-secondary">About Ky</a>
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href="/order" class="btn-primary w-full sm:w-auto">Order a Cake</a>
+          <a href="/about" class="btn-secondary w-full sm:w-auto">About Ky</a>
         </div>
       </div>
 

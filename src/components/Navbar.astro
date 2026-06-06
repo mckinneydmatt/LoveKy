@@ -12,12 +12,12 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header class="sticky top-0 z-50 border-b border-frozen-water/60 bg-vintage-berry/95 backdrop-blur-sm">
-  <div class="container-page flex items-center justify-between gap-4 py-4">
+  <div class="container-page flex items-center justify-between gap-4 py-3 sm:py-4">
     <a href="/" class="shrink-0" aria-label={`${site.name} home`}>
       <img
         src={site.logos.header}
         alt={site.name}
-        class="h-12 w-auto sm:h-14"
+        class="h-10 w-auto sm:h-14"
         width="200"
         height="56"
       />
@@ -42,18 +42,37 @@ const currentPath = Astro.url.pathname;
       <a href="/order" class="btn-primary ml-2">Order</a>
     </nav>
 
-    <div class="flex items-center gap-3 md:hidden">
+    <div class="flex items-center gap-2 sm:gap-3 md:hidden">
       <a href="/order" class="btn-primary px-4 py-2 text-xs">Order</a>
       <button
         type="button"
         id="mobile-menu-button"
-        class="inline-flex items-center justify-center rounded-md border border-frozen-water/20 p-2 text-frozen-water"
+        class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-frozen-water/20 p-2 text-frozen-water"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Open menu"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          id="mobile-menu-icon-open"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          id="mobile-menu-icon-close"
+          xmlns="http://www.w3.org/2000/svg"
+          class="hidden h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
@@ -69,8 +88,9 @@ const currentPath = Astro.url.pathname;
         navLinks.map(({ href, label }) => (
           <a
             href={href}
+            data-mobile-nav-link
             class:list={[
-              "rounded-lg px-3 py-2 text-sm font-medium uppercase tracking-wide",
+              "rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-wide",
               currentPath === href || (href !== "/" && currentPath.startsWith(href))
                 ? "bg-soft-blossom/40 text-vintage-berry"
                 : "text-blue-slate hover:bg-soft-blossom/20",
@@ -87,11 +107,31 @@ const currentPath = Astro.url.pathname;
 <script>
   const button = document.getElementById("mobile-menu-button");
   const menu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("mobile-menu-icon-open");
+  const closeIcon = document.getElementById("mobile-menu-icon-close");
+  const navLinks = document.querySelectorAll("[data-mobile-nav-link]");
+
+  const setMenuOpen = (open: boolean) => {
+    menu?.classList.toggle("hidden", !open);
+    button?.setAttribute("aria-expanded", String(open));
+    button?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    openIcon?.classList.toggle("hidden", open);
+    closeIcon?.classList.toggle("hidden", !open);
+    document.body.classList.toggle("overflow-hidden", open);
+  };
 
   button?.addEventListener("click", () => {
-    const isOpen = !menu?.classList.contains("hidden");
-    menu?.classList.toggle("hidden", isOpen);
-    button.setAttribute("aria-expanded", String(!isOpen));
-    button.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+    const isOpen = menu?.classList.contains("hidden") === false;
+    setMenuOpen(!isOpen);
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu?.classList.contains("hidden") === false) {
+      setMenuOpen(false);
+    }
   });
 </script>
