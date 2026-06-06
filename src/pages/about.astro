@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../content/site";
+---
+
+<BaseLayout title="About">
+  <section class="container-page py-12 sm:py-16">
+    <div class="grid items-start gap-10 lg:grid-cols-2">
+      <div>
+        <h1 class="section-heading mb-6">About Ky</h1>
+        <div class="space-y-4 text-blue-slate/90 leading-relaxed">
+          {site.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <img
+          src={site.about.signatureImage}
+          alt="Ky's signature"
+          class="mt-8 h-16 w-auto"
+          width="160"
+          height="64"
+        />
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border-4 border-soft-blossom bg-soft-blossom/30 shadow-lg">
+        {
+          site.about.image ? (
+            <img
+              src={site.about.image}
+              alt="Ky, owner of Love, Ky Cakes"
+              class="aspect-[4/5] w-full object-cover"
+              width="640"
+              height="800"
+            />
+          ) : (
+            <div class="flex aspect-[4/5] flex-col items-center justify-center px-6 text-center">
+              <img
+                src="/icons/cake-icon-powder-blush.png"
+                alt=""
+                class="mb-4 h-12 w-12 opacity-60"
+                width="48"
+                height="48"
+                aria-hidden="true"
+              />
+              <p class="text-blue-slate/70">Owner photo coming soon</p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,55 @@
+---
+import { site } from "../content/site";
+---
+
+<footer class="mt-auto border-t border-soft-blossom bg-blue-slate text-white">
+  <div class="container-page grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-3">
+    <div>
+      <img
+        src={site.logos.secondary}
+        alt={site.name}
+        class="mb-4 h-12 w-auto"
+        width="180"
+        height="48"
+      />
+      <p class="text-sm text-white/80">{site.contact.location}</p>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-sm font-semibold uppercase tracking-widest text-soft-blossom">
+        Get in touch
+      </h2>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href={`mailto:${site.contact.email}`} class="hover:text-soft-blossom">
+            {site.contact.email}
+          </a>
+        </li>
+        <li>
+          <a href={`tel:${site.contact.phone}`} class="hover:text-soft-blossom">
+            {site.contact.phone}
+          </a>
+        </li>
+        <li class="text-white/80">{site.contact.hours}</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-sm font-semibold uppercase tracking-widest text-soft-blossom">
+        Follow along
+      </h2>
+      <a
+        href={site.social.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-sm hover:text-soft-blossom"
+      >
+        {site.social.handle}
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10 py-4 text-center text-xs text-white/60">
+    &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
+  </div>
+</footer>

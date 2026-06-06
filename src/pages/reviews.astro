@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import { site } from "../content/site";
+---
+
+<BaseLayout title="Reviews">
+  <section class="container-page py-12 sm:py-16">
+    <h1 class="section-heading mb-4">Reviews</h1>
+    <p class="mb-10 max-w-2xl text-blue-slate/80">
+      Real reviews from Love, Ky Cakes customers will be added soon. Placeholders below show
+      where they will appear.
+    </p>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        site.reviews.map((review) => (
+          <ReviewCard
+            quote={review.quote}
+            author={review.author}
+            isPlaceholder={review.isPlaceholder}
+          />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,98 @@
+---
+import { site } from "../content/site";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/order", label: "Order" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-soft-blossom/60 bg-vanilla-custard/95 backdrop-blur-sm">
+  <div class="container-page flex items-center justify-between gap-4 py-4">
+    <a href="/" class="shrink-0" aria-label={`${site.name} home`}>
+      <img
+        src={site.logos.primary}
+        alt={site.name}
+        class="h-12 w-auto sm:h-14"
+        width="200"
+        height="56"
+      />
+    </a>
+
+    <nav class="hidden items-center gap-6 md:flex" aria-label="Main navigation">
+      {
+        navLinks.map(({ href, label }) => (
+          <a
+            href={href}
+            class:list={[
+              "text-sm font-medium uppercase tracking-wide",
+              currentPath === href || (href !== "/" && currentPath.startsWith(href))
+                ? "text-vintage-berry"
+                : "text-blue-slate hover:text-vintage-berry",
+            ]}
+          >
+            {label}
+          </a>
+        ))
+      }
+      <a href="/order" class="btn-primary ml-2">Order</a>
+    </nav>
+
+    <div class="flex items-center gap-3 md:hidden">
+      <a href="/order" class="btn-primary px-4 py-2 text-xs">Order</a>
+      <button
+        type="button"
+        id="mobile-menu-button"
+        class="inline-flex items-center justify-center rounded-md border border-blue-slate/20 p-2 text-blue-slate"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-soft-blossom/60 bg-vanilla-custard md:hidden"
+    aria-label="Mobile navigation"
+  >
+    <div class="container-page flex flex-col gap-1 py-3">
+      {
+        navLinks.map(({ href, label }) => (
+          <a
+            href={href}
+            class:list={[
+              "rounded-lg px-3 py-2 text-sm font-medium uppercase tracking-wide",
+              currentPath === href || (href !== "/" && currentPath.startsWith(href))
+                ? "bg-soft-blossom/40 text-vintage-berry"
+                : "text-blue-slate hover:bg-soft-blossom/20",
+            ]}
+          >
+            {label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<script>
+  const button = document.getElementById("mobile-menu-button");
+  const menu = document.getElementById("mobile-menu");
+
+  button?.addEventListener("click", () => {
+    const isOpen = !menu?.classList.contains("hidden");
+    menu?.classList.toggle("hidden", isOpen);
+    button.setAttribute("aria-expanded", String(!isOpen));
+    button.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+  });
+</script>

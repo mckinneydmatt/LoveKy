@@ -1,0 +1,114 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import { site } from "../content/site";
+
+const featuredReviews = site.reviews.slice(0, 2);
+---
+
+<BaseLayout title="Home">
+  <section class="relative overflow-hidden border-b border-soft-blossom/60">
+    <div class="absolute inset-0 pattern-bg pointer-events-none" aria-hidden="true"></div>
+    <div class="container-page relative grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+      <div>
+        <img
+          src={site.logos.primary}
+          alt={site.name}
+          class="mb-6 h-20 w-auto sm:h-24"
+          width="320"
+          height="96"
+        />
+        <p class="mb-8 max-w-md text-lg text-blue-slate/90">
+          {site.description}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/order" class="btn-primary">Order a Cake</a>
+          <a href="/about" class="btn-secondary">About Ky</a>
+        </div>
+        <p class="mt-8 text-sm text-blue-slate/80">
+          <a href={`mailto:${site.contact.email}`} class="font-medium hover:text-vintage-berry">
+            {site.contact.email}
+          </a>
+        </p>
+      </div>
+
+      <div class="relative">
+        <div class="overflow-hidden rounded-3xl border-4 border-soft-blossom bg-soft-blossom/30 shadow-lg">
+          {
+            site.about.image ? (
+              <img
+                src={site.about.image}
+                alt="Ky, owner of Love, Ky Cakes"
+                class="h-64 w-full object-cover sm:h-80"
+                width="640"
+                height="480"
+              />
+            ) : (
+              <>
+                <img
+                  src="/patterns/cake-full-color.png"
+                  alt=""
+                  class="h-64 w-full object-cover opacity-80 sm:h-80"
+                  width="640"
+                  height="480"
+                  aria-hidden="true"
+                />
+                <p class="px-6 py-4 text-center text-sm text-blue-slate/70">
+                  Owner photo coming soon
+                </p>
+              </>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-16">
+    <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <h2 class="section-heading">Kind words</h2>
+        <p class="mt-2 text-blue-slate/70">What customers are saying</p>
+      </div>
+      <a href="/reviews" class="text-sm font-semibold uppercase tracking-wide text-vintage-berry hover:text-powder-blush">
+        See all reviews →
+      </a>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        featuredReviews.map((review) => (
+          <ReviewCard
+            quote={review.quote}
+            author={review.author}
+            isPlaceholder={review.isPlaceholder}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="border-y border-soft-blossom/60 bg-soft-blossom/20 py-16">
+    <div class="container-page text-center">
+      <img
+        src="/icons/cake-icon-powder-blush.png"
+        alt=""
+        class="mx-auto mb-4 h-10 w-10"
+        width="40"
+        height="40"
+        aria-hidden="true"
+      />
+      <h2 class="section-heading mb-3">Follow along</h2>
+      <p class="mb-6 text-blue-slate/80">
+        See Ky's latest creations on Instagram
+      </p>
+      <a
+        href={site.social.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary"
+      >
+        {site.social.handle}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

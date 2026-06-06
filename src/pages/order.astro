@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import OrderForm from "../components/OrderForm.astro";
+import { site } from "../content/site";
+---
+
+<BaseLayout
+  title="Order"
+  description={`Order a ${site.order.product} from ${site.name}. Pickup in Carmel, Indiana.`}
+>
+  <section class="container-page py-12 sm:py-16">
+    <div class="mb-10 max-w-2xl">
+      <h1 class="section-heading mb-4">Order a cake</h1>
+      <p class="text-blue-slate/80">
+        Request a {site.order.product} for pickup in Carmel. Ky will confirm your order and
+        share the full pickup address.
+      </p>
+    </div>
+
+    <div class="max-w-2xl">
+      <OrderForm />
+    </div>
+  </section>
+</BaseLayout>

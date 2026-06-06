@@ -1,0 +1,29 @@
+---
+interface Props {
+  quote: string;
+  author: string;
+  isPlaceholder?: boolean;
+}
+
+const { quote, author, isPlaceholder = false } = Astro.props;
+---
+
+<blockquote class="rounded-2xl border border-soft-blossom bg-white/60 p-6 shadow-sm">
+  <img
+    src="/icons/filled-heart-red.png"
+    alt=""
+    class="mb-3 h-5 w-5 opacity-80"
+    width="20"
+    height="20"
+    aria-hidden="true"
+  />
+  <p class="mb-4 text-blue-slate/90 italic">&ldquo;{quote}&rdquo;</p>
+  <footer class="text-sm font-medium text-blue-slate">
+    — {author}
+    {isPlaceholder && (
+      <span class="ml-2 text-xs font-normal uppercase tracking-wide text-powder-blush">
+        Placeholder
+      </span>
+    )}
+  </footer>
+</blockquote>
