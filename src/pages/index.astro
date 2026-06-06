@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ReviewCard from "../components/ReviewCard.astro";
+import InstagramEmbed from "../components/InstagramEmbed.astro";
 import { site } from "../content/site";
 
 const featuredReviews = site.reviews.slice(0, 2);
@@ -88,27 +89,20 @@ const featuredReviews = site.reviews.slice(0, 2);
   </section>
 
   <section class="border-y border-soft-blossom/60 bg-soft-blossom/20 py-16">
-    <div class="container-page text-center">
-      <img
-        src="/icons/cake-icon-powder-blush.png"
-        alt=""
-        class="mx-auto mb-4 h-10 w-10"
-        width="40"
-        height="40"
-        aria-hidden="true"
-      />
-      <h2 class="section-heading mb-3">Follow along</h2>
-      <p class="mb-6 text-blue-slate/80">
-        See Ky's latest creations on Instagram
-      </p>
-      <a
-        href={site.social.instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-primary"
-      >
-        {site.social.handle}
-      </a>
+    <div class="container-page">
+      <div class="mb-8 text-center">
+        <img
+          src="/icons/cake-icon-powder-blush.png"
+          alt=""
+          class="mx-auto mb-4 h-10 w-10"
+          width="40"
+          height="40"
+          aria-hidden="true"
+        />
+        <h2 class="section-heading mb-3">Follow along</h2>
+        <p class="text-blue-slate/80">See Ky's latest creations on Instagram</p>
+      </div>
+      <InstagramEmbed />
     </div>
   </section>
 </BaseLayout>
