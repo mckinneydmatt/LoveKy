@@ -51,6 +51,11 @@
     @apply text-2xl font-semibold tracking-wide text-blue-slate sm:text-3xl;
   }
 
+  .tagline {
+    font-family: var(--font-script);
+    @apply text-vintage-berry;
+  }
+
   .pattern-bg {
     background-image: url("/patterns/heart-soft-blossom.png");
     background-repeat: repeat;

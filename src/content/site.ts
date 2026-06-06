@@ -1,8 +1,8 @@
 export const site = {
   name: "Love, Ky Cakes",
-  tagline: null as string | null,
+  tagline: "For people with good taste" as string | null,
   description:
-    "Home-based bakery in Carmel, Indiana specializing in 10-inch chocolate cakes, made with personal care and a signature heart.",
+    "Home-based bakery in Carmel, Indiana specializing in cakes, made with personal care and a signature heart.",
   contact: {
     email: "lovekycakes@gmail.com",
     phone: "317-771-0627",
@@ -53,5 +53,9 @@ export const site = {
     order: "" as string,
   },
 } as const;
+
+export const defaultMetaDescription = site.tagline
+  ? `${site.tagline} — ${site.description}`
+  : site.description;
 
 export type SiteConfig = typeof site;

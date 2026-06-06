@@ -19,6 +19,11 @@ const featuredReviews = site.reviews.slice(0, 2);
           width="320"
           height="96"
         />
+        {
+          site.tagline && (
+            <p class="tagline mb-3 text-2xl sm:text-3xl">{site.tagline}</p>
+          )
+        }
         <p class="mb-8 max-w-md text-lg text-blue-slate/90">
           {site.description}
         </p>

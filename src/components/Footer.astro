@@ -12,6 +12,9 @@ import { site } from "../content/site";
         width="180"
         height="48"
       />
+      {site.tagline && (
+        <p class="tagline mb-2 text-lg text-soft-blossom">{site.tagline}</p>
+      )}
       <p class="text-sm text-frozen-water/80">{site.contact.location}</p>
     </div>
 
