@@ -18,5 +18,20 @@ import { pageDescriptions } from "../content/seo";
     <div class="max-w-2xl">
       <OrderForm />
     </div>
+
+    <div class="mt-10 max-w-2xl rounded-2xl border border-soft-blossom bg-soft-blossom/20 p-6 sm:p-8">
+      {
+        site.order.message.map((paragraph, index) => (
+          <p
+            class:list={[
+              "leading-relaxed text-blue-slate/90",
+              index < site.order.message.length - 1 && "mb-4",
+            ]}
+          >
+            {paragraph}
+          </p>
+        ))
+      }
+    </div>
   </section>
 </BaseLayout>

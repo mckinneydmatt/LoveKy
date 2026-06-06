@@ -21,14 +21,20 @@ export const site = {
     disclaimer:
       "Made in a home kitchen not tested by the health department.",
     ingredients: null as string | null,
+    message: [
+      "Every cake I make goes out the door the way you'd send something to someone you care about — made with intention, finished with care, and meant to make someone's day a little sweeter. That's not a promise I take lightly. Whether it's for a birthday or just another Tuesday, I want what's in that box to feel like it was made just for you. Because it was.",
+      "So thank you for your order, and I hope you enjoy every slice.",
+    ],
   },
   about: {
     image: null as string | null,
     signatureImage: "/signature/signature-powder-blush.png",
     paragraphs: [
-      "Ky is the heart behind Love, Ky, a home-based bakery in Carmel, Indiana. She has been baking for more than 10 years, starting with a chocolate cake she made for her mom's birthday that quickly became a family favorite and the cake people kept asking for again and again.",
-      "After spending 20 years in accounting, Ky decided to turn a difficult career change into something meaningful: sharing the cake her friends, family, and coworkers had loved for years. Baking gives her a way to create something from scratch, care for people, and make everyday moments feel special.",
-      "The name Love, Ky comes from the way she has signed letters for years, with love and her signature heart. Every cake carries that same spirit: personal, heartfelt, and made with genuine care.",
+      "I'm Kylee, the one-woman kitchen behind Love, Ky Cakes.",
+      "I've been making my favorite chocolate cake for friends and family for years, and everyone always said the same thing: \"Kylee, this cake is so good you could sell it.\"",
+      "I just smiled and said thank you. But life has a funny way of nudging you toward the things you love, and eventually I listened.",
+      "So here we are.",
+      "Love, Ky Cakes.",
     ],
   },
   reviews: [
