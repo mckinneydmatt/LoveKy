@@ -3,7 +3,6 @@ import { site } from "../content/site";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/order", label: "Order" },
   { href: "/reviews", label: "Reviews" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -12,7 +11,7 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-vanilla-custard/60 bg-soft-blossom/95 backdrop-blur-sm">
+<header class="sticky top-0 z-50 border-b border-frozen-water/60 bg-vintage-berry/95 backdrop-blur-sm">
   <div class="container-page flex items-center justify-between gap-4 py-4">
     <a href="/" class="shrink-0" aria-label={`${site.name} home`}>
       <img
@@ -32,8 +31,8 @@ const currentPath = Astro.url.pathname;
             class:list={[
               "text-sm font-medium uppercase tracking-wide",
               currentPath === href || (href !== "/" && currentPath.startsWith(href))
-                ? "text-vintage-berry"
-                : "text-blue-slate hover:text-vintage-berry",
+                ? "text-soft-blossom"
+                : "text-frozen-water hover:text-soft-blossom",
             ]}
           >
             {label}
@@ -48,7 +47,7 @@ const currentPath = Astro.url.pathname;
       <button
         type="button"
         id="mobile-menu-button"
-        class="inline-flex items-center justify-center rounded-md border border-blue-slate/20 p-2 text-blue-slate"
+        class="inline-flex items-center justify-center rounded-md border border-frozen-water/20 p-2 text-frozen-water"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Open menu"
@@ -62,7 +61,7 @@ const currentPath = Astro.url.pathname;
 
   <nav
     id="mobile-menu"
-    class="hidden border-t border-soft-blossom/60 bg-vanilla-custard md:hidden"
+    class="hidden border-t border-soft-blossom/60 bg-frozen-water md:hidden"
     aria-label="Mobile navigation"
   >
     <div class="container-page flex flex-col gap-1 py-3">

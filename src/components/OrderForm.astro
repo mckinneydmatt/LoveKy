@@ -6,7 +6,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
 ---
 
 <form
-  class="space-y-6 rounded-2xl border border-soft-blossom bg-white/70 p-6 shadow-sm sm:p-8"
+  class="space-y-6 rounded-2xl border border-soft-blossom bg-frozen-water/70 p-6 shadow-sm sm:p-8"
   method="POST"
   action={formAction}
 >
@@ -18,7 +18,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
     </p>
   )}
 
-  <div class="rounded-lg border border-vintage-berry/20 bg-vanilla-custard p-4">
+  <div class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4">
     <h2 class="text-lg font-semibold text-blue-slate">{site.order.product}</h2>
     <p class="mt-1 text-sm text-blue-slate/80">{priceDisplay}</p>
     <p class="mt-2 text-sm text-blue-slate/70">{site.order.pickupNote}</p>
@@ -32,7 +32,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
         id="name"
         name="name"
         required
-        class="w-full rounded-lg border border-soft-blossom bg-white px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
+        class="w-full rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
       />
     </div>
     <div>
@@ -42,7 +42,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
         id="email"
         name="email"
         required
-        class="w-full rounded-lg border border-soft-blossom bg-white px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
+        class="w-full rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
       />
     </div>
   </div>
@@ -55,7 +55,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
         id="phone"
         name="phone"
         required
-        class="w-full rounded-lg border border-soft-blossom bg-white px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
+        class="w-full rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
       />
     </div>
     <div>
@@ -67,7 +67,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
         id="pickup-date"
         name="pickup-date"
         required
-        class="w-full rounded-lg border border-soft-blossom bg-white px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
+        class="w-full rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
       />
     </div>
   </div>
@@ -80,7 +80,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
       name="quantity"
       min="1"
       value="1"
-      class="w-full max-w-xs rounded-lg border border-soft-blossom bg-white px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
+      class="w-full max-w-xs rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
     />
   </div>
 
@@ -95,7 +95,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
       name="instructions"
       rows="4"
       placeholder="Allergies, occasion, decoration requests..."
-      class="w-full rounded-lg border border-soft-blossom bg-white px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
+      class="w-full rounded-lg border border-soft-blossom bg-frozen-water px-3 py-2 text-blue-slate focus:border-vintage-berry focus:outline-none focus:ring-1 focus:ring-vintage-berry"
     ></textarea>
   </div>
 
