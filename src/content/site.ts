@@ -47,6 +47,7 @@ export const site = {
     primary: "/logos/primary-black.png",
     primaryOnDark: "/logos/primary-red-heart.png",
     secondary: "/logos/secondary-white.png",
+    header: "/logos/header.png",
   },
   formEndpoints: {
     order: "" as string,

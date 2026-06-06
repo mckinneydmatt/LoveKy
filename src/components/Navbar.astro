@@ -12,11 +12,11 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-soft-blossom/60 bg-vanilla-custard/95 backdrop-blur-sm">
+<header class="sticky top-0 z-50 border-b border-vanilla-custard/60 bg-soft-blossom/95 backdrop-blur-sm">
   <div class="container-page flex items-center justify-between gap-4 py-4">
     <a href="/" class="shrink-0" aria-label={`${site.name} home`}>
       <img
-        src={site.logos.primary}
+        src={site.logos.header}
         alt={site.name}
         class="h-12 w-auto sm:h-14"
         width="200"
