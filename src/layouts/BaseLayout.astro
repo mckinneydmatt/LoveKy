@@ -1,16 +1,28 @@
 ---
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-import { site, defaultMetaDescription } from "../content/site";
+import { defaultMetaDescription, site } from "../content/site";
+import {
+  defaultOgImage,
+  localBusinessSchema,
+  pageTitle as buildPageTitle,
+  absoluteUrl,
+} from "../content/seo";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = defaultMetaDescription } = Astro.props;
-const pageTitle = title === "Home" ? site.name : `${site.name} | ${title}`;
+const { title, description = defaultMetaDescription, ogImage = defaultOgImage } = Astro.props;
+
+const resolvedTitle = buildPageTitle(title);
+const siteOrigin = Astro.site?.href ?? Astro.url.origin;
+const canonicalUrl = absoluteUrl(Astro.url.pathname, siteOrigin);
+const ogImageUrl = absoluteUrl(ogImage, siteOrigin);
+const schema = localBusinessSchema(siteOrigin);
 ---
 
 <!doctype html>
@@ -19,6 +31,18 @@ const pageTitle = title === "Home" ? site.name : `${site.name} | ${title}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={resolvedTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={resolvedTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link
       rel="icon"
@@ -45,7 +69,8 @@ const pageTitle = title === "Home" ? site.name : `${site.name} | ${title}`;
       href="https://fonts.googleapis.com/css2?family=Adventures+Unlimited&family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>{pageTitle}</title>
+    <title>{resolvedTitle}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body class="min-h-screen flex flex-col">
     <Navbar />

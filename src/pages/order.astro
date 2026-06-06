@@ -2,12 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import OrderForm from "../components/OrderForm.astro";
 import { site } from "../content/site";
+import { pageDescriptions } from "../content/seo";
 ---
 
-<BaseLayout
-  title="Order"
-  description={`Order a ${site.order.product} from ${site.name}. Pickup in Carmel, Indiana.`}
->
+<BaseLayout title="Order" description={pageDescriptions.order}>
   <section class="container-page py-12 sm:py-16">
     <div class="mb-10 max-w-2xl">
       <h1 class="section-heading mb-4">Order a cake</h1>

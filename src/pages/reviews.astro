@@ -2,9 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ReviewCard from "../components/ReviewCard.astro";
 import { site } from "../content/site";
+import { pageDescriptions } from "../content/seo";
 ---
 
-<BaseLayout title="Reviews">
+<BaseLayout title="Reviews" description={pageDescriptions.reviews}>
   <section class="container-page py-12 sm:py-16">
     <h1 class="section-heading mb-4">Reviews</h1>
     <p class="mb-10 max-w-2xl text-blue-slate/80">
