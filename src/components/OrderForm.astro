@@ -1,14 +1,16 @@
 ---
+import type { Product } from "../content/products";
 import type { SiteConfig } from "../content/site";
 
 interface Props {
   site: SiteConfig;
+  products: Product[];
 }
 
-const { site } = Astro.props;
+const { site, products } = Astro.props;
 
 const formAction = site.formEndpoints.order || undefined;
-const priceDisplay = site.order.price ?? "Price TBD";
+const defaultProduct = products[0];
 ---
 
 <form
@@ -28,12 +30,70 @@ const priceDisplay = site.order.price ?? "Price TBD";
     </p>
   )}
 
-  <div class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4">
+  <fieldset class="space-y-3">
+    <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      Choose your cake <span aria-hidden="true">*</span>
+    </legend>
+    <div class="grid gap-3">
+      {
+        products.map((product, index) => {
+          const priceDisplay = product.price ?? "Price TBD";
+          return (
+            <label
+              class="product-option block cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water p-4 transition has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30"
+              data-product-id={product.id}
+              data-product-name={product.name}
+              data-product-price={priceDisplay}
+              data-product-ingredients={product.ingredients ?? ""}
+            >
+              <div class="flex items-start gap-3">
+                <input
+                  type="radio"
+                  name="product-choice"
+                  value={product.id}
+                  class="mt-1 h-5 w-5 shrink-0 border-soft-blossom text-vintage-berry focus:ring-vintage-berry"
+                  checked={index === 0}
+                  required
+                />
+                <span class="min-w-0">
+                  <span class="block text-base font-semibold text-blue-slate">{product.name}</span>
+                  <span class="mt-1 block text-sm text-vintage-berry">{priceDisplay}</span>
+                  {product.description && (
+                    <span class="mt-2 block text-sm text-blue-slate/75">{product.description}</span>
+                  )}
+                </span>
+              </div>
+            </label>
+          );
+        })
+      }
+    </div>
+  </fieldset>
+
+  <div
+    id="selected-product-summary"
+    class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4"
+  >
     <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
-      {site.order.product}
+      {defaultProduct?.name}
     </h2>
-    <p class="mt-1 text-sm text-blue-slate/80">{priceDisplay}</p>
+    <p id="selected-product-price" class="mt-1 text-sm text-blue-slate/80">
+      {defaultProduct?.price ?? "Price TBD"}
+    </p>
     <p class="mt-2 text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
+    <p
+      id="selected-product-ingredients"
+      class:list={["mt-3 text-sm text-blue-slate/80", !defaultProduct?.ingredients && "hidden"]}
+    >
+      {
+        defaultProduct?.ingredients && (
+          <>
+            <span class="font-semibold uppercase tracking-wide">Ingredients:</span>{" "}
+            {defaultProduct.ingredients}
+          </>
+        )
+      }
+    </p>
   </div>
 
   <div class="grid gap-4 sm:grid-cols-2">
@@ -106,7 +166,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
     />
   </div>
 
-  <input type="hidden" name="product" value={site.order.product} />
+  <input type="hidden" id="product" name="product" value={defaultProduct?.name ?? ""} />
 
   <div>
     <label for="instructions" class="mb-1 block text-sm font-medium text-blue-slate">
@@ -120,17 +180,6 @@ const priceDisplay = site.order.price ?? "Price TBD";
       class="form-input min-h-28"
     ></textarea>
   </div>
-
-  {
-    site.order.ingredients && (
-      <div>
-        <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-slate">
-          Ingredients
-        </h3>
-        <p class="text-sm text-blue-slate/80">{site.order.ingredients}</p>
-      </div>
-    )
-  }
 
   <div class="rounded-lg border border-blue-slate/10 bg-soft-blossom/20 p-4">
     <p id="order-disclaimer" class="text-sm font-medium text-blue-slate">
@@ -168,4 +217,43 @@ const priceDisplay = site.order.price ?? "Price TBD";
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.min = tomorrow.toISOString().split("T")[0];
   }
+
+  const productInput = document.getElementById("product") as HTMLInputElement | null;
+  const summaryHeading = document.getElementById("order-form-heading");
+  const summaryPrice = document.getElementById("selected-product-price");
+  const summaryIngredients = document.getElementById("selected-product-ingredients");
+
+  const updateSelectedProduct = (label: HTMLElement) => {
+    const name = label.dataset.productName ?? "";
+    const price = label.dataset.productPrice ?? "Price TBD";
+    const ingredients = label.dataset.productIngredients ?? "";
+
+    if (productInput) {
+      productInput.value = name;
+    }
+    if (summaryHeading) {
+      summaryHeading.textContent = name;
+    }
+    if (summaryPrice) {
+      summaryPrice.textContent = price;
+    }
+    if (summaryIngredients) {
+      if (ingredients) {
+        summaryIngredients.innerHTML = `<span class="font-semibold uppercase tracking-wide">Ingredients:</span> ${ingredients}`;
+        summaryIngredients.classList.remove("hidden");
+      } else {
+        summaryIngredients.textContent = "";
+        summaryIngredients.classList.add("hidden");
+      }
+    }
+  };
+
+  document.querySelectorAll<HTMLInputElement>('input[name="product-choice"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      const label = radio.closest<HTMLElement>(".product-option");
+      if (label) {
+        updateSelectedProduct(label);
+      }
+    });
+  });
 </script>

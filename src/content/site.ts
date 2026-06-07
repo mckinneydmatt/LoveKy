@@ -19,12 +19,9 @@ export interface SiteConfig {
     handle: string;
   };
   order: {
-    product: string;
-    price: string | null;
     intro: string;
     deliveryNote: string;
     disclaimer: string;
-    ingredients: string | null;
     message: string[];
   };
   about: {
@@ -67,12 +64,9 @@ export const defaultSite: SiteConfig = {
     handle: "@love.kycakes",
   },
   order: {
-    product: "10-inch chocolate cake with whipped chocolate frosting",
-    price: "$44",
     intro: "Free delivery within 30 miles of Carmel. Mileage beyond that is 73¢ per mile.",
     deliveryNote: "Kylee will confirm your order and delivery details.",
     disclaimer: "Made in a home kitchen not tested by the health department.",
-    ingredients: null,
     message: [
       "Every cake I make goes out the door the way you'd send something to someone you care about — made with intention, finished with care, and meant to make someone's day a little sweeter. That's not a promise I take lightly. Whether it's for a birthday or just another Tuesday, I want what's in that box to feel like it was made just for you. Because it was.",
       "So thank you for your order, and I hope you enjoy every slice.",
@@ -116,7 +110,7 @@ export const defaultSite: SiteConfig = {
     contact:
       "Contact Love, Ky Cakes by phone, text, or email. Call or text 8am–8pm, Monday–Saturday. Free delivery within 30 miles of Carmel.",
     order:
-      "Order a 10-inch chocolate cake with whipped chocolate frosting from Love, Ky Cakes. Free delivery within 30 miles of Carmel.",
+      "Order cakes from Love, Ky Cakes. Free delivery within 30 miles of Carmel.",
     reviews:
       "Customer reviews for Love, Ky Cakes, a home bakery in Carmel, Indiana specializing in cakes.",
   },

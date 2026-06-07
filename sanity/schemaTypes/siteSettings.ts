@@ -57,9 +57,8 @@ export const siteSettings = defineType({
       name: 'order',
       title: 'Order',
       type: 'object',
+      description: 'Shared copy for the order page. Individual cakes are managed under Products.',
       fields: [
-        defineField({name: 'product', title: 'Product name', type: 'string', validation: (rule) => rule.required()}),
-        defineField({name: 'price', title: 'Price', type: 'string'}),
         defineField({name: 'intro', title: 'Order intro', type: 'text', rows: 2, validation: (rule) => rule.required()}),
         defineField({
           name: 'deliveryNote',
@@ -74,7 +73,6 @@ export const siteSettings = defineType({
           rows: 2,
           validation: (rule) => rule.required(),
         }),
-        defineField({name: 'ingredients', title: 'Ingredients list', type: 'text', rows: 3}),
         defineField({
           name: 'message',
           title: 'Order closing message',

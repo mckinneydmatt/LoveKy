@@ -19,10 +19,14 @@ Static Astro site for Love, Ky Cakes — a home bakery in Carmel, Indiana.
 | `npm run sanity:dev` | Start Sanity Studio at `localhost:3333` |
 | `npm run sanity:deploy` | Deploy Studio to `*.sanity.studio` |
 | `npm run sanity:seed` | Seed Site Settings from defaults (requires Sanity login) |
+| `npm run sanity:seed:products` | Seed product documents |
+| `npm run sanity:seed:all` | Seed Site Settings and products |
 
 ## Sanity CMS setup
 
-**Project:** Bakery Site (`1bzd5noi`) · **Dataset:** `production`
+**Project:** Bakery Site (`1bzd5noi`)
+
+On `cursor/sanity-multi-product`, use a separate **`development`** dataset so Kylee's `production` content stays untouched. Create it in [sanity.io/manage](https://www.sanity.io/manage) → Bakery Site → **Datasets**.
 
 1. Copy environment variables:
    ```bash
@@ -36,14 +40,14 @@ Static Astro site for Love, Ky Cakes — a home bakery in Carmel, Indiana.
 
 3. Seed initial content:
    ```bash
-   npm run sanity:seed
+   npm run sanity:seed:all
    ```
 
 4. Edit content locally:
    ```bash
    npm run sanity:dev
    ```
-   Open [http://localhost:3333](http://localhost:3333) → **Site Settings**
+   Open [http://localhost:3333](http://localhost:3333) → **Products** or **Site Settings**
 
 5. Deploy Studio for Kylee:
    ```bash
@@ -72,6 +76,8 @@ src/
   lib/sanity/         # GROQ query, mapper, types
   pages/              # Static pages
 sanity/
-  schemaTypes/        # Sanity schema (Site Settings singleton)
-  seed/               # One-time content seed script
+  schemaTypes/        # Sanity schema (products + Site Settings)
+  seed/               # Content seed scripts
+  content/products.ts # Default/fallback products
+  lib/getProducts.ts  # Fetches products from Sanity at build time
 ```

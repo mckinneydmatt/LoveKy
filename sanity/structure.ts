@@ -4,6 +4,8 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
+      S.documentTypeListItem('product').title('Products'),
+      S.divider(),
       S.listItem()
         .title('Site Settings')
         .id('siteSettings')

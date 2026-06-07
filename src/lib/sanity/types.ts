@@ -30,12 +30,9 @@ export interface SanitySiteSettingsDoc {
     instagramHandle?: string;
   };
   order?: {
-    product?: string;
-    price?: string | null;
     intro?: string;
     deliveryNote?: string;
     disclaimer?: string;
-    ingredients?: string | null;
     message?: string[];
   };
   about?: {
@@ -54,4 +51,13 @@ export interface SanitySiteSettingsDoc {
     reviews?: string;
   };
   formspreeOrderEndpoint?: string | null;
+}
+
+export interface SanityProductDoc {
+  _id?: string;
+  name?: string;
+  slug?: { current?: string };
+  price?: string | null;
+  description?: string | null;
+  ingredients?: string | null;
 }

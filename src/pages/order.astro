@@ -2,9 +2,11 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import OrderForm from "../components/OrderForm.astro";
 import { pageDescriptions } from "../content/seo";
+import { getProducts } from "../lib/getProducts";
 import { getSite } from "../lib/getSite";
 
 const site = await getSite();
+const products = await getProducts();
 const descriptions = pageDescriptions(site);
 ---
 
@@ -12,13 +14,11 @@ const descriptions = pageDescriptions(site);
   <section class="container-page py-12 sm:py-16">
     <div class="mb-10 max-w-2xl">
       <h1 class="section-heading mb-4">Order a cake</h1>
-      <p class="text-blue-slate/80">
-        Request a {site.order.product}. {site.order.intro}
-      </p>
+      <p class="text-blue-slate/80">{site.order.intro}</p>
     </div>
 
     <div class="max-w-2xl">
-      <OrderForm site={site} />
+      <OrderForm site={site} products={products} />
     </div>
 
     <div class="mt-10 max-w-2xl rounded-2xl border border-soft-blossom bg-soft-blossom/20 p-6 sm:p-8">

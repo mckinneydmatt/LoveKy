@@ -1,9 +1,12 @@
 import {defineCliConfig} from 'sanity/cli'
+import {activeDataset, loadRootEnv} from './loadRootEnv'
+
+loadRootEnv()
 
 export default defineCliConfig({
   api: {
     projectId: '1bzd5noi',
-    dataset: 'production'
+    dataset: activeDataset(),
   },
   deployment: {
     /**

@@ -21,12 +21,9 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
       handle: doc.social?.instagramHandle ?? defaultSite.social.handle,
     },
     order: {
-      product: doc.order?.product ?? defaultSite.order.product,
-      price: doc.order?.price ?? defaultSite.order.price,
       intro: doc.order?.intro ?? defaultSite.order.intro,
       deliveryNote: doc.order?.deliveryNote ?? defaultSite.order.deliveryNote,
       disclaimer: doc.order?.disclaimer ?? defaultSite.order.disclaimer,
-      ingredients: doc.order?.ingredients ?? defaultSite.order.ingredients,
       message: doc.order?.message?.length ? doc.order.message : defaultSite.order.message,
     },
     about: {

@@ -12,7 +12,9 @@
     "astro": "astro",
     "sanity:dev": "npm run dev --prefix sanity",
     "sanity:deploy": "npm run deploy --prefix sanity",
-    "sanity:seed": "npm run seed --prefix sanity"
+    "sanity:seed": "npm run seed --prefix sanity",
+    "sanity:seed:products": "npm run seed:products --prefix sanity",
+    "sanity:seed:all": "npm run seed:all --prefix sanity"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
