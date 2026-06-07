@@ -3,11 +3,11 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import sanity from '@sanity/astro';
 import tailwindcss from '@tailwindcss/vite';
-import { loadEnv } from 'vite';
+import { activeDataset, activeProjectId, loadSanityEnv } from './loadSanityEnv.mjs';
 
-const env = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), '');
-const projectId = env.PUBLIC_SANITY_PROJECT_ID;
-const dataset = env.PUBLIC_SANITY_DATASET ?? 'production';
+loadSanityEnv();
+const projectId = activeProjectId();
+const dataset = activeDataset();
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,5 +28,9 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    define: {
+      'import.meta.env.PUBLIC_SANITY_PROJECT_ID': JSON.stringify(projectId),
+      'import.meta.env.PUBLIC_SANITY_DATASET': JSON.stringify(dataset),
+    },
   },
 });

@@ -26,23 +26,16 @@ Static Astro site for Love, Ky Cakes — a home bakery in Carmel, Indiana.
 
 ### Branch → dataset
 
-| Git branch | Sanity dataset | Use for |
-| :--------- | :------------- | :------ |
-| `cursor/sanity-cms` | `production` | Kylee's real content, single-product site |
-| `cursor/sanity-multi-product` | `development` | 3-product experiment (sandbox) |
+| Git branch | Sanity dataset | Config file |
+| :--------- | :------------- | :---------- |
+| `cursor/sanity-cms` | `production` | `sanity.env` (committed) |
+| `cursor/sanity-multi-product` | `development` | `sanity.env` (committed) |
 
-After switching branches, refresh your local env from the template:
+Sanity project ID and dataset live in **`sanity.env`** at the repo root. That file changes when you `git checkout` a branch — no manual copy step.
 
-```bash
-cp .env.example .env
-```
+Use **`.env`** only for optional secrets (e.g. Formspree keys). It stays gitignored.
 
-Then restart `npm run dev` and `npm run sanity:dev`.
-
-1. Copy environment variables:
-   ```bash
-   cp .env.example .env
-   ```
+After switching branches, restart `npm run dev` and `npm run sanity:dev`.
 
 2. Log in to Sanity CLI (one time):
    ```bash
