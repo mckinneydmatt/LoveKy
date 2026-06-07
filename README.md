@@ -24,6 +24,21 @@ Static Astro site for Love, Ky Cakes — a home bakery in Carmel, Indiana.
 
 **Project:** Bakery Site (`1bzd5noi`) · **Dataset:** `production`
 
+### Branch → dataset
+
+| Git branch | Sanity dataset | Use for |
+| :--------- | :------------- | :------ |
+| `cursor/sanity-cms` | `production` | Kylee's real content, single-product site |
+| `cursor/sanity-multi-product` | `development` | 3-product experiment (sandbox) |
+
+After switching branches, refresh your local env from the template:
+
+```bash
+cp .env.example .env
+```
+
+Then restart `npm run dev` and `npm run sanity:dev`.
+
 1. Copy environment variables:
    ```bash
    cp .env.example .env
