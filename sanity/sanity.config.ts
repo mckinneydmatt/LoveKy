@@ -1,18 +1,18 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
-import {activeDataset, activeProjectId, loadSanityEnv} from '../loadSanityEnv.mjs'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 
-loadSanityEnv()
-const dataset = activeDataset()
+// sanity.cli.ts loads sanity.env in Node before this bundle runs — no fs imports here.
+const dataset = process.env.SANITY_STUDIO_DATASET ?? 'production'
+const projectId = process.env.PUBLIC_SANITY_PROJECT_ID ?? '1bzd5noi'
 
 export default defineConfig({
   name: 'default',
   title: dataset === 'production' ? 'Bakery Site' : `Bakery Site (${dataset})`,
 
-  projectId: activeProjectId(),
+  projectId,
   dataset,
 
   plugins: [structureTool({structure}), visionTool()],
