@@ -14,10 +14,12 @@ export const site = {
     handle: "@love.kycakes",
   },
   order: {
-    product: "10-inch chocolate cake",
-    price: null as string | null,
-    pickupNote:
-      "Pickup in Carmel, Indiana. Full address provided after your order is confirmed.",
+    product: "10-inch chocolate cake with whipped chocolate frosting",
+    price: "$44",
+    intro:
+      "Free delivery within 30 miles of Carmel. Mileage beyond that is 73¢ per mile.",
+    deliveryNote:
+      "Kylee will confirm your order and delivery details.",
     disclaimer:
       "Made in a home kitchen not tested by the health department.",
     ingredients: null as string | null,

@@ -28,7 +28,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
       {site.order.product}
     </h2>
     <p class="mt-1 text-sm text-blue-slate/80">{priceDisplay}</p>
-    <p class="mt-2 text-sm text-blue-slate/70">{site.order.pickupNote}</p>
+    <p class="mt-2 text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
   </div>
 
   <div class="grid gap-4 sm:grid-cols-2">
@@ -75,13 +75,13 @@ const priceDisplay = site.order.price ?? "Price TBD";
       />
     </div>
     <div>
-      <label for="pickup-date" class="mb-1 block text-sm font-medium text-blue-slate">
-        Preferred pickup date <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+      <label for="delivery-date" class="mb-1 block text-sm font-medium text-blue-slate">
+        Preferred delivery date <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
       <input
         type="date"
-        id="pickup-date"
-        name="pickup-date"
+        id="delivery-date"
+        name="delivery-date"
         required
         class="form-input"
       />
@@ -157,7 +157,7 @@ const priceDisplay = site.order.price ?? "Price TBD";
 </form>
 
 <script>
-  const dateInput = document.getElementById("pickup-date") as HTMLInputElement | null;
+  const dateInput = document.getElementById("delivery-date") as HTMLInputElement | null;
   if (dateInput) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
