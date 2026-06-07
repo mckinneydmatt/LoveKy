@@ -1,8 +1,8 @@
 import {getCliClient} from 'sanity/cli'
-import {loadRootEnv, seedDataset} from './loadEnv'
+import {activeDataset, loadSanityEnv} from '../../loadSanityEnv.mjs'
 
-loadRootEnv()
-console.log(`Seeding siteSettings → dataset: ${seedDataset()}`)
+loadSanityEnv()
+console.log(`Seeding siteSettings → dataset: ${activeDataset()}`)
 
 const client = getCliClient({apiVersion: '2026-03-01'})
 

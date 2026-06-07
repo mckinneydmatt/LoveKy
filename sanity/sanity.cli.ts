@@ -1,11 +1,11 @@
 import {defineCliConfig} from 'sanity/cli'
-import {activeDataset, loadRootEnv} from './loadRootEnv'
+import {activeDataset, activeProjectId, loadSanityEnv} from '../loadSanityEnv.mjs'
 
-loadRootEnv()
+loadSanityEnv()
 
 export default defineCliConfig({
   api: {
-    projectId: '1bzd5noi',
+    projectId: activeProjectId(),
     dataset: activeDataset(),
   },
   deployment: {
