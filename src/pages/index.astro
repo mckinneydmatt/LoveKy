@@ -2,13 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ReviewCard from "../components/ReviewCard.astro";
 import InstagramEmbed from "../components/InstagramEmbed.astro";
-import { site } from "../content/site";
 import { pageDescriptions } from "../content/seo";
+import { getSite } from "../lib/getSite";
 
+const site = await getSite();
+const descriptions = pageDescriptions(site);
 const featuredReviews = site.reviews.slice(0, 2);
 ---
 
-<BaseLayout title="Home" description={pageDescriptions.home}>
+<BaseLayout title="Home" description={descriptions.home}>
   <section class="relative overflow-hidden border-b border-soft-blossom/60">
     <div class="absolute inset-0 pattern-bg pointer-events-none" aria-hidden="true"></div>
     <div class="container-page relative grid items-center gap-8 py-12 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:py-24">

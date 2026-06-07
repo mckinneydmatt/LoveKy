@@ -1,5 +1,11 @@
 ---
-import { site } from "../content/site";
+import type { SiteConfig } from "../content/site";
+
+interface Props {
+  site: SiteConfig;
+}
+
+const { site } = Astro.props;
 
 const formAction = site.formEndpoints.order || undefined;
 const priceDisplay = site.order.price ?? "Price TBD";
@@ -17,9 +23,8 @@ const priceDisplay = site.order.price ?? "Price TBD";
       role="status"
       class="rounded-lg bg-frozen-water/30 px-4 py-3 text-sm break-words text-blue-slate"
     >
-      Formspree is not configured yet. Add your endpoint URL to{" "}
-      <code class="break-all text-vintage-berry">site.formEndpoints.order</code> in{" "}
-      <code class="break-all text-vintage-berry">src/content/site.ts</code>.
+      Formspree is not configured yet. Add your endpoint URL in Sanity under{" "}
+      <strong class="text-vintage-berry">Site Settings → Formspree order endpoint</strong>.
     </p>
   )}
 

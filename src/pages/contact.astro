@@ -1,10 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../content/site";
 import { pageDescriptions } from "../content/seo";
+import { getSite } from "../lib/getSite";
+
+const site = await getSite();
+const descriptions = pageDescriptions(site);
 ---
 
-<BaseLayout title="Contact" description={pageDescriptions.contact}>
+<BaseLayout title="Contact" description={descriptions.contact}>
   <section class="container-page py-12 sm:py-16">
     <h1 class="section-heading mb-4">Contact</h1>
     <p class="mb-10 max-w-2xl text-blue-slate/80">

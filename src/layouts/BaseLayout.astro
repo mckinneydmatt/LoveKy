@@ -1,13 +1,14 @@
 ---
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-import { defaultMetaDescription, site } from "../content/site";
+import { defaultMetaDescription } from "../content/site";
 import {
   defaultOgImage,
   localBusinessSchema,
   pageTitle as buildPageTitle,
   absoluteUrl,
 } from "../content/seo";
+import { getSite } from "../lib/getSite";
 import "../styles/global.css";
 
 interface Props {
@@ -16,13 +17,18 @@ interface Props {
   ogImage?: string;
 }
 
-const { title, description = defaultMetaDescription, ogImage = defaultOgImage } = Astro.props;
+const site = await getSite();
+const {
+  title,
+  description = defaultMetaDescription(site),
+  ogImage = defaultOgImage(site),
+} = Astro.props;
 
-const resolvedTitle = buildPageTitle(title);
+const resolvedTitle = buildPageTitle(site, title);
 const siteOrigin = Astro.site?.href ?? Astro.url.origin;
 const canonicalUrl = absoluteUrl(Astro.url.pathname, siteOrigin);
 const ogImageUrl = absoluteUrl(ogImage, siteOrigin);
-const schema = localBusinessSchema(siteOrigin);
+const schema = localBusinessSchema(site, siteOrigin);
 ---
 
 <!doctype html>
@@ -74,10 +80,10 @@ const schema = localBusinessSchema(siteOrigin);
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <Navbar />
+    <Navbar site={site} />
     <main id="main-content" class="flex-1" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer site={site} />
   </body>
 </html>
