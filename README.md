@@ -24,9 +24,24 @@ Static Astro site for Love, Ky Cakes — a home bakery in Carmel, Indiana.
 
 ## Sanity CMS setup
 
-**Project:** Bakery Site (`1bzd5noi`)
+**Project:** Bakery Site (`1bzd5noi`) · **Dataset:** `development`
 
-On `cursor/sanity-multi-product`, use a separate **`development`** dataset so Kylee's `production` content stays untouched. Create it in [sanity.io/manage](https://www.sanity.io/manage) → Bakery Site → **Datasets**.
+### Branch → dataset
+
+| Git branch | Sanity dataset | Use for |
+| :--------- | :------------- | :------ |
+| `cursor/sanity-cms` | `production` | Kylee's real content, single-product site |
+| `cursor/sanity-multi-product` | `development` | 3-product experiment (sandbox) |
+
+After switching branches, refresh your local env from the template:
+
+```bash
+cp .env.example .env
+```
+
+Then restart `npm run dev` and `npm run sanity:dev`.
+
+Create the **`development`** dataset in [sanity.io/manage](https://www.sanity.io/manage) → Bakery Site → **Datasets** if it does not exist yet.
 
 1. Copy environment variables:
    ```bash
