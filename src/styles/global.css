@@ -55,19 +55,19 @@
   }
 
   .btn-primary {
-    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-nail-polish px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-frozen-water transition hover:bg-vintage-berry focus-visible:outline-frozen-water;
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full bg-nail-polish px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-frozen-water transition hover:bg-vintage-berry focus-visible:outline-frozen-water disabled:cursor-not-allowed;
   }
 
   .btn-soft-blossom {
-    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-soft-blossom px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:bg-powder-blush focus-visible:outline-blue-slate;
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full bg-soft-blossom px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:bg-powder-blush focus-visible:outline-blue-slate disabled:cursor-not-allowed;
   }
 
   .btn-blush {
-    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-powder-blush px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:bg-vintage-berry hover:text-frozen-water focus-visible:outline-blue-slate;
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full bg-powder-blush px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:bg-vintage-berry hover:text-frozen-water focus-visible:outline-blue-slate disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply inline-flex min-h-11 items-center justify-center rounded-full border-2 border-blue-slate px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:border-vintage-berry hover:text-vintage-berry;
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full border-2 border-blue-slate px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-blue-slate transition hover:border-vintage-berry hover:text-vintage-berry disabled:cursor-not-allowed;
   }
 
   .form-input {
