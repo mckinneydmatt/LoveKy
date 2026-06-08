@@ -1,27 +1,34 @@
 ---
 import { site } from "../content/site";
+import { isStripeConfigured } from "../lib/stripe";
 
-const formAction = site.formEndpoints.order || undefined;
+const stripeConfigured = isStripeConfigured();
 const priceDisplay = site.order.price ?? "Price TBD";
 ---
 
 <form
+  id="order-form"
   class="space-y-6 rounded-2xl border border-soft-blossom bg-frozen-water/70 p-4 shadow-sm sm:p-8"
-  method="POST"
-  action={formAction}
   aria-labelledby="order-form-heading"
 >
-  {!formAction && (
+  {!stripeConfigured && (
     <p
       id="form-config-notice"
       role="status"
       class="rounded-lg bg-frozen-water/30 px-4 py-3 text-sm break-words text-blue-slate"
     >
-      Formspree is not configured yet. Add your endpoint URL to{" "}
-      <code class="break-all text-vintage-berry">site.formEndpoints.order</code> in{" "}
-      <code class="break-all text-vintage-berry">src/content/site.ts</code>.
+      Stripe is not configured yet. Add your secret key to{" "}
+      <code class="break-all text-vintage-berry">STRIPE_SECRET_KEY</code> in a local{" "}
+      <code class="break-all text-vintage-berry">.env</code> file (see{" "}
+      <code class="break-all text-vintage-berry">.env.example</code>).
     </p>
   )}
+
+  <p
+    id="checkout-error"
+    role="alert"
+    class="hidden rounded-lg border border-vintage-berry/30 bg-soft-blossom/40 px-4 py-3 text-sm text-blue-slate"
+  ></p>
 
   <div class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4">
     <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
@@ -88,6 +95,54 @@ const priceDisplay = site.order.price ?? "Price TBD";
     </div>
   </div>
 
+  <fieldset class="space-y-4">
+    <legend class="text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      Delivery address <span aria-hidden="true">*</span>
+    </legend>
+    <div>
+      <label for="delivery-address" class="mb-1 block text-sm font-medium text-blue-slate">
+        Street address
+      </label>
+      <input
+        type="text"
+        id="delivery-address"
+        name="delivery-address"
+        required
+        autocomplete="street-address"
+        class="form-input"
+      />
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="delivery-city" class="mb-1 block text-sm font-medium text-blue-slate">
+          City
+        </label>
+        <input
+          type="text"
+          id="delivery-city"
+          name="delivery-city"
+          required
+          autocomplete="address-level2"
+          class="form-input"
+        />
+      </div>
+      <div>
+        <label for="delivery-zip" class="mb-1 block text-sm font-medium text-blue-slate">
+          ZIP code
+        </label>
+        <input
+          type="text"
+          id="delivery-zip"
+          name="delivery-zip"
+          required
+          inputmode="numeric"
+          autocomplete="postal-code"
+          class="form-input"
+        />
+      </div>
+    </div>
+  </fieldset>
+
   <div>
     <label for="quantity" class="mb-1 block text-sm font-medium text-blue-slate">Quantity</label>
     <input
@@ -100,8 +155,6 @@ const priceDisplay = site.order.price ?? "Price TBD";
       class="form-input max-w-xs"
     />
   </div>
-
-  <input type="hidden" name="product" value={site.order.product} />
 
   <div>
     <label for="instructions" class="mb-1 block text-sm font-medium text-blue-slate">
@@ -148,19 +201,85 @@ const priceDisplay = site.order.price ?? "Price TBD";
 
   <button
     type="submit"
+    id="checkout-submit"
     class="btn-primary w-full sm:w-auto"
-    disabled={!formAction}
-    aria-describedby={!formAction ? "form-config-notice" : undefined}
+    disabled={!stripeConfigured}
+    aria-describedby={!stripeConfigured ? "form-config-notice" : undefined}
   >
-    Submit Order Request
+    Proceed to payment
   </button>
 </form>
 
 <script>
+  const form = document.getElementById("order-form") as HTMLFormElement | null;
   const dateInput = document.getElementById("delivery-date") as HTMLInputElement | null;
+  const submitButton = document.getElementById("checkout-submit") as HTMLButtonElement | null;
+  const errorBox = document.getElementById("checkout-error") as HTMLParagraphElement | null;
+
   if (dateInput) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.min = tomorrow.toISOString().split("T")[0];
   }
+
+  function showError(message: string) {
+    if (!errorBox) return;
+    errorBox.textContent = message;
+    errorBox.classList.remove("hidden");
+  }
+
+  function clearError() {
+    if (!errorBox) return;
+    errorBox.textContent = "";
+    errorBox.classList.add("hidden");
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    clearError();
+
+    if (!submitButton) return;
+
+    const formData = new FormData(form);
+    const disclaimerAck = formData.get("disclaimer-ack") === "on";
+
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim(),
+      deliveryDate: String(formData.get("delivery-date") ?? "").trim(),
+      quantity: Number(formData.get("quantity") ?? 1),
+      deliveryAddress: String(formData.get("delivery-address") ?? "").trim(),
+      deliveryCity: String(formData.get("delivery-city") ?? "").trim(),
+      deliveryZip: String(formData.get("delivery-zip") ?? "").trim(),
+      instructions: String(formData.get("instructions") ?? "").trim(),
+      disclaimerAck,
+    };
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Redirecting to payment…";
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.url) {
+        showError(data.error ?? "Unable to start checkout. Please try again.");
+        submitButton.disabled = false;
+        submitButton.textContent = "Proceed to payment";
+        return;
+      }
+
+      window.location.href = data.url;
+    } catch {
+      showError("Unable to reach the payment service. Please try again.");
+      submitButton.disabled = false;
+      submitButton.textContent = "Proceed to payment";
+    }
+  });
 </script>

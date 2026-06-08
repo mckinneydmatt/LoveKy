@@ -3,6 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import OrderForm from "../components/OrderForm.astro";
 import { site } from "../content/site";
 import { pageDescriptions } from "../content/seo";
+
+const showCanceledNotice = Astro.url.searchParams.has("canceled");
 ---
 
 <BaseLayout title="Order" description={pageDescriptions.order}>
@@ -10,9 +12,21 @@ import { pageDescriptions } from "../content/seo";
     <div class="mb-10 max-w-2xl">
       <h1 class="section-heading mb-4">Order a cake</h1>
       <p class="text-blue-slate/80">
-        Request a {site.order.product}. {site.order.intro}
+        Order a {site.order.product}. {site.order.intro}
       </p>
     </div>
+
+    {
+      showCanceledNotice && (
+        <div
+          id="payment-canceled-notice"
+          role="status"
+          class="mb-8 max-w-2xl rounded-lg border border-vintage-berry/20 bg-soft-blossom/30 px-4 py-3 text-sm text-blue-slate"
+        >
+          Payment was canceled. Your order was not placed — you can try again below.
+        </div>
+      )
+    }
 
     <div class="max-w-2xl">
       <OrderForm />

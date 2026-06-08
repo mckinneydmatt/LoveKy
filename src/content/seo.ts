@@ -10,7 +10,7 @@ export const pageDescriptions = {
   about:
     "Meet Ky, the Carmel, Indiana baker behind Love, Ky Cakes. Home-based bakery with more than 10 years of experience making cakes with personal care.",
   contact: `Contact ${site.name} by phone, text, or email. ${site.contact.hours}. ${site.order.intro}`,
-  order: `Order a ${site.order.product} from ${site.name}. Free delivery within 30 miles of Carmel.`,
+  order: `Order and pay online for a ${site.order.product} from ${site.name}. Free delivery within 30 miles of Carmel.`,
   reviews: `Customer reviews for ${site.name}, a home bakery in Carmel, Indiana specializing in cakes.`,
 } as const;
 

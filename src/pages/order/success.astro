@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../content/site";
+import { getStripeClient, isStripeConfigured } from "../../lib/stripe";
+
+export const prerender = false;
+
+const sessionId = Astro.url.searchParams.get("session_id");
+let customerEmail: string | null = null;
+let deliveryDate: string | null = null;
+let quantity: string | null = null;
+
+if (sessionId && isStripeConfigured()) {
+  try {
+    const stripe = getStripeClient();
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    customerEmail = session.customer_email ?? session.metadata?.email ?? null;
+    deliveryDate = session.metadata?.deliveryDate ?? null;
+    quantity = session.metadata?.quantity ?? null;
+  } catch {
+    // Show generic success if session lookup fails.
+  }
+}
+---
+
+<BaseLayout title="Order confirmed" description={`Your ${site.name} order is confirmed.`}>
+  <section class="container-page py-12 sm:py-16">
+    <div class="max-w-2xl">
+      <h1 class="section-heading mb-4">Thank you for your order</h1>
+      <p class="text-blue-slate/80">
+        Your payment was received. Kylee will confirm your delivery details and any mileage fee
+        beyond 30 miles of Carmel.
+      </p>
+
+      {
+        (customerEmail || deliveryDate || quantity) && (
+          <div class="mt-8 rounded-2xl border border-soft-blossom bg-frozen-water/70 p-6">
+            <h2 class="text-lg font-semibold text-blue-slate">Order summary</h2>
+            <ul class="mt-4 space-y-2 text-sm text-blue-slate/85">
+              <li>
+                <span class="font-medium text-blue-slate">Product:</span> {site.order.product}
+              </li>
+              {quantity && (
+                <li>
+                  <span class="font-medium text-blue-slate">Quantity:</span> {quantity}
+                </li>
+              )}
+              {deliveryDate && (
+                <li>
+                  <span class="font-medium text-blue-slate">Preferred delivery:</span>{" "}
+                  {deliveryDate}
+                </li>
+              )}
+              {customerEmail && (
+                <li>
+                  <span class="font-medium text-blue-slate">Confirmation sent to:</span>{" "}
+                  {customerEmail}
+                </li>
+              )}
+            </ul>
+          </div>
+        )
+      }
+
+      <div class="mt-10 rounded-2xl border border-soft-blossom bg-soft-blossom/20 p-6 sm:p-8">
+        {
+          site.order.message.map((paragraph, index) => (
+            <p
+              class:list={[
+                "leading-relaxed text-blue-slate/90",
+                index < site.order.message.length - 1 && "mb-4",
+              ]}
+            >
+              {paragraph}
+            </p>
+          ))
+        }
+      </div>
+
+      <p class="mt-8">
+        <a href="/" class="text-vintage-berry underline-offset-2 hover:underline">
+          Back to home
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -16,10 +16,11 @@ export const site = {
   order: {
     product: "10-inch chocolate cake with whipped chocolate frosting",
     price: "$44",
+    priceCents: 4400,
     intro:
-      "Free delivery within 30 miles of Carmel. Mileage beyond that is 73¢ per mile.",
+      "Pay online at checkout. Free delivery within 30 miles of Carmel; mileage beyond that is 73¢ per mile and confirmed by Kylee after your order.",
     deliveryNote:
-      "Kylee will confirm your order and delivery details.",
+      "Kylee will confirm your delivery details and any mileage fee beyond 30 miles.",
     disclaimer:
       "Made in a home kitchen not tested by the health department.",
     ingredients: null as string | null,
