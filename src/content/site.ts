@@ -36,7 +36,6 @@ export const site = {
       "I've been making my favorite chocolate cake for friends and family for years, and everyone always said the same thing: \"Kylee, this cake is so good you could sell it.\"",
       "I just smiled and said thank you. But life has a funny way of nudging you toward the things you love, and eventually I listened.",
       "So here we are.",
-      "Love, Ky Cakes.",
     ],
   },
   reviews: [
