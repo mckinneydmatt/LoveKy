@@ -13,7 +13,6 @@ const products = [
     name: '10-inch chocolate cake with whipped chocolate frosting',
     slug: {_type: 'slug', current: 'chocolate-cake'},
     price: '$44',
-    description: null,
     ingredients:
       'Sugar, flour, cocoa powder, baking powder, baking soda, salt, eggs, milk, vegetable oil, vanilla extract, powdered sugar, heavy cream',
     active: true,

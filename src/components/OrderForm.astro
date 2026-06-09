@@ -47,6 +47,7 @@ const multipleProducts = products.length > 1;
                   class="product-option block cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water p-4 transition has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30"
                   data-product-name={product.name}
                   data-product-price={productPrice}
+                  data-product-description={product.description ?? ""}
                   data-product-ingredients={product.ingredients ?? ""}
                 >
                   <div class="flex items-start gap-3">
@@ -84,6 +85,12 @@ const multipleProducts = products.length > 1;
     </h2>
     <p id="selected-product-price" class="mt-1 text-sm text-blue-slate/80">
       {priceDisplay}
+    </p>
+    <p
+      id="selected-product-description"
+      class:list={["mt-2 text-sm text-blue-slate/75", !defaultProduct?.description && "hidden"]}
+    >
+      {defaultProduct?.description}
     </p>
     <p class="mt-2 text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
   </div>
@@ -228,11 +235,13 @@ const multipleProducts = products.length > 1;
   const productInput = document.getElementById("product") as HTMLInputElement | null;
   const summaryHeading = document.getElementById("order-form-heading");
   const summaryPrice = document.getElementById("selected-product-price");
+  const summaryDescription = document.getElementById("selected-product-description");
   const summaryIngredients = document.getElementById("selected-product-ingredients");
 
   const updateSelectedProduct = (label: HTMLElement) => {
     const name = label.dataset.productName ?? "";
     const price = label.dataset.productPrice ?? "Price TBD";
+    const description = label.dataset.productDescription ?? "";
     const ingredients = label.dataset.productIngredients ?? "";
 
     if (productInput) {
@@ -243,6 +252,15 @@ const multipleProducts = products.length > 1;
     }
     if (summaryPrice) {
       summaryPrice.textContent = price;
+    }
+    if (summaryDescription) {
+      if (description) {
+        summaryDescription.textContent = description;
+        summaryDescription.classList.remove("hidden");
+      } else {
+        summaryDescription.textContent = "";
+        summaryDescription.classList.add("hidden");
+      }
     }
     if (summaryIngredients) {
       const ingredientsText = summaryIngredients.querySelector("p");

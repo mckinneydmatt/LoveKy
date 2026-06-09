@@ -282,6 +282,9 @@ Sanity project ID and dataset live in **`sanity.env`** at the repo root. Use **`
 
 | Problem | Likely cause | Fix |
 |---------|--------------|-----|
+| Products empty; cake info under Site Settings | Old CMS data from before the schema split | Run `npm run sanity:seed:all`, then hard-refresh Studio (`Cmd+Shift+R`) |
+| Spotlight fields empty in Studio | Site Settings never re-seeded after schema update | Run `npm run sanity:seed:all` (safe to re-run; resets to defaults) |
+| Studio shows schema/validation errors | Stale fields from old schema (e.g. `order.product`, `social.instagramUrl`) | Run `npm run sanity:seed:all` to replace documents with the current structure |
 | Site shows old content | Rebuild didn't run | Check Sanity webhook and host build hook; deploy manually |
 | Order button disabled | Formspree URL empty | Add URL in Site Settings → Publish → rebuild |
 | No order emails | Wrong Formspree account or email | Check Formspree form settings and spam folder |
