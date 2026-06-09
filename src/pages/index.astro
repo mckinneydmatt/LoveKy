@@ -61,10 +61,10 @@ const featuredReviews = site.reviews.slice(0, 2);
           site.home.spotlight.image ? (
             <img
               src={site.home.spotlight.image}
-              alt=""
+              alt="Chocolate layer cake with whipped icing on a wooden stand"
               class="block h-full w-full object-cover"
-              width="400"
-              height="533"
+              width="540"
+              height="720"
             />
           ) : (
             <div class="flex h-full min-h-full items-center justify-center px-4 py-8 text-center text-sm font-semibold uppercase tracking-wide text-frozen-water/80">
@@ -74,10 +74,12 @@ const featuredReviews = site.reviews.slice(0, 2);
         }
       </figure>
       <div class="home-spotlight-copy">
-        <h2 id="home-spotlight-heading" class="section-heading mb-2">
+        <h2 id="home-spotlight-heading" class="tagline mb-2 text-2xl sm:text-3xl">
           {site.home.spotlight.title}
         </h2>
-        <p class="tagline mb-3 text-xl sm:text-2xl">{site.home.spotlight.subhead}</p>
+        <p class="mb-3 text-xl font-semibold tracking-wide text-blue-slate sm:text-2xl">
+          {site.home.spotlight.subhead}
+        </p>
         <p>{site.home.spotlight.text}</p>
         <p class="home-spotlight-ingredient-note">{site.home.spotlight.ingredientNote}</p>
         <div class="home-spotlight-cta">

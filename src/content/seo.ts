@@ -40,6 +40,6 @@ export function localBusinessSchema(origin: string) {
       addressCountry: "US",
     },
     areaServed: site.contact.location,
-    sameAs: [site.social.instagram],
+    sameAs: site.social.links.map((link) => link.url),
   };
 }

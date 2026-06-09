@@ -16,8 +16,26 @@ export const site = {
     },
   },
   social: {
-    instagram: "https://instagram.com/love.kycakes",
-    handle: "@love.kycakes",
+    links: [
+      {
+        icon: "instagram" as const,
+        name: "Instagram",
+        url: "https://instagram.com/love.kycakes",
+        label: "@love.kycakes",
+      },
+      {
+        icon: "tiktok" as const,
+        name: "TikTok",
+        url: "https://www.tiktok.com/@lovekycakes",
+        label: "@lovekycakes",
+      },
+      {
+        icon: "facebook" as const,
+        name: "Facebook",
+        url: "https://www.facebook.com/people/Love-Ky-Cakes/61590607383689/",
+        label: "Love, Ky Cakes",
+      },
+    ],
   },
   home: {
     heroImage: "/images/chocolate-cake-hero.png",
@@ -29,7 +47,7 @@ export const site = {
         "Real ingredients. Sugar, flour, cocoa, eggs, milk, vanilla, heavy cream — nothing you can't pronounce.",
       ctaLabel: "Order Yours",
       secondaryLine: "Made to order | Home-baked in Carmel, Indiana",
-      image: null as string | null,
+      image: "/images/chocolate-cake-spotlight.png",
     },
   },
   order: {

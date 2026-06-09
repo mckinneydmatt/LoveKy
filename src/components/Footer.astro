@@ -1,33 +1,39 @@
 ---
 import { site } from "../content/site";
+import SocialIcon from "./SocialIcon.astro";
 ---
 
 <footer class="mt-auto border-t border-soft-blossom bg-blue-slate text-frozen-water">
   <div class="container-page grid gap-8 py-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-3">
     <div class="flex flex-col items-center sm:items-start">
-      <img
-        src={site.logos.secondary}
-        alt=""
-        class="mb-4 h-12 w-auto"
-        width="180"
-        height="48"
-        aria-hidden="true"
-      />
+      <a href="/" class="mb-4 shrink-0" aria-label={`${site.name} home`}>
+        <img
+          src={site.logos.secondary}
+          alt=""
+          class="h-12 w-auto"
+          width="180"
+          height="48"
+          aria-hidden="true"
+        />
+      </a>
       {site.tagline && (
         <p class="tagline mb-2 text-lg text-soft-blossom">{site.tagline}</p>
       )}
-      <p class="text-sm text-frozen-water/80">{site.contact.location}</p>
+      <address class="text-sm not-italic text-frozen-water/80">
+        {site.contact.address.street}<br />
+        {site.contact.address.city}, {site.contact.address.state} {site.contact.address.zip}
+      </address>
     </div>
 
     <div>
       <h2 class="mb-3 text-sm font-semibold uppercase tracking-widest text-soft-blossom">
         Get in touch
       </h2>
-      <ul class="space-y-2 text-sm">
+      <ul class="space-y-1 text-sm leading-snug">
         <li>
           <a
             href={`mailto:${site.contact.email}`}
-            class="inline-flex min-h-11 items-center justify-center break-all hover:text-soft-blossom sm:justify-start"
+            class="inline-flex items-center justify-center break-all py-0.5 hover:text-soft-blossom sm:justify-start"
           >
             {site.contact.email}
           </a>
@@ -35,12 +41,12 @@ import { site } from "../content/site";
         <li>
           <a
             href={`tel:${site.contact.phone}`}
-            class="inline-flex min-h-11 items-center justify-center hover:text-soft-blossom sm:justify-start"
+            class="inline-flex items-center justify-center py-0.5 hover:text-soft-blossom sm:justify-start"
           >
             {site.contact.phone}
           </a>
         </li>
-        <li class="text-frozen-water/80">{site.contact.hours}</li>
+        <li class="py-0.5 text-frozen-water/80">{site.contact.hours}</li>
       </ul>
     </div>
 
@@ -48,15 +54,24 @@ import { site } from "../content/site";
       <h2 class="mb-3 text-sm font-semibold uppercase tracking-widest text-soft-blossom">
         Follow along
       </h2>
-      <a
-        href={site.social.instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${site.social.handle} on Instagram (opens in new tab)`}
-        class="inline-flex min-h-11 items-center justify-center gap-2 text-sm hover:text-soft-blossom sm:justify-start"
-      >
-        {site.social.handle}
-      </a>
+      <ul class="space-y-1 text-sm leading-snug">
+        {
+          site.social.links.map((link) => (
+            <li>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${link.label} on ${link.name} (opens in new tab)`}
+                class="inline-flex items-center justify-center gap-2.5 py-0.5 hover:text-soft-blossom sm:justify-start"
+              >
+                <SocialIcon name={link.icon} />
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
 
