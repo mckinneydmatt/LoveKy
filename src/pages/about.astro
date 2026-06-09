@@ -10,7 +10,13 @@ import { pageDescriptions } from "../content/seo";
       <div class="order-2 lg:order-1">
         <h1 class="section-heading mb-6">About Me</h1>
         <div class="space-y-4 text-blue-slate/90 leading-relaxed">
-          {site.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          {
+            site.about.paragraphs.map((paragraph) => (
+              <p class:list={[paragraph === site.about.pullQuote && "about-pull-quote"]}>
+                {paragraph}
+              </p>
+            ))
+          }
         </div>
         <img
           src={site.about.signatureImage}

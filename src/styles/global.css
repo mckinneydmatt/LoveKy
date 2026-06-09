@@ -9,6 +9,7 @@
   --color-nail-polish: #ed1c24;
 
   --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
   --font-script: "Adventures Unlimited", cursive;
 }
 
@@ -150,5 +151,11 @@
 
   .home-spotlight-secondary {
     @apply mt-3 text-xs font-medium uppercase tracking-widest text-blue-slate/60;
+  }
+
+  .about-pull-quote {
+    font-family: var(--font-serif);
+    @apply my-6 pl-4 text-xl font-medium italic text-vintage-berry sm:my-8 sm:text-2xl;
+    border-left: 3px solid var(--color-soft-blossom);
   }
 }
