@@ -4,13 +4,14 @@ export const product = defineType({
   name: 'product',
   title: 'Product',
   type: 'document',
-  description: 'Cakes customers can order. Shown on the Order page.',
+  description:
+    'Cakes customers can order. Shown on the Order page. If you delete all products, the site falls back to the default chocolate cake in code — but empty fields on a product here stay empty on the site.',
   fields: [
     defineField({
       name: 'name',
       title: 'Name',
       type: 'string',
-      description: 'Full cake name. Shown on the Order page product summary and sent in order emails.',
+      description: 'Full cake name. Shown on the Order page product summary and sent in order emails. No per-field fallback.',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -25,21 +26,21 @@ export const product = defineType({
       name: 'price',
       title: 'Price',
       type: 'string',
-      description: 'Display price, e.g. "$44". Shown on the Order page under the cake name.',
+      description: 'Display price, e.g. "$44". Shown on the Order page under the cake name. No per-field fallback — leave empty to hide the price.',
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
       rows: 2,
-      description: 'Short blurb about this cake. Shown on the Order page under the price.',
+      description: 'Short blurb about this cake. Shown on the Order page under the price. No per-field fallback.',
     }),
     defineField({
       name: 'ingredients',
       title: 'Ingredients',
       type: 'text',
       rows: 3,
-      description: 'Ingredient list for this cake. Shown in the Ingredients section on the Order page.',
+      description: 'Ingredient list for this cake. Shown in the Ingredients section on the Order page. No per-field fallback.',
     }),
     defineField({
       name: 'active',
