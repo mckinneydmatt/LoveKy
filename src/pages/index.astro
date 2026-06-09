@@ -39,32 +39,16 @@ const featuredReviews = site.reviews.slice(0, 2);
       </div>
 
       <div class="relative">
-        <div class="overflow-hidden rounded-3xl border-4 border-soft-blossom bg-soft-blossom/30 shadow-lg">
-          {
-            site.about.image ? (
-              <img
-                src={site.about.image}
-                alt="Ky, owner of Love, Ky Cakes"
-                class="h-64 w-full object-cover sm:h-80"
-                width="640"
-                height="480"
-              />
-            ) : (
-              <>
-                <img
-                  src="/patterns/cake-full-color.png"
-                  alt=""
-                  class="h-64 w-full object-cover opacity-80 sm:h-80"
-                  width="640"
-                  height="480"
-                  aria-hidden="true"
-                />
-                <p class="px-6 py-4 text-center text-sm text-blue-slate/70">
-                  Owner photo coming soon
-                </p>
-              </>
-            )
-          }
+        <div class="rounded-3xl bg-soft-blossom p-4 shadow-lg sm:p-5">
+          <div class="overflow-hidden rounded-2xl">
+            <img
+              src={site.home.heroImage}
+              alt="Slice of chocolate layer cake with whipped chocolate frosting"
+              class="block w-full"
+              width="824"
+              height="598"
+            />
+          </div>
         </div>
       </div>
     </div>

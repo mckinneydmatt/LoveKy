@@ -13,6 +13,9 @@ export const site = {
     instagram: "https://instagram.com/love.kycakes",
     handle: "@love.kycakes",
   },
+  home: {
+    heroImage: "/images/chocolate-cake-hero.png",
+  },
   order: {
     product: "10-inch chocolate cake with whipped chocolate frosting",
     price: "$44",
