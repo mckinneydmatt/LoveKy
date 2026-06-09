@@ -99,4 +99,56 @@
     background-size: 120px;
     opacity: 0.08;
   }
+
+  .home-spotlight {
+    @apply mx-auto max-w-4xl rounded-3xl border border-soft-blossom/50 bg-soft-blossom p-5 shadow-sm sm:p-6 lg:p-8;
+    display: flow-root;
+  }
+
+  .home-spotlight-photo {
+    @apply mx-auto mb-6 aspect-[3/4] w-full max-w-[16rem] overflow-hidden rounded-2xl bg-vintage-berry shadow-lg sm:max-w-[18rem];
+  }
+
+  @media (min-width: 48rem) {
+    .home-spotlight {
+      overflow: visible;
+    }
+
+    .home-spotlight-photo {
+      float: right;
+      width: 17rem;
+      max-width: none;
+      margin: -3.5rem -1rem 1.25rem 2.5rem;
+      transform: rotate(4deg);
+      shape-outside: margin-box;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .home-spotlight-photo {
+      width: 20rem;
+      margin: -5rem -1.5rem 1.5rem 3rem;
+      transform: rotate(5deg);
+    }
+  }
+
+  .home-spotlight-copy {
+    @apply text-blue-slate/90 leading-relaxed;
+  }
+
+  .home-spotlight-copy p + p {
+    @apply mt-4;
+  }
+
+  .home-spotlight-ingredient-note {
+    @apply mt-3 text-base text-blue-slate/85;
+  }
+
+  .home-spotlight-cta {
+    @apply mt-3;
+  }
+
+  .home-spotlight-secondary {
+    @apply mt-3 text-xs font-medium uppercase tracking-widest text-blue-slate/60;
+  }
 }

@@ -131,6 +131,10 @@ const priceDisplay = site.order.price ?? "Price TBD";
     <p id="order-disclaimer" class="text-sm font-medium text-blue-slate">
       {site.order.disclaimer}
     </p>
+    <address class="mt-2 text-sm not-italic text-blue-slate/80">
+      {site.contact.address.street}<br />
+      {site.contact.address.city}, {site.contact.address.state} {site.contact.address.zip}
+    </address>
     <div class="mt-3 flex items-start gap-3">
       <input
         type="checkbox"

@@ -8,6 +8,12 @@ export const site = {
     phone: "317-771-0627",
     hours: "Call or text 8am–8pm, Monday–Saturday",
     location: "Carmel, Indiana",
+    address: {
+      street: "35 Rosewalk Circle",
+      city: "Carmel",
+      state: "IN",
+      zip: "46032",
+    },
   },
   social: {
     instagram: "https://instagram.com/love.kycakes",
@@ -15,6 +21,16 @@ export const site = {
   },
   home: {
     heroImage: "/images/chocolate-cake-hero.png",
+    spotlight: {
+      title: "The Cake",
+      subhead: "One Cake. Made for You.",
+      text: "A two-layer chocolate cake with whipped icing — made from scratch, to order, in my own kitchen. Every single one. No shortcuts, no assembly lines, just me and a recipe I've been perfecting for over a decade. The kind of cake people remember.",
+      ingredientNote:
+        "Real ingredients. Sugar, flour, cocoa, eggs, milk, vanilla, heavy cream — nothing you can't pronounce.",
+      ctaLabel: "Order Yours",
+      secondaryLine: "Made to order | Home-baked in Carmel, Indiana",
+      image: null as string | null,
+    },
   },
   order: {
     product: "10-inch chocolate cake with whipped chocolate frosting",
