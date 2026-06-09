@@ -2,17 +2,60 @@
 
 Complete checklist for handing the site from occasional technical help to Kylee (hosting, maintaining, and owning the business accounts). Written for the `cursor/sanity-live-merge` branch and later.
 
+**Last updated:** June 2026 — CMS live on Netlify; transfer Sanity project `1bzd5noi` (not a new project) for ownership handoff.
+
+---
+
+## Current status
+
+### Done (technical helper)
+
+- [x] **CMS branch built** — `cursor/sanity-live-merge` wires the Astro site and order form to Sanity at build time
+- [x] **Sanity schema** — **Site Settings** and **Products** (split from older single-document layout)
+- [x] **Seed scripts** — `npm run sanity:seed:all` loads current live copy + chocolate cake product
+- [x] **Production build passes** — `npm run build` succeeds on the CMS branch
+- [x] **Studio deployed** — https://love-ky-cakes.sanity.studio/ (hostname: `love-ky-cakes`)
+- [x] **Studio app ID pinned** — `sanity/sanity.cli.ts` includes `appId` so future `npm run sanity:deploy` runs skip the prompt
+- [x] **CMS content seeded** — on project `1bzd5noi` / dataset `production` (helper's Sanity account for now)
+- [x] **Order page** — product name, price, ingredients, and descriptions come from Sanity
+- [x] **Handoff doc** — this file
+- [x] **CMS branch merged** — `cursor/sanity-live-merge` merged into Netlify's production deploy branch
+- [x] **Netlify deploy branch** — production deploys point at the CMS branch
+- [x] **Netlify env vars** — `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET=production` set; site redeployed
+
+### Remaining (before Kylee owns everything)
+
+- [ ] **Netlify ownership** — confirm site is on Kylee's Netlify team (transfer if still on helper's account — see [Netlify transfer](#netlify-transfer-to-kylees-account))
+- [ ] **Sanity ownership** — **transfer** project `1bzd5noi` to Kylee's org (preferred — see [Sanity transfer](#sanity-transfer-to-kylees-account))
+- [ ] **Formspree** — Kylee creates her form; paste URL in Studio → **Site Settings** → **Formspree order endpoint** → Publish
+- [ ] **Auto-rebuild webhook** — Netlify build hook + Sanity webhook (see Phase 4)
+- [ ] **End-to-end test** — publish a CMS edit → site rebuilds; submit test order → email arrives
+- [ ] **GitHub** — Kylee has repo access; knows which branch triggers deploys
+
+### Temporary config (change at handoff)
+
+
+| Item           | Current value                                                                | Target                                           |
+| -------------- | ---------------------------------------------------------------------------- | ------------------------------------------------ |
+| Sanity project | `1bzd5noi` (helper account) | Same ID — transfer ownership to Kylee's org |
+| Studio URL | https://love-ky-cakes.sanity.studio/ | Same — no redeploy needed after transfer |
+| Deploy branch | Configured in Netlify (CMS branch live) | Same unless branch strategy changes |
+| Formspree URL  | Empty / not in Kylee's account                                               | Her Formspree form URL in Site Settings          |
+
+
 ---
 
 ## Ownership model
 
-| Service | Owner | Why |
-|---------|-------|-----|
-| **Formspree** | Kylee | Order emails go to her |
-| **Sanity project** | Kylee | She edits content long-term |
-| **Hosting + domain** | Kylee | She deploys and owns the live site |
-| **GitHub repo** | Kylee (or shared) | She can push/deploy without outside help |
+
+| Service              | Owner                 | Why                                        |
+| -------------------- | --------------------- | ------------------------------------------ |
+| **Formspree**        | Kylee                 | Order emails go to her                     |
+| **Sanity project**   | Kylee                 | She edits content long-term                |
+| **Hosting + domain** | Kylee                 | She deploys and owns the live site         |
+| **GitHub repo**      | Kylee (or shared)     | She can push/deploy without outside help   |
 | **Technical helper** | Optional collaborator | Invited to Sanity/GitHub only when helping |
+
 
 **Rule:** Anything that receives orders or controls the live site should be on Kylee's accounts before handoff is complete.
 
@@ -34,10 +77,11 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 
 **Goal:** The CMS branch is ready to become production.
 
-- [ ] Merge `cursor/sanity-live-merge` into the branch the host deploys from
-- [ ] Confirm `npm run build` passes on that branch
-- [ ] Confirm the live site still looks right (homepage, about, order form layout)
-- [ ] Replace project ID `1bzd5noi` in `sanity.env` if that is a personal Sanity project — Kylee should use **her** project ID before seeding
+- [x] Merge `cursor/sanity-live-merge` into the branch the host deploys from
+- [x] Confirm `npm run build` passes on that branch
+- [ ] Confirm the live site still looks right after Netlify deploys the CMS branch (homepage, about, order form layout)
+
+**Note:** If using the recommended [Sanity transfer](#sanity-transfer-to-kylees-account), project ID `1bzd5noi` stays the same — no changes to `sanity.env` or Netlify env vars.
 
 **Deliverable for Kylee:** a working branch, repo access, and this document.
 
@@ -57,23 +101,26 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 
 ### 1B. Sanity
 
-1. Go to [sanity.io](https://sanity.io) and create a free account
-2. Create a new project: **"Love, Ky Cakes"**
-3. Note the **Project ID** from [sanity.io/manage](https://sanity.io/manage)
-4. Use dataset **`production`** (default is fine)
+**Recommended: transfer the existing project** (`1bzd5noi`) rather than create a new one. Content, Studio, Netlify env vars, and webhooks already point at this project — transfer changes ownership only.
 
-**If content already exists in project `1bzd5noi`:** transfer ownership in Sanity → Project settings → Transfer. Otherwise start fresh on her project (recommended — the seed script has all current copy).
+1. Kylee creates a free account at [sanity.io](https://sanity.io)
+2. She creates an **organization** (e.g. "Love, Ky Cakes") at [sanity.io/manage/create-new-team](https://www.sanity.io/manage/create-new-team)
+3. Helper transfers the project — see [Sanity transfer](#sanity-transfer-to-kylees-account)
 
-**Verify:** She can log in at sanity.io/manage and see her project.
+**Verify:** Kylee logs in at [sanity.io/manage](https://sanity.io/manage) and sees **Bakery Site** (`1bzd5noi`) under her organization.
 
-### 1C. Hosting (if not already done)
+**Alternate (new project):** Only if transfer is not possible. Create a new project, update `sanity.env` and Netlify env vars, run `npm run sanity:seed:all`, and `npm run sanity:deploy` (update `appId` in `sanity/sanity.cli.ts` if prompted).
 
-Confirm she has:
+### 1C. Hosting (Netlify)
 
-- [ ] Hosting account (Netlify, Vercel, Cloudflare Pages, etc.)
+Kylee may already have a Netlify account and domain. Confirm:
+
+- [ ] Hosting account is **hers** (not the helper's) — see [Netlify transfer](#netlify-transfer-to-kylees-account) if needed
 - [ ] Domain pointed at the host (`lovekycakes.com`)
-- [ ] Site connected to the GitHub repo
-- [ ] Deploys from the correct branch
+- [ ] Site connected to the GitHub repo (`mckinneydmatt/LoveKy` or transferred repo)
+- [x] Production deploy branch configured for CMS (merged `cursor/sanity-live-merge`)
+
+**To change deploy branch (Netlify):** Site configuration → Build & deploy → Continuous deployment → **Branch to deploy** → save → trigger deploy.
 
 **Verify:** She can open the host dashboard and see the site and deploy history.
 
@@ -90,9 +137,13 @@ Confirm she has:
 
 **Who:** Kylee runs commands; the helper can screen-share or do the first pass.
 
+**If transferring project `1bzd5noi` (recommended):** Phase 2 is largely **already done** — content seeded, Studio deployed, `sanity.env` and Netlify env vars set. Skip to Phase 3 after [Sanity transfer](#sanity-transfer-to-kylees-account).
+
 ### 2A. Update project config
 
-Edit `sanity.env` in the repo root:
+**Skip if transferring** — project ID stays `1bzd5noi`.
+
+Only needed for a **new** Sanity project. Edit `sanity.env` in the repo root:
 
 ```env
 PUBLIC_SANITY_PROJECT_ID=<her-project-id>
@@ -117,6 +168,10 @@ Log in with **Kylee's** Sanity account.
 
 ### 2C. Seed initial content
 
+**Skip if transferring** — content already exists on `1bzd5noi`.
+
+Only needed for a **new** Sanity project:
+
 ```bash
 npm run sanity:seed:all
 ```
@@ -130,11 +185,13 @@ This creates:
 
 ### 2D. Deploy Sanity Studio
 
+**Done** — Studio is live at https://love-ky-cakes.sanity.studio/. Only re-run if using a new Sanity project.
+
 ```bash
 npm run sanity:deploy
 ```
 
-Choose a Studio hostname (e.g. `love-ky-cakes`). Bookmark the URL (e.g. `https://love-ky-cakes.sanity.studio`).
+The repo pins `appId` in `sanity/sanity.cli.ts` so redeploys do not prompt for the application ID.
 
 **Verify:** She can open Studio, see **Site Settings** and **Products**, and edit a field without errors.
 
@@ -146,12 +203,16 @@ Choose a Studio hostname (e.g. `love-ky-cakes`). Bookmark the URL (e.g. `https:/
 
 In the host dashboard → Site settings → Environment variables, add:
 
-| Variable | Value |
-|----------|--------|
+
+| Variable                   | Value                 |
+| -------------------------- | --------------------- |
 | `PUBLIC_SANITY_PROJECT_ID` | Her Sanity project ID |
-| `PUBLIC_SANITY_DATASET` | `production` |
+| `PUBLIC_SANITY_DATASET`    | `production`          |
+
 
 Redeploy after saving.
+
+**Done:** Both vars are set on Netlify (currently `1bzd5noi` / `production`) and a redeploy has run.
 
 **Verify:** Build logs show no Sanity config errors; the site builds successfully.
 
@@ -176,48 +237,121 @@ Trigger a rebuild (next phase or manual deploy).
 
 ---
 
-## Phase 4 — Auto-rebuild on content changes (Kylee, ~10 min)
+## Phase 4 — Auto-rebuild on content changes (~10 min)
 
-Without this, she must manually redeploy after every Sanity edit.
+The Astro site reads Sanity at **build time**. Publishing in Studio does nothing on the live site until the host runs a new build. This phase connects **Sanity publish → Netlify rebuild**.
 
-### 4A. Create a build hook on the host
+**Prerequisites:** Netlify deploy branch and env vars are correct; a manual deploy succeeds.
 
-**Netlify:** Site settings → Build & deploy → Build hooks → Add build hook  
-**Vercel:** Project settings → Git → Deploy Hooks → Create hook
+### 4A. Create a Netlify build hook
 
-Copy the webhook URL (e.g. `https://api.netlify.com/build_hooks/...`).
+1. [app.netlify.com](https://app.netlify.com) → open the Love, Ky Cakes site
+2. **Site configuration** → **Build & deploy** → **Build hooks** → **Add build hook**
+3. **Name:** `Sanity publish`
+4. **Branch to build:** same as production (`cursor/sanity-live-merge` or `main` after merge)
+5. **Save** and copy the URL (e.g. `https://api.netlify.com/build_hooks/...`)
+
+Keep this URL private — anyone with it can trigger builds.
+
+**Optional sanity check:** Trigger the hook once from Netlify and confirm a deploy starts before wiring Sanity.
 
 ### 4B. Add Sanity webhook
 
-1. [sanity.io/manage](https://sanity.io/manage) → her project → **API** → **Webhooks**
-2. Create webhook:
-   - **Name:** Rebuild site on publish
-   - **URL:** Build hook from 4A
-   - **Dataset:** `production`
-   - **Trigger:** Create, Update, Delete (published documents)
-   - **Filter (optional):** `_type in ["siteSettings", "product"]`
+1. [sanity.io/manage](https://sanity.io/manage) → her project → **API** → **Webhooks** → **Create webhook**
+2. Configure:
 
-**Verify:**
 
-1. Change something small in Studio (e.g. tagline) → **Publish**
+| Field                 | Value                                           |
+| --------------------- | ----------------------------------------------- |
+| **Name**              | `Rebuild site on publish`                       |
+| **URL**               | Netlify build hook from 4A                      |
+| **Dataset**           | `production`                                    |
+| **Trigger on**        | Create, Update, Delete                          |
+| **Filter** (optional) | `_type in ["siteSettings", "product"]`          |
+| **Include drafts**    | Off — only **published** changes should rebuild |
+
+
+1. **Save**
+
+If the Netlify site is **transferred** later, the build hook usually moves with it. If the hook URL changes, update this webhook in Sanity.
+
+### 4C. Verify the loop
+
+1. Studio → **Site Settings** → change something obvious (e.g. tagline) → **Publish**
 2. Wait 2–5 minutes
-3. Confirm the host shows a new deploy
-4. Confirm the change appears on the live site
+3. Netlify → **Deploys** — new deploy triggered by build hook (not git push)
+4. Hard-refresh live site — change should appear
+
+**If it fails:** Check Sanity webhook **Attempts** tab; confirm env vars, deploy branch, and that you clicked **Publish** (not just saved a draft).
+
+---
+
+## Sanity transfer to Kylee's account
+
+**Recommended over creating a new project.** ~5 minutes, no code or Netlify changes.
+
+### Why transfer
+
+| | Transfer `1bzd5noi` | New project |
+|--|---------------------|-------------|
+| Project ID | Stays the same | New ID — update `sanity.env`, Netlify, redeploy |
+| Content & uploads | Kept | Re-seed; re-upload images |
+| Studio URL | Unchanged | Redeploy; may need new `appId` |
+| Netlify env vars | **No change** | Update + redeploy |
+
+### Steps
+
+1. Kylee has a Sanity account and an **organization** (not just a personal account)
+2. Helper is **project administrator** on `1bzd5noi`
+3. [sanity.io/manage](https://sanity.io/manage) → **Bakery Site** → **Settings**
+4. Scroll to **Danger zone** → **Transfer ownership**
+5. Select Kylee's organization → confirm
+6. Kylee adds helper as **Editor** if ongoing help is needed; remove helper access when done
+
+### After transfer
+
+- Project ID remains `1bzd5noi` — `sanity.env` and Netlify env vars stay as-is
+- Studio at https://love-ky-cakes.sanity.studio/ keeps working
+- Kylee creates the Sanity webhook (Phase 4) under her org
+- Helper loses project ownership (intended for handoff)
+
+---
+
+## Netlify transfer to Kylee's account
+
+**Difficulty:** Easy — usually 10–15 minutes, no code changes, typically no downtime.
+
+### Self-serve (preferred)
+
+Works when the helper is an **Owner** on the current site team and an **Owner** or **Developer** on Kylee's Netlify team:
+
+1. Kylee has a Netlify account (free is fine)
+2. She invites the helper to her team temporarily
+3. Helper: **Site configuration** → **General** → **Project information** → **Transfer project** → select Kylee's team
+4. Remove helper from her team when done (optional)
+
+### Via Netlify Support
+
+If there is no shared team access, open a ticket at [netlify.com/support](https://www.netlify.com/support) with the site name, domain (`lovekycakes.com`), and Kylee's Netlify email. Usually 1–2 business days.
+
+### After transfer
+
+- Domain, SSL, env vars, and build hooks usually move with the site
+- GitHub may need reconnecting under Kylee's login if it was linked via the helper's account
+- Sanity webhook URL only needs updating if the build hook URL changed
 
 ---
 
 ## Phase 5 — Final ownership cleanup (Kylee)
 
 - [ ] Formspree account is hers (not the helper's)
-- [ ] Sanity project is under her account/org
-- [ ] Hosting and domain are hers
-- [ ] `sanity.env` uses her project ID (not `1bzd5noi` unless that project was transferred to her)
-- [ ] Build hook and Sanity webhook are configured
-- [ ] Studio URL is bookmarked
-- [ ] Host dashboard is bookmarked
-- [ ] Formspree inbox is bookmarked
+- [ ] Sanity project `1bzd5noi` transferred to Kylee's organization (see [Sanity transfer](#sanity-transfer-to-kylees-account))
+- [ ] Netlify site is on her team (see [Netlify transfer](#netlify-transfer-to-kylees-account))
+- [ ] Domain (`lovekycakes.com`) and DNS remain on her account
+- [ ] Build hook and Sanity webhook are configured and tested
+- [ ] Bookmarks: Studio (https://love-ky-cakes.sanity.studio/), Netlify dashboard, Formspree inbox
 
-**Optional:** Invite the technical helper to Sanity as **Editor** and GitHub as **Collaborator** when needed. Remove or downgrade access later if desired.
+**Optional:** Invite the technical helper to Sanity as **Editor**, Netlify as **Developer**, and GitHub as **Collaborator** when needed. Remove or downgrade access later if desired.
 
 ---
 
@@ -264,13 +398,15 @@ Studio → **Site Settings** → **Formspree order endpoint** → **Publish** �
 
 ## Local dev reference
 
-| Command | Purpose |
-|---------|---------|
-| `npm run dev` | Site at `localhost:4321` |
-| `npm run sanity:dev` | Studio at `localhost:3333` |
-| `npm run build` | Production build test |
+
+| Command                   | Purpose                                         |
+| ------------------------- | ----------------------------------------------- |
+| `npm run dev`             | Site at `localhost:4321`                        |
+| `npm run sanity:dev`      | Studio at `localhost:3333`                      |
+| `npm run build`           | Production build test                           |
 | `npm run sanity:seed:all` | Reset CMS from defaults (careful on production) |
-| `npm run sanity:deploy` | Publish Studio to `*.sanity.studio` |
+| `npm run sanity:deploy`   | Publish Studio to `*.sanity.studio`             |
+
 
 After switching branches or editing `sanity.env`, restart dev servers.
 
@@ -280,53 +416,89 @@ Sanity project ID and dataset live in **`sanity.env`** at the repo root. Use **`
 
 ## Troubleshooting
 
-| Problem | Likely cause | Fix |
-|---------|--------------|-----|
-| Products empty; cake info under Site Settings | Old CMS data from before the schema split | Run `npm run sanity:seed:all`, then hard-refresh Studio (`Cmd+Shift+R`) |
-| Spotlight fields empty in Studio | Site Settings never re-seeded after schema update | Run `npm run sanity:seed:all` (safe to re-run; resets to defaults) |
-| Studio shows schema/validation errors | Stale fields from old schema (e.g. `order.product`, `social.instagramUrl`) | Run `npm run sanity:seed:all` to replace documents with the current structure |
-| Site shows old content | Rebuild didn't run | Check Sanity webhook and host build hook; deploy manually |
-| Order button disabled | Formspree URL empty | Add URL in Site Settings → Publish → rebuild |
-| No order emails | Wrong Formspree account or email | Check Formspree form settings and spam folder |
-| Studio won't load | Wrong login or project | `npx sanity login` with her account; check `sanity.env` |
-| Build fails | Missing env vars on host | Set `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET` |
-| Site works but CMS doesn't | Seed not run | `npm run sanity:seed:all` on her project |
-| Images broken after upload | Publish without rebuild | Publish in Studio, wait for webhook deploy |
+
+| Problem                                       | Likely cause                                                               | Fix                                                                           |
+| --------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Products empty; cake info under Site Settings | Old CMS data from before the schema split                                  | Run `npm run sanity:seed:all`, then hard-refresh Studio (`Cmd+Shift+R`)       |
+| Spotlight fields empty in Studio              | Site Settings never re-seeded after schema update                          | Run `npm run sanity:seed:all` (safe to re-run; resets to defaults)            |
+| Studio shows schema/validation errors         | Stale fields from old schema (e.g. `order.product`, `social.instagramUrl`) | Run `npm run sanity:seed:all` to replace documents with the current structure |
+| Site shows old content                        | Rebuild didn't run                                                         | Check Sanity webhook and Netlify build hook; deploy manually                  |
+| Publish in Studio, no Netlify deploy          | Webhook not set up or draft-only save                                      | Must click **Publish**; check Sanity webhook Attempts tab                     |
+| Netlify deploys but site unchanged            | Wrong deploy branch                                                        | Set branch to `cursor/sanity-live-merge` (or merged branch)                   |
+| Order button disabled                         | Formspree URL empty                                                        | Add URL in Site Settings → Publish → rebuild                                  |
+| No order emails                               | Wrong Formspree account or email                                           | Check Formspree form settings and spam folder                                 |
+| Studio won't load                             | Wrong login or project                                                     | `npx sanity login` with her account; check `sanity.env`                       |
+| Build fails                                   | Missing env vars on host                                                   | Set `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET`                    |
+| Site works but CMS doesn't                    | Seed not run                                                               | `npm run sanity:seed:all` on her project                                      |
+| Images broken after upload                    | Publish without rebuild                                                    | Publish in Studio, wait for webhook deploy                                    |
+
 
 **Fallback:** If Sanity is down or misconfigured, the site still builds using defaults in `src/content/site.ts` and `src/content/products.ts`. The site won't go blank, but CMS edits won't appear until Sanity is fixed.
 
 ---
 
+## Free tier limits (what Kylee should know)
+
+Editing in Studio is effectively unlimited. The caps that matter for a small bakery:
+
+
+| Service           | Free tier limit                                                   | Impact on this site                                                                 |
+| ----------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Sanity**        | 10,000 documents; 1 dataset; 20 users                             | Nowhere near limits (~2 documents today)                                            |
+| **Sanity Studio** | Hosted free at `*.sanity.studio`                                  | Already deployed                                                                    |
+| **Netlify**       | ~300 credits/month (new plans); ~15 credits per production deploy | ~20 rebuilds/month if each publish triggers a deploy — batch edits and publish once |
+| **Formspree**     | **50 submissions/month**                                          | Most likely limit to hit if orders pick up; upgrade ~$10/mo if needed               |
+
+
+**Netlify note:** Each Sanity **Publish** → webhook → one deploy. Frequent tweak-and-publish sessions use credits faster than occasional edits.
+
+**Formspree note:** When the monthly cap is hit, new order submissions are rejected until the next calendar month or she upgrades.
+
+---
+
 ## Suggested timeline
 
-| When | What |
-|------|------|
-| **Day 1** | Phases 1–2: accounts, `sanity.env`, seed, deploy Studio |
-| **Day 1** | Phase 3: host env vars, Formspree, test order |
-| **Day 2** | Phase 4: webhook and verify auto-rebuild |
-| **Day 2** | Phase 5: ownership cleanup |
-| **Ongoing** | Kylee edits in Studio; help only when asked |
+
+| When             | What                                             | Status    |
+| ---------------- | ------------------------------------------------ | --------- |
+| **Done**         | CMS branch, seed, Studio deploy                  | Complete  |
+| **Done**         | Netlify merge, deploy branch, env vars, redeploy | Complete  |
+| **Next**         | Confirm live site; Sanity transfer; Formspree; webhook | Remaining |
+| **Day 1**        | Sanity ownership transfer, test order            | Remaining |
+| **Day 1–2**      | Webhook + verify auto-rebuild                    | Remaining |
+| **Day 2**        | Netlify/GitHub ownership cleanup                 | Remaining |
+| **Ongoing**      | Kylee edits in Studio; help only when asked      | —         |
+
 
 ---
 
 ## One-page checklist
 
 ```
+TECHNICAL (helper) — mostly done
+[x] CMS branch built and pushed (cursor/sanity-live-merge)
+[x] npm run build passes
+[x] Studio deployed — https://love-ky-cakes.sanity.studio/
+[x] Content seeded on project 1bzd5noi (temporary)
+[x] Merge CMS branch to production deploy branch
+
 ACCOUNTS
 [ ] Formspree — Kylee's account, form created
-[ ] Sanity — Kylee's project created, project ID noted
-[ ] Hosting — domain live, repo connected
+[ ] Sanity — transfer project 1bzd5noi to Kylee's org (preferred)
+[ ] Netlify — site on Kylee's team (transfer if needed)
 [ ] GitHub — Kylee has access
 
 SANITY SETUP
-[ ] sanity.env updated with her project ID
-[ ] npm run sanity:seed:all
-[ ] npm run sanity:deploy — Studio URL bookmarked
+[x] sanity.env — 1bzd5noi (unchanged after transfer)
+[x] Content seeded on 1bzd5noi
+[x] Studio URL bookmarked — love-ky-cakes.sanity.studio
+[ ] Project ownership transferred to Kylee's org
 
 HOSTING
-[ ] PUBLIC_SANITY_PROJECT_ID set on host
-[ ] PUBLIC_SANITY_DATASET=production set on host
-[ ] Deploy succeeds
+[x] Production deploy branch configured (CMS live)
+[x] PUBLIC_SANITY_PROJECT_ID set on Netlify
+[x] PUBLIC_SANITY_DATASET=production set on Netlify
+[ ] Deploy succeeds with CMS content — confirm live site looks right
 
 FORMSPREE
 [ ] URL pasted in Site Settings → Formspree order endpoint
@@ -334,7 +506,7 @@ FORMSPREE
 [ ] Test order submitted and email received
 
 AUTO-REBUILD
-[ ] Host build hook created
+[ ] Netlify build hook created
 [ ] Sanity webhook → build hook
 [ ] Test edit in Studio appears on live site after rebuild
 
@@ -342,3 +514,4 @@ HANDOFF COMPLETE
 [ ] All accounts owned by Kylee
 [ ] She can edit content, receive orders, and deploy without help
 ```
+
