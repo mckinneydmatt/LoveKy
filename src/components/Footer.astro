@@ -10,7 +10,7 @@ const { site } = Astro.props;
 ---
 
 <footer class="mt-auto border-t border-soft-blossom bg-blue-slate text-frozen-water">
-  <div class="container-page grid gap-8 py-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-3">
+  <div class="container-page grid gap-8 py-8 text-center sm:grid-cols-2 sm:py-10 sm:text-left lg:grid-cols-3">
     <div class="flex flex-col items-center sm:items-start">
       <a href="/" class="mb-4 shrink-0" aria-label={`${site.name} home`}>
         <img
@@ -23,7 +23,7 @@ const { site } = Astro.props;
         />
       </a>
       {site.tagline && (
-        <p class="tagline mb-2 text-lg text-soft-blossom">{site.tagline}</p>
+        <p class="tagline mb-2 text-base text-soft-blossom sm:text-lg">{site.tagline}</p>
       )}
       <address class="text-sm not-italic text-frozen-water/80">
         {site.contact.address.street}<br />

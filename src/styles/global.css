@@ -9,7 +9,7 @@
   --color-nail-polish: #ed1c24;
 
   --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  --font-script: "Adventures Unlimited", cursive;
+  --font-script: "Adventures Unlimited", "Dancing Script", cursive;
 }
 
 @layer base {
@@ -75,22 +75,38 @@
   }
 
   .instagram-embed {
-    @apply w-full max-w-[540px] overflow-hidden;
+    @apply mx-auto w-full max-w-[540px] overflow-hidden px-1;
   }
 
   .instagram-embed .instagram-media {
     min-width: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .section-heading {
-    @apply text-2xl font-semibold tracking-wide text-blue-slate sm:text-3xl;
+    @apply text-xl font-semibold tracking-wide text-blue-slate sm:text-2xl lg:text-3xl;
+  }
+
+  .section-pad {
+    @apply py-10 sm:py-14 lg:py-16;
   }
 
   .tagline {
     font-family: var(--font-script);
     @apply text-vintage-berry;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .tagline-lg {
+    @apply text-[clamp(1.5rem,4.5vw,1.875rem)] sm:text-3xl;
+  }
+
+  .tagline-xl {
+    @apply text-[clamp(1.625rem,5vw,2.25rem)] sm:text-4xl;
   }
 
   .pattern-bg {
@@ -101,33 +117,48 @@
   }
 
   .home-spotlight {
-    @apply mx-auto max-w-4xl rounded-3xl border border-soft-blossom/50 bg-soft-blossom p-5 shadow-sm sm:p-6 lg:p-8;
-    display: flow-root;
+    @apply mx-auto max-w-4xl overflow-hidden rounded-3xl border border-soft-blossom/50 bg-soft-blossom p-5 shadow-sm sm:p-6 md:overflow-visible lg:p-8;
+    display: grid;
+    gap: 1.5rem;
   }
 
   .home-spotlight-photo {
-    @apply mx-auto mb-6 aspect-[3/4] w-full max-w-[16rem] overflow-hidden rounded-2xl bg-vintage-berry shadow-lg sm:max-w-[18rem];
+    @apply mx-auto aspect-[3/4] w-full max-w-[14rem] overflow-hidden rounded-2xl bg-vintage-berry shadow-lg sm:max-w-[16rem];
+    order: -1;
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 40rem) {
     .home-spotlight {
-      overflow: visible;
+      grid-template-columns: minmax(0, 1fr) min(18rem, 42%);
+      align-items: start;
+      column-gap: 1.5rem;
     }
 
     .home-spotlight-photo {
-      float: right;
-      width: 17rem;
+      order: 0;
+      grid-column: 2;
+      grid-row: 1;
+      width: 100%;
       max-width: none;
-      margin: -3.5rem -1rem 1.25rem 2.5rem;
+      margin: -1rem 0 0;
       transform: rotate(4deg);
-      shape-outside: margin-box;
+      justify-self: end;
+    }
+
+    .home-spotlight-copy {
+      grid-column: 1;
+      grid-row: 1;
     }
   }
 
   @media (min-width: 64rem) {
+    .home-spotlight {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      column-gap: 2.5rem;
+    }
+
     .home-spotlight-photo {
-      width: 20rem;
-      margin: -5rem -1.5rem 1.5rem 3rem;
+      margin: -2.5rem -0.5rem 0;
       transform: rotate(5deg);
     }
   }
@@ -145,7 +176,11 @@
   }
 
   .home-spotlight-cta {
-    @apply mt-3;
+    @apply mt-4 flex flex-col items-stretch gap-3 sm:items-start;
+  }
+
+  .home-spotlight-cta .btn-blush {
+    @apply w-full sm:w-auto;
   }
 
   .home-spotlight-secondary {
@@ -153,11 +188,11 @@
   }
 
   .about-pull-quote {
-    @apply my-6 text-2xl sm:my-8 sm:text-3xl;
+    @apply my-6 text-[clamp(1.375rem,4vw,1.875rem)] sm:my-8 lg:text-3xl;
   }
 
   .about-gallery-photo {
-    @apply aspect-[4/5] w-[58%] overflow-hidden rounded-2xl border-4 border-soft-blossom bg-soft-blossom/30 shadow-md;
+    @apply aspect-[4/5] w-full max-w-[16rem] overflow-hidden rounded-2xl border-4 border-soft-blossom bg-soft-blossom/30 shadow-md sm:w-[72%] sm:max-w-none lg:w-[58%];
   }
 
   .about-gallery-photo--right {

@@ -13,13 +13,13 @@ const featuredReviews = site.reviews.slice(0, 2);
 <BaseLayout title="Home" description={descriptions.home}>
   <section class="relative overflow-hidden border-b border-soft-blossom/60">
     <div class="absolute inset-0 pattern-bg pointer-events-none" aria-hidden="true"></div>
-    <div class="container-page relative grid items-center gap-8 py-12 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:py-24">
-      <div>
-        <h1 class="mb-6">
+    <div class="container-page relative grid items-center gap-8 py-10 sm:gap-10 sm:py-14 md:grid-cols-2 lg:py-20">
+      <div class="text-center md:text-left">
+        <h1 class="mb-4 sm:mb-6">
           <img
             src={site.logos.primary}
             alt=""
-            class="h-20 w-auto sm:h-24"
+            class="mx-auto h-20 w-auto sm:h-24 md:mx-0"
             width="320"
             height="96"
             aria-hidden="true"
@@ -28,19 +28,19 @@ const featuredReviews = site.reviews.slice(0, 2);
         </h1>
         {
           site.tagline && (
-            <p class="tagline mb-3 text-2xl sm:text-3xl">{site.tagline}</p>
+            <p class="tagline tagline-lg mb-3">{site.tagline}</p>
           )
         }
-        <p class="mb-8 max-w-md text-lg text-blue-slate/90">
+        <p class="mx-auto mb-8 max-w-md text-base text-blue-slate/90 sm:text-lg md:mx-0">
           {site.description}
         </p>
-        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap md:justify-start justify-center">
           <a href="/order" class="btn-blush w-full sm:w-auto">Order a Cake</a>
           <a href="/about" class="btn-secondary w-full sm:w-auto">About Us</a>
         </div>
       </div>
 
-      <div class="relative">
+      <div class="relative mx-auto w-full max-w-sm md:max-w-none">
         <div class="rounded-3xl bg-soft-blossom p-4 shadow-lg sm:p-5">
           <div class="overflow-hidden rounded-2xl">
             <img
@@ -56,7 +56,7 @@ const featuredReviews = site.reviews.slice(0, 2);
     </div>
   </section>
 
-  <section class="container-page overflow-visible py-16" aria-labelledby="home-spotlight-heading">
+  <section class="container-page section-pad overflow-visible" aria-labelledby="home-spotlight-heading">
     <div class="home-spotlight">
       <figure class="home-spotlight-photo">
         {
@@ -76,10 +76,10 @@ const featuredReviews = site.reviews.slice(0, 2);
         }
       </figure>
       <div class="home-spotlight-copy">
-        <h2 id="home-spotlight-heading" class="tagline mb-2 text-2xl sm:text-3xl">
+        <h2 id="home-spotlight-heading" class="tagline tagline-lg mb-2">
           {site.home.spotlight.title}
         </h2>
-        <p class="mb-3 text-xl font-semibold tracking-wide text-blue-slate sm:text-2xl">
+        <p class="mb-3 text-lg font-semibold tracking-wide text-blue-slate sm:text-xl lg:text-2xl">
           {site.home.spotlight.subhead}
         </p>
         <p>{site.home.spotlight.text}</p>
@@ -92,7 +92,7 @@ const featuredReviews = site.reviews.slice(0, 2);
     </div>
   </section>
 
-  <section class="container-page py-16" aria-labelledby="home-reviews-heading">
+  <section class="container-page section-pad" aria-labelledby="home-reviews-heading">
     <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
       <div>
         <h2 id="home-reviews-heading" class="section-heading">Reviews</h2>
@@ -116,7 +116,7 @@ const featuredReviews = site.reviews.slice(0, 2);
   </section>
 
   <section
-    class="border-y border-soft-blossom/60 bg-soft-blossom/20 py-16"
+    class="section-pad border-y border-soft-blossom/60 bg-soft-blossom/20"
     aria-labelledby="home-instagram-heading"
   >
     <div class="container-page">
