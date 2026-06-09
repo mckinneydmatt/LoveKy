@@ -1,6 +1,89 @@
-export const site = {
+export interface SocialLink {
+  icon: "instagram" | "tiktok" | "facebook";
+  name: string;
+  url: string;
+  label: string;
+}
+
+export interface Review {
+  quote: string;
+  author: string;
+  isPlaceholder: boolean;
+}
+
+export interface GalleryPhoto {
+  image: string | null;
+  side: "left" | "right";
+}
+
+export interface SiteConfig {
+  name: string;
+  tagline: string | null;
+  description: string;
+  contact: {
+    email: string;
+    phone: string;
+    hours: string;
+    location: string;
+    address: {
+      street: string;
+      city: string;
+      state: string;
+      zip: string;
+    };
+  };
+  social: {
+    links: SocialLink[];
+  };
+  home: {
+    heroImage: string;
+    spotlight: {
+      title: string;
+      subhead: string;
+      text: string;
+      ingredientNote: string;
+      ctaLabel: string;
+      secondaryLine: string;
+      image: string;
+    };
+  };
+  order: {
+    intro: string;
+    deliveryNote: string;
+    disclaimer: string;
+    message: string[];
+  };
+  about: {
+    title: string;
+    subhead: string;
+    image: string | null;
+    signatureImage: string;
+    paragraphs: string[];
+    pullQuote: string;
+    galleryPhotos: GalleryPhoto[];
+  };
+  reviews: Review[];
+  logos: {
+    primary: string;
+    primaryOnDark: string;
+    secondary: string;
+    header: string;
+  };
+  formEndpoints: {
+    order: string;
+  };
+  seo: {
+    about: string;
+    contact: string;
+    order: string;
+    reviews: string;
+  };
+}
+
+/** Fallback content when Sanity is unavailable or not configured. */
+export const defaultSite: SiteConfig = {
   name: "Love, Ky Cakes",
-  tagline: "For people with good taste" as string | null,
+  tagline: "For people with good taste",
   description:
     "Home-based bakery in Carmel, Indiana specializing in cakes, made with personal care and a signature heart.",
   contact: {
@@ -18,19 +101,19 @@ export const site = {
   social: {
     links: [
       {
-        icon: "instagram" as const,
+        icon: "instagram",
         name: "Instagram",
         url: "https://instagram.com/love.kycakes",
         label: "@love.kycakes",
       },
       {
-        icon: "tiktok" as const,
+        icon: "tiktok",
         name: "TikTok",
         url: "https://www.tiktok.com/@lovekycakes",
         label: "@lovekycakes",
       },
       {
-        icon: "facebook" as const,
+        icon: "facebook",
         name: "Facebook",
         url: "https://www.facebook.com/people/Love-Ky-Cakes/61590607383689/",
         label: "Love, Ky Cakes",
@@ -51,16 +134,9 @@ export const site = {
     },
   },
   order: {
-    product: "10-inch chocolate cake with whipped chocolate frosting",
-    price: "$44",
-    intro:
-      "Free delivery within 30 miles of Carmel. Mileage beyond that is 73¢ per mile.",
-    deliveryNote:
-      "Kylee will confirm your order and delivery details.",
-    disclaimer:
-      "Made in a home kitchen not tested by the health department.",
-    ingredients:
-      "Sugar, flour, cocoa powder, baking powder, baking soda, salt, eggs, milk, vegetable oil, vanilla extract, powdered sugar, heavy cream",
+    intro: "Free delivery within 30 miles of Carmel. Mileage beyond that is 73¢ per mile.",
+    deliveryNote: "Kylee will confirm your order and delivery details.",
+    disclaimer: "Made in a home kitchen not tested by the health department.",
     message: [
       "Every cake I make goes out the door the way you'd send something to someone you care about — made with intention, finished with care, and meant to make someone's day a little sweeter. That's not a promise I take lightly. Whether it's for a birthday or just another Tuesday, I want what's in that box to feel like it was made just for you. Because it was.",
       "So thank you for your order, and I hope you enjoy every slice.",
@@ -69,7 +145,7 @@ export const site = {
   about: {
     title: "Hi, I'm Kylee.",
     subhead: "One-woman kitchen. One really good chocolate cake.",
-    image: null as string | null,
+    image: null,
     signatureImage: "/signature/signature-powder-blush.png",
     paragraphs: [
       "I've been baking for over 10 years, but this cake – <em>the</em> cake – started with my mom's birthday. I made it for her, and from that moment on, my family never let me forget it. Birthdays, holidays, random Tuesdays – someone was always asking for it. Then friends started asking. Then co-workers. And every time, without fail, I'd hear the same thing:",
@@ -87,8 +163,8 @@ export const site = {
     ],
     pullQuote: "The name means something.",
     galleryPhotos: [
-      { image: null as string | null, side: "right" as const },
-      { image: null as string | null, side: "left" as const },
+      { image: null, side: "right" },
+      { image: null, side: "left" },
     ],
   },
   reviews: [
@@ -110,12 +186,20 @@ export const site = {
     header: "/logos/header.png",
   },
   formEndpoints: {
-    order: "" as string,
+    order: "",
   },
-} as const;
+  seo: {
+    about:
+      "Meet Ky, the Carmel, Indiana baker behind Love, Ky Cakes. Home-based bakery with more than 10 years of experience making cakes with personal care.",
+    contact:
+      "Contact Love, Ky Cakes by phone, text, or email. Call or text 8am–8pm, Monday–Saturday. Free delivery within 30 miles of Carmel.",
+    order:
+      "Order a 10-inch chocolate cake with whipped chocolate frosting from Love, Ky Cakes. Free delivery within 30 miles of Carmel.",
+    reviews:
+      "Customer reviews for Love, Ky Cakes, a home bakery in Carmel, Indiana specializing in cakes.",
+  },
+};
 
-export const defaultMetaDescription = site.tagline
-  ? `${site.tagline} — ${site.description}`
-  : site.description;
-
-export type SiteConfig = typeof site;
+export function defaultMetaDescription(site: SiteConfig): string {
+  return site.tagline ? `${site.tagline} — ${site.description}` : site.description;
+}

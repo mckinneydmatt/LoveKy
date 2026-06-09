@@ -1,20 +1,23 @@
-import { site, defaultMetaDescription } from "./site";
+import type { SiteConfig } from "./site";
 
 /** Update in astro.config.mjs when the live domain is confirmed. */
 export const siteUrl = "https://lovekycakes.com";
 
-export const defaultOgImage = site.logos.primaryOnDark;
+export function defaultOgImage(site: SiteConfig): string {
+  return site.logos.primaryOnDark;
+}
 
-export const pageDescriptions = {
-  home: defaultMetaDescription,
-  about:
-    "Meet Ky, the Carmel, Indiana baker behind Love, Ky Cakes. Home-based bakery with more than 10 years of experience making cakes with personal care.",
-  contact: `Contact ${site.name} by phone, text, or email. ${site.contact.hours}. ${site.order.intro}`,
-  order: `Order a ${site.order.product} from ${site.name}. Free delivery within 30 miles of Carmel.`,
-  reviews: `Customer reviews for ${site.name}, a home bakery in Carmel, Indiana specializing in cakes.`,
-} as const;
+export function pageDescriptions(site: SiteConfig) {
+  return {
+    home: site.tagline ? `${site.tagline} — ${site.description}` : site.description,
+    about: site.seo.about,
+    contact: site.seo.contact,
+    order: site.seo.order,
+    reviews: site.seo.reviews,
+  };
+}
 
-export function pageTitle(title: string) {
+export function pageTitle(site: SiteConfig, title: string) {
   return title === "Home" ? site.name : `${site.name} | ${title}`;
 }
 
@@ -22,7 +25,7 @@ export function absoluteUrl(pathname: string, origin: string) {
   return new URL(pathname, origin).href;
 }
 
-export function localBusinessSchema(origin: string) {
+export function localBusinessSchema(site: SiteConfig, origin: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Bakery",

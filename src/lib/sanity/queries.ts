@@ -1,0 +1,43 @@
+export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings" && _id == "siteSettings"][0]{
+  name,
+  tagline,
+  description,
+  contact,
+  social,
+  home{
+    heroImage,
+    spotlight{
+      title,
+      subhead,
+      text,
+      ingredientNote,
+      ctaLabel,
+      secondaryLine,
+      image
+    }
+  },
+  order,
+  about{
+    title,
+    subhead,
+    pullQuote,
+    paragraphs,
+    ownerImage,
+    galleryPhotos[]{
+      image,
+      side
+    }
+  },
+  reviews,
+  seo,
+  formspreeOrderEndpoint
+}`;
+
+export const PRODUCTS_QUERY = `*[_type == "product" && active == true] | order(sortOrder asc) {
+  _id,
+  name,
+  slug,
+  price,
+  description,
+  ingredients
+}`;
