@@ -9,12 +9,23 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sanity:dev": "npm run dev --prefix sanity",
+    "sanity:deploy": "npm run deploy --prefix sanity",
+    "sanity:seed": "npm run seed --prefix sanity",
+    "sanity:seed:products": "npm run seed:products --prefix sanity",
+    "sanity:seed:all": "npm run seed:all --prefix sanity"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@sanity/astro": "^3.4.0",
+    "@sanity/client": "^7.22.1",
+    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.4.4",
     "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.22.4"
   }
 }

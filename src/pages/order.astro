@@ -1,11 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import OrderForm from "../components/OrderForm.astro";
-import { site } from "../content/site";
 import { pageDescriptions } from "../content/seo";
+import { getProducts } from "../lib/getProducts";
+import { getSite } from "../lib/getSite";
+
+const site = await getSite();
+const products = await getProducts();
+const descriptions = pageDescriptions(site);
 ---
 
-<BaseLayout title="Order" description={pageDescriptions.order}>
+<BaseLayout title="Order" description={descriptions.order}>
   <section class="container-page py-12 sm:py-16">
     <div class="mb-10 max-w-2xl">
       <h1 class="section-heading mb-4">Good Taste Awaits...</h1>
@@ -15,7 +20,7 @@ import { pageDescriptions } from "../content/seo";
     </div>
 
     <div class="max-w-2xl">
-      <OrderForm />
+      <OrderForm site={site} products={products} />
     </div>
 
     <div class="mt-10 max-w-2xl rounded-2xl border border-soft-blossom bg-soft-blossom/20 p-6 sm:p-8">

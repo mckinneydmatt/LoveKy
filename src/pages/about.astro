@@ -1,10 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../content/site";
 import { pageDescriptions } from "../content/seo";
+import { getSite } from "../lib/getSite";
+
+const site = await getSite();
+const descriptions = pageDescriptions(site);
 ---
 
-<BaseLayout title="About" description={pageDescriptions.about}>
+<BaseLayout title="About" description={descriptions.about}>
   <section class="container-page py-12 sm:py-16">
     <div class="grid items-start gap-8 sm:gap-10 lg:grid-cols-2">
       <div class="order-2 lg:order-1">
