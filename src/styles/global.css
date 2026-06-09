@@ -155,4 +155,16 @@
   .about-pull-quote {
     @apply my-6 text-2xl sm:my-8 sm:text-3xl;
   }
+
+  .about-gallery-photo {
+    @apply aspect-[4/5] w-[58%] overflow-hidden rounded-2xl border-4 border-soft-blossom bg-soft-blossom/30 shadow-md;
+  }
+
+  .about-gallery-photo--right {
+    @apply ml-auto rotate-[4deg];
+  }
+
+  .about-gallery-photo--left {
+    @apply mr-auto rotate-[-4deg];
+  }
 }

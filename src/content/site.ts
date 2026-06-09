@@ -86,6 +86,10 @@ export const site = {
       "Because it was.",
     ],
     pullQuote: "The name means something.",
+    galleryPhotos: [
+      { image: null as string | null, side: "right" as const },
+      { image: null as string | null, side: "left" as const },
+    ],
   },
   reviews: [
     {
