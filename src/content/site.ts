@@ -22,7 +22,8 @@ export const site = {
       "Kylee will confirm your order and delivery details.",
     disclaimer:
       "Made in a home kitchen not tested by the health department.",
-    ingredients: null as string | null,
+    ingredients:
+      "Sugar, flour, cocoa powder, baking powder, baking soda, salt, eggs, milk, vegetable oil, vanilla extract, powdered sugar, heavy cream",
     message: [
       "Every cake I make goes out the door the way you'd send something to someone you care about — made with intention, finished with care, and meant to make someone's day a little sweeter. That's not a promise I take lightly. Whether it's for a birthday or just another Tuesday, I want what's in that box to feel like it was made just for you. Because it was.",
       "So thank you for your order, and I hope you enjoy every slice.",
