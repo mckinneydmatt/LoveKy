@@ -98,7 +98,7 @@ export const defaultSite = {
     },
   ],
   logos: {
-    primary: '/logos/primary-black.png',
+    primary: '/logos/primary-blue.png',
     primaryOnDark: '/logos/primary-red-heart.png',
     secondary: '/logos/secondary-white.png',
     header: '/logos/header.png',
