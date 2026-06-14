@@ -22,12 +22,14 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 - [x] **CMS branch merged** — `cursor/sanity-live-merge` merged into Netlify's production deploy branch
 - [x] **Netlify deploy branch** — production deploys point at the CMS branch
 - [x] **Netlify env vars** — `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET=production` set; site redeployed
+- [x] **Formspree form** — created on helper's account; URL pasted in Studio → **Site Settings** → **Formspree order endpoint** and published
+- [x] **Order form UX** — submissions stay on-site with an inline thank-you (no redirect to formspree.io)
 
 ### Remaining (before Kylee owns everything)
 
 - [ ] **Netlify ownership** — confirm site is on Kylee's Netlify team (transfer if still on helper's account — see [Netlify transfer](#netlify-transfer-to-kylees-account))
 - [ ] **Sanity ownership** — **transfer** project `1bzd5noi` to Kylee's org (preferred — see [Sanity transfer](#sanity-transfer-to-kylees-account))
-- [ ] **Formspree** — Kylee creates her form; paste URL in Studio → **Site Settings** → **Formspree order endpoint** → Publish
+- [ ] **Formspree ownership** — change the Formspree login email from the helper's to `lovekycakes@gmail.com` (see [Formspree email transfer](#formspree-email-transfer))
 - [ ] **Auto-rebuild webhook** — Netlify build hook + Sanity webhook (see Phase 4)
 - [ ] **End-to-end test** — publish a CMS edit → site rebuilds; submit test order → email arrives
 - [ ] **GitHub** — Kylee has repo access; knows which branch triggers deploys
@@ -40,7 +42,8 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 | Sanity project | `1bzd5noi` (helper account) | Same ID — transfer ownership to Kylee's org |
 | Studio URL | https://love-ky-cakes.sanity.studio/ | Same — no redeploy needed after transfer |
 | Deploy branch | Configured in Netlify (CMS branch live) | Same unless branch strategy changes |
-| Formspree URL  | Empty / not in Kylee's account                                               | Her Formspree form URL in Site Settings          |
+| Formspree account | Helper's email (form live in Sanity) | Login email = `lovekycakes@gmail.com` |
+| Formspree URL  | Set in Site Settings (helper's account) | Same URL — no Sanity change needed after email transfer |
 
 
 ---
@@ -91,13 +94,15 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 
 ### 1A. Formspree
 
-1. Go to [formspree.io](https://formspree.io) and sign up with `lovekycakes@gmail.com`
-2. Create a new form (e.g. "Order requests")
-3. Set notification email to her address
-4. Copy the form URL: `https://formspree.io/f/xxxxxxxx`
-5. **Do not** paste it into code — it goes in Sanity (Phase 3)
+**Already done (helper):** Form created on the helper's Formspree account; form URL saved in Studio → **Site Settings** → **Formspree order endpoint** and published. The order page submit button is enabled.
 
-**Verify:** Formspree dashboard shows the form and "waiting for submissions."
+**Remaining — transfer login to Kylee:** Formspree has no one-click "transfer account" like Sanity. Change the account's primary login email to hers so she owns the inbox and dashboard going forward. The form URL stays the same — nothing to change in Sanity.
+
+See [Formspree email transfer](#formspree-email-transfer) (Phase 5) for step-by-step instructions.
+
+**Verify (now):** Live `/order` page submit button works; test submission arrives at the notification email configured in Formspree.
+
+**Verify (after transfer):** Kylee logs in at [formspree.io](https://formspree.io) with `lovekycakes@gmail.com` and sees the order form and submissions.
 
 ### 1B. Sanity
 
@@ -218,11 +223,7 @@ Redeploy after saving.
 
 ### 3B. Formspree in Sanity
 
-1. Open Studio → **Site Settings**
-2. Paste the Formspree URL into **Formspree order endpoint**
-3. **Publish**
-
-Trigger a rebuild (next phase or manual deploy).
+**Done:** Formspree URL is in Studio → **Site Settings** → **Formspree order endpoint** and published.
 
 **Verify:** The order page submit button is enabled (not grayed out with "Formspree is not configured").
 
@@ -286,6 +287,43 @@ If the Netlify site is **transferred** later, the build hook usually moves with 
 
 ---
 
+## Formspree email transfer
+
+**Recommended over creating a new form.** The form URL is already in Sanity — changing the login email transfers ownership without touching the site.
+
+Formspree does not have a formal account transfer like Sanity. Instead, change the account's **primary login email** to Kylee's address.
+
+### Why email transfer (not a new account)
+
+| | Change login email | Kylee creates new account |
+|--|-------------------|---------------------------|
+| Form URL in Sanity | **No change** | Must paste new URL and republish |
+| Past submissions | Kept | Lost on old account |
+| Order form on site | Keeps working | Broken until new URL is published |
+
+### Prerequisites
+
+- Kylee's email (`lovekycakes@gmail.com`) is **not** already the primary email on a different Formspree account
+- Form notification email in Formspree is set to `lovekycakes@gmail.com` (Form → **Settings** → notification email)
+
+### Steps
+
+1. Kylee (or helper on her behalf) adds `lovekycakes@gmail.com` under Formspree → **Account** → **Linked emails**, if not already listed
+2. Kylee opens the verification email from Formspree and confirms the address
+3. In Formspree → **Account**, click **Change Email** and set `lovekycakes@gmail.com` as the primary login email
+4. Kylee logs out; Kylee logs in with `lovekycakes@gmail.com` and sets her password
+5. Helper confirms they can no longer access the account (or is removed if team access was added)
+
+**Docs:** [Changing your account email](https://help.formspree.io/articles/account-management/changing-your-account-email)
+
+### After transfer
+
+- Form URL in Sanity stays the same — no republish or redeploy needed
+- Kylee manages submissions at [formspree.io](https://formspree.io)
+- Helper should not retain login access after handoff is complete
+
+---
+
 ## Sanity transfer to Kylee's account
 
 **Recommended over creating a new project.** ~5 minutes, no code or Netlify changes.
@@ -344,7 +382,7 @@ If there is no shared team access, open a ticket at [netlify.com/support](https:
 
 ## Phase 5 — Final ownership cleanup (Kylee)
 
-- [ ] Formspree account is hers (not the helper's)
+- [ ] Formspree login email is `lovekycakes@gmail.com` (not the helper's) — see [Formspree email transfer](#formspree-email-transfer)
 - [ ] Sanity project `1bzd5noi` transferred to Kylee's organization (see [Sanity transfer](#sanity-transfer-to-kylees-account))
 - [ ] Netlify site is on her team (see [Netlify transfer](#netlify-transfer-to-kylees-account))
 - [ ] Domain (`lovekycakes.com`) and DNS remain on her account
@@ -426,7 +464,7 @@ Sanity project ID and dataset live in **`sanity.env`** at the repo root. Use **`
 | Publish in Studio, no Netlify deploy          | Webhook not set up or draft-only save                                      | Must click **Publish**; check Sanity webhook Attempts tab                     |
 | Netlify deploys but site unchanged            | Wrong deploy branch                                                        | Set branch to `cursor/sanity-live-merge` (or merged branch)                   |
 | Order button disabled                         | Formspree URL empty                                                        | Add URL in Site Settings → Publish → rebuild                                  |
-| No order emails                               | Wrong Formspree account or email                                           | Check Formspree form settings and spam folder                                 |
+| No order emails                               | Wrong notification email in Formspree or spam folder                       | Formspree → form → Settings → notification email; check spam folder           |
 | Studio won't load                             | Wrong login or project                                                     | `npx sanity login` with her account; check `sanity.env`                       |
 | Build fails                                   | Missing env vars on host                                                   | Set `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET`                    |
 | Site works but CMS doesn't                    | Seed not run                                                               | `npm run sanity:seed:all` on her project                                      |
@@ -463,8 +501,8 @@ Editing in Studio is effectively unlimited. The caps that matter for a small bak
 | ---------------- | ------------------------------------------------ | --------- |
 | **Done**         | CMS branch, seed, Studio deploy                  | Complete  |
 | **Done**         | Netlify merge, deploy branch, env vars, redeploy | Complete  |
-| **Next**         | Confirm live site; Sanity transfer; Formspree; webhook | Remaining |
-| **Day 1**        | Sanity ownership transfer, test order            | Remaining |
+| **Next**         | Confirm live site; Sanity transfer; Formspree email change; webhook | Remaining |
+| **Day 1**        | Sanity ownership transfer; Formspree email transfer; test order | Remaining |
 | **Day 1–2**      | Webhook + verify auto-rebuild                    | Remaining |
 | **Day 2**        | Netlify/GitHub ownership cleanup                 | Remaining |
 | **Ongoing**      | Kylee edits in Studio; help only when asked      | —         |
@@ -482,8 +520,11 @@ TECHNICAL (helper) — mostly done
 [x] Content seeded on project 1bzd5noi (temporary)
 [x] Merge CMS branch to production deploy branch
 
+[x] Formspree form created (helper account); URL in Site Settings
+[x] Order form stays on-site after submit (no formspree.io redirect)
+
 ACCOUNTS
-[ ] Formspree — Kylee's account, form created
+[ ] Formspree — login email changed to lovekycakes@gmail.com
 [ ] Sanity — transfer project 1bzd5noi to Kylee's org (preferred)
 [ ] Netlify — site on Kylee's team (transfer if needed)
 [ ] GitHub — Kylee has access
@@ -501,8 +542,9 @@ HOSTING
 [ ] Deploy succeeds with CMS content — confirm live site looks right
 
 FORMSPREE
-[ ] URL pasted in Site Settings → Formspree order endpoint
-[ ] Published + site rebuilt
+[x] URL pasted in Site Settings → Formspree order endpoint
+[x] Published + site rebuilt
+[ ] Login email transferred to lovekycakes@gmail.com
 [ ] Test order submitted and email received
 
 AUTO-REBUILD
