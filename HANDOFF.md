@@ -31,6 +31,7 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 - [ ] **Sanity ownership** — **transfer** project `1bzd5noi` to Kylee's org (preferred — see [Sanity transfer](#sanity-transfer-to-kylees-account))
 - [ ] **Formspree ownership** — change the Formspree login email from the helper's to `lovekycakes@gmail.com` (see [Formspree email transfer](#formspree-email-transfer))
 - [ ] **Auto-rebuild webhook** — Netlify build hook + Sanity webhook (see Phase 4)
+- [ ] **Custom domain** — point her purchased domain at the Netlify site (exact URL TBD — see [Custom domain setup](#custom-domain-setup))
 - [ ] **End-to-end test** — publish a CMS edit → site rebuilds; submit test order → email arrives
 
 ### Temporary config (change at handoff)
@@ -41,6 +42,7 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 | Sanity project | `1bzd5noi` (helper account) | Same ID — transfer ownership to Kylee's org |
 | Studio URL | https://love-ky-cakes.sanity.studio/ | Same — no redeploy needed after transfer |
 | Deploy branch | Configured in Netlify (CMS branch live) | Same unless branch strategy changes |
+| Live URL | Netlify subdomain (e.g. `*.netlify.app`) | Her purchased custom domain (exact URL TBD) |
 | Formspree account | Helper's email (form live in Sanity) | Login email = `lovekycakes@gmail.com` |
 | Formspree URL  | Set in Site Settings (helper's account) | Same URL — no Sanity change needed after email transfer |
 
@@ -119,12 +121,12 @@ See [Formspree email transfer](#formspree-email-transfer) (Phase 5) for step-by-
 Kylee may already have a Netlify account and domain. Confirm:
 
 - [ ] Hosting account is **hers** (not the helper's) — see [Netlify transfer](#netlify-transfer-to-kylees-account) if needed
-- [ ] Domain pointed at the host (`lovekycakes.com`)
+- [ ] Custom domain connected — her purchased domain points at the Netlify site (see [Custom domain setup](#custom-domain-setup))
 - [x] Production deploy branch configured for CMS (merged `cursor/sanity-live-merge`)
 
 **To change deploy branch (Netlify):** Site configuration → Build & deploy → Continuous deployment → **Branch to deploy** → save → trigger deploy.
 
-**Verify:** She can open the host dashboard and see the site and deploy history.
+**Verify:** She can open the host dashboard and see the site and deploy history. Visiting her custom domain loads the Love, Ky Cakes site (not a Netlify placeholder or wrong page).
 
 ---
 
@@ -226,6 +228,12 @@ Redeploy after saving.
 
 **Verify:** Email arrives with correct product name, price, and form fields.
 
+### 3D. Custom domain
+
+Connect Kylee's purchased domain so visitors use her URL instead of a Netlify subdomain. See [Custom domain setup](#custom-domain-setup).
+
+**Verify:** Her domain and `www.` (if enabled) load the site with a valid SSL certificate.
+
 ---
 
 ## Phase 4 — Auto-rebuild on content changes (~10 min)
@@ -274,6 +282,50 @@ If the Netlify site is **transferred** later, the build hook usually moves with 
 4. Hard-refresh live site — change should appear
 
 **If it fails:** Check Sanity webhook **Attempts** tab; confirm env vars, deploy branch, and that you clicked **Publish** (not just saved a draft).
+
+---
+
+## Custom domain setup
+
+Kylee has already purchased a custom domain (exact URL still TBD — use whatever she registered, e.g. `lovekycakes.com`). Point that domain at the Netlify site so the public URL matches the live site.
+
+When the final domain is confirmed, update the codebase so sitemap and SEO use the same URL:
+
+- `astro.config.mjs` → `site`
+- `src/content/seo.ts` → `siteUrl`
+- `public/robots.txt` → sitemap URL
+
+Then commit, push, and trigger a Netlify redeploy.
+
+### Where the domain lives
+
+The domain may be registered at GoDaddy, Google Domains, Namecheap, Netlify, or elsewhere. Kylee should log in wherever she bought it — DNS changes happen there unless she moves DNS fully to Netlify.
+
+### Steps (Netlify + DNS)
+
+Replace `yourdomain.com` below with her actual domain.
+
+1. [app.netlify.com](https://app.netlify.com) → open the Love, Ky Cakes site
+2. **Domain management** → **Add a domain** → enter `yourdomain.com`
+3. Optionally add `www.yourdomain.com` and set **Primary domain** to the version you want (usually the apex with www redirecting)
+4. Netlify shows the DNS records needed. At Kylee's domain registrar, add or update:
+   - **Apex (`yourdomain.com`):** A record → `75.2.60.5` (Netlify load balancer), *or* ALIAS/ANAME to `apex-loadbalancer.netlify.com` if the registrar supports it
+   - **www (`www.yourdomain.com`):** CNAME → your site's Netlify subdomain (e.g. `something.netlify.app`)
+5. Wait for DNS to propagate (often 15 minutes–48 hours)
+6. In Netlify → **Domain management**, confirm **HTTPS** shows a certificate issued (Let's Encrypt — automatic once DNS is correct)
+
+**Alternative:** In the registrar, change **nameservers** to Netlify's if using Netlify DNS — then manage all records inside Netlify → **Domain management** → **DNS**.
+
+### Verify
+
+- [ ] Her custom domain loads the bakery site
+- [ ] Browser shows a padlock (valid SSL)
+- [ ] Old Netlify URL still works or redirects to the custom domain (optional but tidy)
+- [ ] `astro.config.mjs` and related files use the same domain (after URL is confirmed)
+
+### If the domain was on another host
+
+Remove old A/CNAME records pointing at a previous site or parking page before the new Netlify records take effect.
 
 ---
 
@@ -360,7 +412,7 @@ Works when the helper is an **Owner** on the current site team and an **Owner** 
 
 ### Via Netlify Support
 
-If there is no shared team access, open a ticket at [netlify.com/support](https://www.netlify.com/support) with the site name, domain (`lovekycakes.com`), and Kylee's Netlify email. Usually 1–2 business days.
+If there is no shared team access, open a ticket at [netlify.com/support](https://www.netlify.com/support) with the site name, her domain, and Kylee's Netlify email. Usually 1–2 business days.
 
 ### After transfer
 
@@ -374,9 +426,9 @@ If there is no shared team access, open a ticket at [netlify.com/support](https:
 - [ ] Formspree login email is `lovekycakes@gmail.com` (not the helper's) — see [Formspree email transfer](#formspree-email-transfer)
 - [ ] Sanity project `1bzd5noi` transferred to Kylee's organization (see [Sanity transfer](#sanity-transfer-to-kylees-account))
 - [ ] Netlify site is on her team (see [Netlify transfer](#netlify-transfer-to-kylees-account))
-- [ ] Domain (`lovekycakes.com`) and DNS remain on her account
+- [ ] Custom domain points at the Netlify site (see [Custom domain setup](#custom-domain-setup))
 - [ ] Build hook and Sanity webhook are configured and tested
-- [ ] Bookmarks: Studio (https://love-ky-cakes.sanity.studio/), Netlify dashboard, Formspree inbox
+- [ ] Bookmarks: Studio (https://love-ky-cakes.sanity.studio/), Netlify dashboard, Formspree inbox, her live site URL
 
 **Optional:** Invite the technical helper to Sanity as **Editor** or Netlify as **Developer** when needed. Remove or downgrade access later if desired.
 
@@ -456,6 +508,7 @@ Sanity project ID and dataset live in **`sanity.env`** at the repo root. Use **`
 | No order emails                               | Wrong notification email in Formspree or spam folder                       | Formspree → form → Settings → notification email; check spam folder           |
 | Studio won't load                             | Wrong login or project                                                     | `npx sanity login` with her account; check `sanity.env`                       |
 | Build fails                                   | Missing env vars on host                                                   | Set `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET`                    |
+| Custom domain shows wrong site or won't load  | DNS still pointing at old host or records not propagated                   | Update A/CNAME at registrar per [Custom domain setup](#custom-domain-setup); wait for DNS |
 | Site works but CMS doesn't                    | Seed not run                                                               | `npm run sanity:seed:all` on her project                                      |
 | Images broken after upload                    | Publish without rebuild                                                    | Publish in Studio, wait for webhook deploy                                    |
 
@@ -490,8 +543,8 @@ Editing in Studio is effectively unlimited. The caps that matter for a small bak
 | ---------------- | ------------------------------------------------ | --------- |
 | **Done**         | CMS branch, seed, Studio deploy                  | Complete  |
 | **Done**         | Netlify merge, deploy branch, env vars, redeploy | Complete  |
-| **Next**         | Confirm live site; Sanity transfer; Formspree email change; webhook | Remaining |
-| **Day 1**        | Sanity ownership transfer; Formspree email transfer; test order | Remaining |
+| **Next**         | Confirm live site; custom domain; Sanity transfer; Formspree email change; webhook | Remaining |
+| **Day 1**        | Custom domain live; Sanity ownership transfer; Formspree email transfer; test order | Remaining |
 | **Day 1–2**      | Webhook + verify auto-rebuild                    | Remaining |
 | **Day 2**        | Netlify ownership cleanup                        | Remaining |
 | **Ongoing**      | Kylee edits in Studio; help only when asked      | —         |
@@ -527,6 +580,9 @@ HOSTING
 [x] Production deploy branch configured (CMS live)
 [x] PUBLIC_SANITY_PROJECT_ID set on Netlify
 [x] PUBLIC_SANITY_DATASET=production set on Netlify
+[ ] Custom domain added in Netlify + DNS updated at registrar
+[ ] Custom domain loads the site with SSL
+[ ] astro.config.mjs updated once final domain is confirmed
 [ ] Deploy succeeds with CMS content — confirm live site looks right
 
 FORMSPREE
