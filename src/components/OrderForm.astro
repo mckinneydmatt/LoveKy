@@ -15,10 +15,13 @@ const priceDisplay = defaultProduct?.price ?? "Price TBD";
 const multipleProducts = products.length > 1;
 ---
 
+<div id="order-form-wrapper">
 <form
+  id="order-form"
   class="space-y-6 rounded-2xl border border-soft-blossom bg-frozen-water/70 p-4 shadow-sm sm:p-8"
   method="POST"
   action={formAction}
+  data-endpoint={formAction}
   aria-labelledby="order-form-heading"
 >
   {!formAction && (
@@ -214,7 +217,17 @@ const multipleProducts = products.length > 1;
     </div>
   </div>
 
+  <p
+    id="order-form-error"
+    role="alert"
+    hidden
+    class="rounded-lg border border-nail-polish/30 bg-nail-polish/10 px-4 py-3 text-sm text-blue-slate"
+  >
+    Something went wrong sending your request. Please try again, or call or text us directly.
+  </p>
+
   <button
+    id="order-form-submit"
     type="submit"
     class="btn-blush w-full sm:w-auto"
     disabled={!formAction}
@@ -223,6 +236,31 @@ const multipleProducts = products.length > 1;
     Submit Order Request
   </button>
 </form>
+
+<div
+  id="order-form-success"
+  hidden
+  class="space-y-4 rounded-2xl border border-soft-blossom bg-frozen-water/70 p-6 shadow-sm sm:p-8"
+  role="status"
+  aria-live="polite"
+>
+  <h2 class="text-2xl font-semibold text-blue-slate">Thank you!</h2>
+  <p class="text-blue-slate/90">
+    Your order request has been sent. {site.order.deliveryNote}
+  </p>
+  <p class="text-sm text-blue-slate/75">
+    Questions? Reach us at{" "}
+    <a href={`mailto:${site.contact.email}`} class="font-medium text-vintage-berry hover:underline">
+      {site.contact.email}
+    </a>{" "}
+    or{" "}
+    <a href={`tel:${site.contact.phone.replace(/\D/g, "")}`} class="font-medium text-vintage-berry hover:underline">
+      {site.contact.phone}
+    </a>
+    .
+  </p>
+</div>
+</div>
 
 <script>
   const dateInput = document.getElementById("delivery-date") as HTMLInputElement | null;
@@ -281,4 +319,51 @@ const multipleProducts = products.length > 1;
       }
     });
   });
+
+  const orderForm = document.getElementById("order-form") as HTMLFormElement | null;
+  const orderFormSuccess = document.getElementById("order-form-success");
+  const orderFormError = document.getElementById("order-form-error");
+  const orderFormSubmit = document.getElementById("order-form-submit") as HTMLButtonElement | null;
+  const submitLabel = orderFormSubmit?.textContent?.trim() ?? "Submit Order Request";
+
+  if (
+    orderForm?.dataset.endpoint &&
+    orderFormSuccess &&
+    orderFormError &&
+    orderFormSubmit
+  ) {
+    orderForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      orderFormError.hidden = true;
+      orderFormSubmit.disabled = true;
+      orderFormSubmit.textContent = "Sending...";
+
+      try {
+        const response = await fetch(orderForm.action, {
+          method: "POST",
+          body: new FormData(orderForm),
+          headers: { Accept: "application/json" },
+        });
+
+        if (response.ok) {
+          orderForm.hidden = true;
+          orderFormSuccess.hidden = false;
+          orderFormSuccess.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "nearest",
+          });
+          return;
+        }
+
+        orderFormError.hidden = false;
+      } catch {
+        orderFormError.hidden = false;
+      } finally {
+        if (!orderForm.hidden) {
+          orderFormSubmit.disabled = false;
+          orderFormSubmit.textContent = submitLabel;
+        }
+      }
+    });
+  }
 </script>
