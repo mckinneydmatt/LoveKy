@@ -32,7 +32,6 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 - [ ] **Formspree ownership** — change the Formspree login email from the helper's to `lovekycakes@gmail.com` (see [Formspree email transfer](#formspree-email-transfer))
 - [ ] **Auto-rebuild webhook** — Netlify build hook + Sanity webhook (see Phase 4)
 - [ ] **End-to-end test** — publish a CMS edit → site rebuilds; submit test order → email arrives
-- [ ] **GitHub** — Kylee has repo access; knows which branch triggers deploys
 
 ### Temporary config (change at handoff)
 
@@ -56,8 +55,7 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 | **Formspree**        | Kylee                 | Order emails go to her                     |
 | **Sanity project**   | Kylee                 | She edits content long-term                |
 | **Hosting + domain** | Kylee                 | She deploys and owns the live site         |
-| **GitHub repo**      | Kylee (or shared)     | She can push/deploy without outside help   |
-| **Technical helper** | Optional collaborator | Invited to Sanity/GitHub only when helping |
+| **Technical helper** | Optional collaborator | Invited to Sanity or Netlify only when helping |
 
 
 **Rule:** Anything that receives orders or controls the live site should be on Kylee's accounts before handoff is complete.
@@ -86,7 +84,7 @@ Complete checklist for handing the site from occasional technical help to Kylee 
 
 **Note:** If using the recommended [Sanity transfer](#sanity-transfer-to-kylees-account), project ID `1bzd5noi` stays the same — no changes to `sanity.env` or Netlify env vars.
 
-**Deliverable for Kylee:** a working branch, repo access, and this document.
+**Deliverable for Kylee:** a working live site and this document.
 
 ---
 
@@ -122,19 +120,11 @@ Kylee may already have a Netlify account and domain. Confirm:
 
 - [ ] Hosting account is **hers** (not the helper's) — see [Netlify transfer](#netlify-transfer-to-kylees-account) if needed
 - [ ] Domain pointed at the host (`lovekycakes.com`)
-- [ ] Site connected to the GitHub repo (`mckinneydmatt/LoveKy` or transferred repo)
 - [x] Production deploy branch configured for CMS (merged `cursor/sanity-live-merge`)
 
 **To change deploy branch (Netlify):** Site configuration → Build & deploy → Continuous deployment → **Branch to deploy** → save → trigger deploy.
 
 **Verify:** She can open the host dashboard and see the site and deploy history.
-
-### 1D. GitHub
-
-- [ ] Kylee has access to the repo (Owner or Admin)
-- [ ] She knows which branch triggers production deploys
-
-**Optional:** Invite the technical helper as a collaborator when needed.
 
 ---
 
@@ -157,7 +147,7 @@ SANITY_DATASET=production
 SANITY_STUDIO_DATASET=production
 ```
 
-Commit and push (or edit in GitHub).
+Commit and push.
 
 ### 2B. Install and log in
 
@@ -375,7 +365,6 @@ If there is no shared team access, open a ticket at [netlify.com/support](https:
 ### After transfer
 
 - Domain, SSL, env vars, and build hooks usually move with the site
-- GitHub may need reconnecting under Kylee's login if it was linked via the helper's account
 - Sanity webhook URL only needs updating if the build hook URL changed
 
 ---
@@ -389,7 +378,7 @@ If there is no shared team access, open a ticket at [netlify.com/support](https:
 - [ ] Build hook and Sanity webhook are configured and tested
 - [ ] Bookmarks: Studio (https://love-ky-cakes.sanity.studio/), Netlify dashboard, Formspree inbox
 
-**Optional:** Invite the technical helper to Sanity as **Editor**, Netlify as **Developer**, and GitHub as **Collaborator** when needed. Remove or downgrade access later if desired.
+**Optional:** Invite the technical helper to Sanity as **Editor** or Netlify as **Developer** when needed. Remove or downgrade access later if desired.
 
 ---
 
@@ -504,7 +493,7 @@ Editing in Studio is effectively unlimited. The caps that matter for a small bak
 | **Next**         | Confirm live site; Sanity transfer; Formspree email change; webhook | Remaining |
 | **Day 1**        | Sanity ownership transfer; Formspree email transfer; test order | Remaining |
 | **Day 1–2**      | Webhook + verify auto-rebuild                    | Remaining |
-| **Day 2**        | Netlify/GitHub ownership cleanup                 | Remaining |
+| **Day 2**        | Netlify ownership cleanup                        | Remaining |
 | **Ongoing**      | Kylee edits in Studio; help only when asked      | —         |
 
 
@@ -527,7 +516,6 @@ ACCOUNTS
 [ ] Formspree — login email changed to lovekycakes@gmail.com
 [ ] Sanity — transfer project 1bzd5noi to Kylee's org (preferred)
 [ ] Netlify — site on Kylee's team (transfer if needed)
-[ ] GitHub — Kylee has access
 
 SANITY SETUP
 [x] sanity.env — 1bzd5noi (unchanged after transfer)
