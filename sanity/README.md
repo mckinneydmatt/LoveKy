@@ -1,9 +1,7 @@
-# Sanity Clean Content Studio
+# Sanity Studio — Love, Ky Cakes
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+Content editing app for the bakery website. Run locally with `npm run sanity:dev` from the repo root (port 3333).
 
-Now you can do the following things:
+**Developer documentation:** [docs/10-sanity-studio/](../docs/10-sanity-studio/overview.md)
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+**Live Studio:** https://love-ky-cakes.sanity.studio/
