@@ -65,9 +65,6 @@ const multipleProducts = products.length > 1;
                     <span class="min-w-0">
                       <span class="block text-base font-semibold text-blue-slate">{product.name}</span>
                       <span class="mt-1 block text-sm text-vintage-berry">{productPrice}</span>
-                      {product.description && (
-                        <span class="mt-2 block text-sm text-blue-slate/75">{product.description}</span>
-                      )}
                     </span>
                   </div>
                 </label>
@@ -79,14 +76,26 @@ const multipleProducts = products.length > 1;
     )
   }
 
-  <div
+  <section
     id="selected-product-summary"
     class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4"
+    aria-labelledby={multipleProducts ? "order-form-heading selected-product-summary-label" : "order-form-heading"}
   >
-    <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
-      {defaultProduct?.name}
-    </h2>
-    <p id="selected-product-price" class="mt-1 text-sm text-blue-slate/80">
+    <div class="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+      <div>
+        {multipleProducts && (
+          <p id="selected-product-summary-label" class="text-xs uppercase tracking-wide text-blue-slate/70">
+            Selected cake summary
+          </p>
+        )}
+        <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
+          {defaultProduct?.name}
+        </h2>
+      </div>
+      <p class="text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
+    </div>
+
+    <p id="selected-product-price" class="text-sm text-blue-slate/80">
       {priceDisplay}
     </p>
     <p
@@ -95,8 +104,7 @@ const multipleProducts = products.length > 1;
     >
       {defaultProduct?.description}
     </p>
-    <p class="mt-2 text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
-  </div>
+  </section>
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
