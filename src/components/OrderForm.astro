@@ -81,18 +81,16 @@ const multipleProducts = products.length > 1;
     class="rounded-lg border border-vintage-berry/20 bg-frozen-water p-4"
     aria-labelledby={multipleProducts ? "order-form-heading selected-product-summary-label" : "order-form-heading"}
   >
-    <div class="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-      <div>
-        {multipleProducts && (
-          <p id="selected-product-summary-label" class="text-xs uppercase tracking-wide text-blue-slate/70">
-            Selected cake summary
-          </p>
-        )}
-        <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
-          {defaultProduct?.name}
-        </h2>
-      </div>
-      <p class="text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
+    <div class="mb-4">
+      {multipleProducts && (
+        <p id="selected-product-summary-label" class="text-xs uppercase tracking-wide text-blue-slate/70">
+          Selected cake summary
+        </p>
+      )}
+      <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
+        {defaultProduct?.name}
+      </h2>
+      <p class="mt-1 text-sm text-blue-slate/70">{site.order.deliveryNote}</p>
     </div>
 
     <p id="selected-product-price" class="text-sm text-blue-slate/80">
