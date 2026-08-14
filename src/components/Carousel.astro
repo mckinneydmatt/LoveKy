@@ -1,0 +1,139 @@
+---
+interface Photo {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  photos: Photo[];
+  label?: string;
+  size?: "default" | "hero";
+  framed?: boolean;
+}
+
+const { photos, label = "Photo carousel", size = "default", framed = false } = Astro.props;
+---
+
+<div
+  class:list={["carousel", size === "hero" && "carousel--hero"]}
+  role="region"
+  aria-roledescription="carousel"
+  aria-label={label}
+>
+  <div class:list={["carousel-frame", framed && "carousel-frame--pink"]}>
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        {
+          photos.map((photo, i) => (
+            <div
+              class="carousel-slide"
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${photos.length}`}
+            >
+              <img src={photo.src} alt={photo.alt} class="block h-full w-full object-cover" loading="lazy" />
+            </div>
+          ))
+        }
+      </div>
+
+      {
+        photos.length > 1 && (
+          <>
+            <button type="button" class="carousel-arrow carousel-arrow--prev" aria-label="Previous photo">
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button type="button" class="carousel-arrow carousel-arrow--next" aria-label="Next photo">
+              <span aria-hidden="true">›</span>
+            </button>
+          </>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    photos.length > 1 && (
+      <div class="carousel-dots" role="tablist" aria-label="Slides">
+        {photos.map((_, i) => (
+          <button
+            type="button"
+            class="carousel-dot"
+            role="tab"
+            aria-label={`Go to photo ${i + 1}`}
+            data-index={i}
+          />
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  function initCarousel(carousel) {
+    const track = carousel.querySelector(".carousel-track");
+    const slides = Array.from(carousel.querySelectorAll(".carousel-slide"));
+    const prevBtn = carousel.querySelector(".carousel-arrow--prev");
+    const nextBtn = carousel.querySelector(".carousel-arrow--next");
+    const dots = Array.from(carousel.querySelectorAll(".carousel-dot"));
+
+    function currentIndex() {
+      let closest = 0;
+      let closestDist = Infinity;
+      slides.forEach((slide, i) => {
+        const dist = Math.abs(slide.offsetLeft - track.scrollLeft);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = i;
+        }
+      });
+      return closest;
+    }
+
+    function scrollToIndex(index) {
+      const slide = slides[index];
+      if (slide) {
+        track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
+      }
+    }
+
+    function setActive(index) {
+      dots.forEach((dot, i) => {
+        dot.setAttribute("aria-selected", String(i === index));
+      });
+    }
+
+    function updateActive() {
+      setActive(currentIndex());
+    }
+
+    prevBtn?.addEventListener("click", () => {
+      const index = (currentIndex() - 1 + slides.length) % slides.length;
+      scrollToIndex(index);
+      setActive(index);
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      const index = (currentIndex() + 1) % slides.length;
+      scrollToIndex(index);
+      setActive(index);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        scrollToIndex(i);
+        setActive(i);
+      });
+    });
+
+    let scrollTimeout;
+    track.addEventListener("scroll", () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActive, 50);
+    });
+
+    updateActive();
+  }
+
+  document.querySelectorAll(".carousel").forEach(initCarousel);
+</script>

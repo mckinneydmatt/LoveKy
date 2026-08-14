@@ -202,4 +202,73 @@
   .about-gallery-photo--left {
     @apply mr-auto rotate-[-4deg];
   }
+
+  .carousel {
+    @apply mx-auto w-full max-w-2xl;
+  }
+
+  .carousel--hero {
+    @apply max-w-none;
+  }
+
+  .carousel-viewport {
+    @apply relative;
+  }
+
+  .carousel-frame--pink {
+    @apply -rotate-1 rounded-3xl bg-soft-blossom p-4 shadow-lg sm:p-5;
+  }
+
+  .carousel-frame--pink .carousel-viewport {
+    @apply rotate-1 overflow-hidden rounded-2xl;
+  }
+
+  .carousel-track {
+    @apply flex snap-x snap-mandatory overflow-x-auto rounded-2xl border border-soft-blossom/50 shadow-md;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-slide {
+    @apply w-full flex-none snap-start;
+    aspect-ratio: 4 / 3;
+  }
+
+  .carousel--hero .carousel-slide {
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (min-width: 40rem) {
+    .carousel--hero .carousel-slide {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  .carousel-arrow {
+    @apply absolute top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-frozen-water/90 text-xl font-bold leading-none text-blue-slate shadow-md transition hover:bg-powder-blush focus-visible:outline-blue-slate;
+  }
+
+  .carousel-arrow--prev {
+    @apply left-2;
+  }
+
+  .carousel-arrow--next {
+    @apply right-2;
+  }
+
+  .carousel-dots {
+    @apply mt-3 flex items-center justify-center gap-2;
+  }
+
+  .carousel-dot {
+    @apply h-2.5 w-2.5 cursor-pointer rounded-full bg-blue-slate/25 transition hover:bg-blue-slate/50;
+  }
+
+  .carousel-dot[aria-selected="true"] {
+    @apply bg-vintage-berry hover:bg-vintage-berry;
+  }
 }
