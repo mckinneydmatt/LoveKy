@@ -5,7 +5,7 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings" && _id == "siteSet
   contact,
   social,
   home{
-    heroImage,
+    carouselPhotos,
     spotlight{
       title,
       subhead,

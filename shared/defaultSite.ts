@@ -39,7 +39,28 @@ export const defaultSite = {
     ],
   },
   home: {
-    heroImage: '/images/chocolate-cake-hero.png',
+    carouselPhotos: [
+      {
+        src: '/carousel/love ky cakes-97.jpg',
+        alt: 'Overhead view of a chocolate sprinkle cake with a slice cut out, next to a plated slice',
+      },
+      {
+        src: '/carousel/love ky cakes-6.jpg',
+        alt: 'Round cake with smooth icing on a dark wood pedestal stand, with playful shadow-puppet hands reaching toward it',
+      },
+      {
+        src: '/carousel/love ky cakes-44.jpg',
+        alt: 'Several to-go containers of chocolate cake tied with white string',
+      },
+      {
+        src: '/carousel/love ky cakes-16.jpg',
+        alt: 'Pink Love, Ky Cakes business card with a heart accent',
+      },
+      {
+        src: '/carousel/love ky cakes-115.jpg',
+        alt: 'Close-up of chocolate sprinkles on a frosted cake with a slice cut out',
+      },
+    ],
     spotlight: {
       title: 'The Cake',
       subhead: 'One Cake. Made for You.',
