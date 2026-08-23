@@ -12,27 +12,27 @@ const photos = [
   {
     file: 'love ky cakes-97.jpg',
     key: 'carousel-97',
-    alt: 'Overhead view of a chocolate sprinkle cake with a slice cut out on a wooden stand, next to a plated slice, a dish of chocolate sprinkles, and eucalyptus greenery',
+    alt: 'Overhead view of a chocolate sprinkle cake with a slice cut out, next to a plated slice',
   },
   {
     file: 'love ky cakes-6.jpg',
     key: 'carousel-6',
-    alt: 'Round cake with smooth mocha buttercream on a dark wood pedestal stand, with playful shadow-puppet hands reaching toward it',
+    alt: 'Round cake with smooth icing on a dark wood pedestal stand, with playful shadow-puppet hands reaching toward it',
   },
   {
     file: 'love ky cakes-44.jpg',
     key: 'carousel-44',
-    alt: 'Several to-go containers of piped chocolate buttercream tied with white string, being arranged by hand on a marble counter',
+    alt: 'Several to-go containers of chocolate cake tied with white string',
   },
   {
     file: 'love ky cakes-16.jpg',
     key: 'carousel-16',
-    alt: 'Pink Love, Ky Cakes business card with a heart accent, resting on a woven fabric surface',
+    alt: 'Pink Love, Ky Cakes business card with a heart accent',
   },
   {
     file: 'love ky cakes-115.jpg',
     key: 'carousel-115',
-    alt: 'Macro close-up of chocolate sprinkles on a frosted cake with a slice cut out',
+    alt: 'Close-up of chocolate sprinkles on a frosted cake with a slice cut out',
   },
 ]
 
