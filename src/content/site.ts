@@ -18,6 +18,11 @@ export interface GalleryPhoto {
   side: "left" | "right";
 }
 
+export interface CarouselPhoto {
+  src: string;
+  alt: string;
+}
+
 export interface SiteConfig {
   name: string;
   tagline: string | null;
@@ -38,7 +43,7 @@ export interface SiteConfig {
     links: SocialLink[];
   };
   home: {
-    heroImage: string;
+    carouselPhotos: CarouselPhoto[];
     spotlight: {
       title: string;
       subhead: string;

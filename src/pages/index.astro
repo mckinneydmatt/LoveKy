@@ -48,35 +48,7 @@ const featuredReviews = site.reviews.slice(0, 2);
       </div>
 
       <div class="relative mx-auto w-full max-w-md md:max-w-none">
-        <Carousel
-          framed
-          label="Featured cakes"
-          photos={[
-            {
-              src: "/carousel/love ky cakes-97.jpg",
-              alt: "Slice of chocolate layer cake with whipped chocolate frosting",
-            },
-
-            {
-              src: "/carousel/love ky cakes-6.jpg",
-              alt: "Slice of chocolate layer cake with whipped chocolate frosting",
-            },
-            {
-              src: "/carousel/love ky cakes-44.jpg",
-              alt: "Piping buttercream detail in powder blush pink",
-            },
-
-            {
-              src: "/carousel/love ky cakes-16.jpg",
-              alt: "Chocolate layer cake with whipped icing on a wooden stand",
-            },
-
-            {
-              src: "/carousel/love ky cakes-115.jpg",
-              alt: "Slice of chocolate layer cake with whipped chocolate frosting",
-            },
-          ]}
-        />
+        <Carousel framed label="Featured cakes" photos={site.home.carouselPhotos} />
       </div>
     </div>
   </section>

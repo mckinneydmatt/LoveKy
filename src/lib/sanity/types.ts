@@ -40,7 +40,7 @@ export interface SanitySiteSettingsDoc {
     }>;
   };
   home?: {
-    heroImage?: SanityImageSource;
+    carouselPhotos?: Array<SanityImageSource & {alt?: string}>;
     spotlight?: {
       title?: string;
       subhead?: string;

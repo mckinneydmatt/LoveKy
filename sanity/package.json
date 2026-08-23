@@ -11,7 +11,8 @@
     "dev": "sanity dev",
     "seed": "sanity exec seed/seedSiteSettings.ts --with-user-token",
     "seed:products": "sanity exec seed/seedProducts.ts --with-user-token",
-    "seed:all": "npm run seed && npm run seed:products",
+    "seed:carousel": "sanity exec seed/seedCarouselPhotos.ts --with-user-token",
+    "seed:all": "npm run seed && npm run seed:products && npm run seed:carousel",
     "start": "sanity start"
   },
   "keywords": [

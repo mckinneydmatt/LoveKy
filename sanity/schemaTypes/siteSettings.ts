@@ -177,12 +177,31 @@ export const siteSettings = defineType({
       description: 'Content for the homepage hero and cake spotlight section.',
       fields: [
         defineField({
-          name: 'heroImage',
-          title: 'Hero image',
-          type: 'image',
-          options: {hotspot: true},
+          name: 'carouselPhotos',
+          title: 'Hero carousel photos',
+          type: 'array',
           description:
-            'Large cake photo in the homepage hero (right side). Leave empty until you have a photo you own and can use on the site — a temporary placeholder image is shown until you upload one here.',
+            'Rotating photos shown in the homepage hero carousel. Add, remove, or reorder photos here. If you remove all photos, the site restores the default set of cake photos from code.',
+          of: [
+            defineArrayMember({
+              type: 'image',
+              options: {hotspot: true},
+              fields: [
+                defineField({
+                  name: 'alt',
+                  title: 'Alt text',
+                  type: 'string',
+                  description:
+                    'Short description of the photo for screen readers and search engines (e.g. "Chocolate cake with sprinkles on a wood cake stand").',
+                  validation: (rule) => rule.required().warning('Alt text helps with accessibility and SEO'),
+                }),
+              ],
+              preview: {
+                select: {title: 'alt', media: 'asset'},
+              },
+            }),
+          ],
+          validation: (rule) => rule.max(10).warning('Keep the carousel to about 10 photos or fewer for fast loading'),
         }),
         defineField({
           name: 'spotlight',

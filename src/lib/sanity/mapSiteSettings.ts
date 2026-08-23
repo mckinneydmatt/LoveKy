@@ -1,14 +1,16 @@
-import { defaultSite, type GalleryPhoto, type SiteConfig, type SocialLink } from "../../content/site";
+import {
+  defaultSite,
+  type CarouselPhoto,
+  type GalleryPhoto,
+  type SiteConfig,
+  type SocialLink,
+} from "../../content/site";
 import { urlFor, type SanitySiteSettingsDoc } from "./types";
 
 export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
   const ownerImage = doc.about?.ownerImage
     ? urlFor(doc.about.ownerImage).width(800).auto("format").url()
     : defaultSite.about.image;
-
-  const heroImage = doc.home?.heroImage
-    ? urlFor(doc.home.heroImage).width(1200).auto("format").url()
-    : defaultSite.home.heroImage;
 
   const spotlightImage = doc.home?.spotlight?.image
     ? urlFor(doc.home.spotlight.image).width(1080).auto("format").url()
@@ -23,6 +25,14 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
           label: link.label ?? "",
         }))
       : defaultSite.social.links;
+
+  const carouselPhotos: CarouselPhoto[] =
+    doc.home?.carouselPhotos?.length
+      ? doc.home.carouselPhotos.map((photo, index) => ({
+          src: urlFor(photo).width(1800).auto("format").url(),
+          alt: photo.alt ?? defaultSite.home.carouselPhotos[index]?.alt ?? "",
+        }))
+      : defaultSite.home.carouselPhotos;
 
   const galleryPhotos: GalleryPhoto[] =
     doc.about?.galleryPhotos?.length
@@ -54,7 +64,7 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
       links: socialLinks,
     },
     home: {
-      heroImage,
+      carouselPhotos,
       spotlight: {
         title: doc.home?.spotlight?.title ?? defaultSite.home.spotlight.title,
         subhead: doc.home?.spotlight?.subhead ?? defaultSite.home.spotlight.subhead,
