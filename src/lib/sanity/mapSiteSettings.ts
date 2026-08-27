@@ -82,6 +82,27 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
       deliveryNote: doc.order?.deliveryNote ?? defaultSite.order.deliveryNote,
       disclaimer: doc.order?.disclaimer ?? defaultSite.order.disclaimer,
       message: doc.order?.message?.length ? doc.order.message : defaultSite.order.message,
+      form: {
+        chooseCakeLabel: doc.order?.form?.chooseCakeLabel ?? defaultSite.order.form.chooseCakeLabel,
+        selectedSummaryLabel:
+          doc.order?.form?.selectedSummaryLabel ?? defaultSite.order.form.selectedSummaryLabel,
+        nameLabel: doc.order?.form?.nameLabel ?? defaultSite.order.form.nameLabel,
+        emailLabel: doc.order?.form?.emailLabel ?? defaultSite.order.form.emailLabel,
+        phoneLabel: doc.order?.form?.phoneLabel ?? defaultSite.order.form.phoneLabel,
+        deliveryDateLabel: doc.order?.form?.deliveryDateLabel ?? defaultSite.order.form.deliveryDateLabel,
+        quantityLabel: doc.order?.form?.quantityLabel ?? defaultSite.order.form.quantityLabel,
+        instructionsLabel: doc.order?.form?.instructionsLabel ?? defaultSite.order.form.instructionsLabel,
+        instructionsPlaceholder:
+          doc.order?.form?.instructionsPlaceholder ?? defaultSite.order.form.instructionsPlaceholder,
+        ingredientsLabel: doc.order?.form?.ingredientsLabel ?? defaultSite.order.form.ingredientsLabel,
+        disclaimerAckLabel:
+          doc.order?.form?.disclaimerAckLabel ?? defaultSite.order.form.disclaimerAckLabel,
+        submitLabel: doc.order?.form?.submitLabel ?? defaultSite.order.form.submitLabel,
+        errorMessage: doc.order?.form?.errorMessage ?? defaultSite.order.form.errorMessage,
+        successHeading: doc.order?.form?.successHeading ?? defaultSite.order.form.successHeading,
+        successQuestionsLabel:
+          doc.order?.form?.successQuestionsLabel ?? defaultSite.order.form.successQuestionsLabel,
+      },
     },
     about: {
       title: doc.about?.title ?? defaultSite.about.title,

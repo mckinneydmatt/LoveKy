@@ -56,6 +56,23 @@ export interface SanitySiteSettingsDoc {
     deliveryNote?: string;
     disclaimer?: string;
     message?: string[];
+    form?: {
+      chooseCakeLabel?: string;
+      selectedSummaryLabel?: string;
+      nameLabel?: string;
+      emailLabel?: string;
+      phoneLabel?: string;
+      deliveryDateLabel?: string;
+      quantityLabel?: string;
+      instructionsLabel?: string;
+      instructionsPlaceholder?: string;
+      ingredientsLabel?: string;
+      disclaimerAckLabel?: string;
+      submitLabel?: string;
+      errorMessage?: string;
+      successHeading?: string;
+      successQuestionsLabel?: string;
+    };
   };
   about?: {
     title?: string;
