@@ -39,7 +39,7 @@ const multipleProducts = products.length > 1;
     multipleProducts && (
       <fieldset class="space-y-3">
         <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
-          Choose your cake <span aria-hidden="true">*</span>
+          {site.order.form.chooseCakeLabel} <span aria-hidden="true">*</span>
         </legend>
         <div class="grid gap-3">
           {
@@ -84,7 +84,7 @@ const multipleProducts = products.length > 1;
     <div class="mb-4">
       {multipleProducts && (
         <p id="selected-product-summary-label" class="text-xs uppercase tracking-wide text-blue-slate/70">
-          Selected cake summary
+          {site.order.form.selectedSummaryLabel}
         </p>
       )}
       <h2 id="order-form-heading" class="text-lg font-semibold text-blue-slate">
@@ -107,7 +107,7 @@ const multipleProducts = products.length > 1;
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
       <label for="name" class="mb-1 block text-sm font-medium text-blue-slate">
-        Name <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+        {site.order.form.nameLabel} <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
       <input
         type="text"
@@ -120,7 +120,7 @@ const multipleProducts = products.length > 1;
     </div>
     <div>
       <label for="email" class="mb-1 block text-sm font-medium text-blue-slate">
-        Email <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+        {site.order.form.emailLabel} <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
       <input
         type="email"
@@ -136,7 +136,7 @@ const multipleProducts = products.length > 1;
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
       <label for="phone" class="mb-1 block text-sm font-medium text-blue-slate">
-        Phone <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+        {site.order.form.phoneLabel} <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
       <input
         type="tel"
@@ -149,7 +149,7 @@ const multipleProducts = products.length > 1;
     </div>
     <div>
       <label for="delivery-date" class="mb-1 block text-sm font-medium text-blue-slate">
-        Preferred delivery date <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+        {site.order.form.deliveryDateLabel} <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
       <input
         type="date"
@@ -162,7 +162,7 @@ const multipleProducts = products.length > 1;
   </div>
 
   <div>
-    <label for="quantity" class="mb-1 block text-sm font-medium text-blue-slate">Quantity</label>
+    <label for="quantity" class="mb-1 block text-sm font-medium text-blue-slate">{site.order.form.quantityLabel}</label>
     <input
       type="number"
       id="quantity"
@@ -178,13 +178,13 @@ const multipleProducts = products.length > 1;
 
   <div>
     <label for="instructions" class="mb-1 block text-sm font-medium text-blue-slate">
-      Special instructions
+      {site.order.form.instructionsLabel}
     </label>
     <textarea
       id="instructions"
       name="instructions"
       rows="4"
-      placeholder="Allergies, occasion, decoration requests..."
+      placeholder={site.order.form.instructionsPlaceholder}
       class="form-input min-h-28"
     ></textarea>
   </div>
@@ -193,7 +193,7 @@ const multipleProducts = products.length > 1;
     defaultProduct?.ingredients && (
       <div id="selected-product-ingredients">
         <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-slate">
-          Ingredients
+          {site.order.form.ingredientsLabel}
         </h3>
         <p class="text-sm text-blue-slate/80">{defaultProduct.ingredients}</p>
       </div>
@@ -218,7 +218,7 @@ const multipleProducts = products.length > 1;
         class="mt-1 h-5 w-5 shrink-0 rounded border-soft-blossom text-vintage-berry focus:ring-vintage-berry"
       />
       <label for="disclaimer-ack" class="cursor-pointer text-sm text-blue-slate/90">
-        I understand and agree to the above disclaimer. <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
+        {site.order.form.disclaimerAckLabel} <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
       </label>
     </div>
   </div>
@@ -229,7 +229,7 @@ const multipleProducts = products.length > 1;
     hidden
     class="rounded-lg border border-nail-polish/30 bg-nail-polish/10 px-4 py-3 text-sm text-blue-slate"
   >
-    Something went wrong sending your request. Please try again, or call or text us directly.
+    {site.order.form.errorMessage}
   </p>
 
   <button
@@ -239,7 +239,7 @@ const multipleProducts = products.length > 1;
     disabled={!formAction}
     aria-describedby={!formAction ? "form-config-notice" : undefined}
   >
-    Submit Order Request
+    {site.order.form.submitLabel}
   </button>
 </form>
 
@@ -250,12 +250,12 @@ const multipleProducts = products.length > 1;
   role="status"
   aria-live="polite"
 >
-  <h2 class="text-2xl font-semibold text-blue-slate">Thank you!</h2>
+  <h2 class="text-2xl font-semibold text-blue-slate">{site.order.form.successHeading}</h2>
   <p class="text-blue-slate/90">
     Your order request has been sent. {site.order.deliveryNote}
   </p>
   <p class="text-sm text-blue-slate/75">
-    Questions? Reach us at{" "}
+    {site.order.form.successQuestionsLabel}{" "}
     <a href={`mailto:${site.contact.email}`} class="font-medium text-vintage-berry hover:underline">
       {site.contact.email}
     </a>{" "}
