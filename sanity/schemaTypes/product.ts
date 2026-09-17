@@ -24,9 +24,23 @@ export const product = defineType({
     }),
     defineField({
       name: 'price',
-      title: 'Price',
+      title: 'Price (regular)',
       type: 'string',
-      description: 'Display price, e.g. "$44". Shown on the Order page under the cake name. No per-field fallback — leave empty to hide the price.',
+      description: 'Display price, e.g. "$55". Shown on the Order page under the cake name. No per-field fallback — leave empty to hide the price.',
+    }),
+    defineField({
+      name: 'glutenFreePrice',
+      title: 'Price (gluten-free)',
+      type: 'string',
+      description:
+        'Display price when the customer selects Gluten-Free cake type, e.g. "$65". Leave empty if this cake has no gluten-free option.',
+    }),
+    defineField({
+      name: 'servingInfo',
+      title: 'Serving info',
+      type: 'string',
+      description:
+        'Short serving/yield note shown under the cake name in the Choose Your Cake list, e.g. "Serves 12 generously — up to 24 smaller party servings". Optional.',
     }),
     defineField({
       name: 'description',
@@ -34,13 +48,6 @@ export const product = defineType({
       type: 'text',
       rows: 2,
       description: 'Short blurb about this cake. Shown on the Order page under the price. No per-field fallback.',
-    }),
-    defineField({
-      name: 'ingredients',
-      title: 'Ingredients',
-      type: 'text',
-      rows: 3,
-      description: 'Ingredient list for this cake. Shown in the Ingredients section on the Order page. No per-field fallback.',
     }),
     defineField({
       name: 'active',

@@ -54,20 +54,44 @@ export interface SanitySiteSettingsDoc {
   order?: {
     intro?: string;
     deliveryNote?: string;
-    disclaimer?: string;
     message?: string[];
+    ingredients?: {
+      heading?: string;
+      sections?: Array<{ heading?: string; body?: string }>;
+    };
     form?: {
       chooseCakeLabel?: string;
       selectedSummaryLabel?: string;
+      cakeType?: {
+        label?: string;
+        regularLabel?: string;
+        glutenFreeLabel?: string;
+      };
+      frosting?: {
+        label?: string;
+        options?: string[];
+      };
+      sprinkles?: {
+        label?: string;
+        options?: Array<{ label?: string; showsNoteField?: boolean; notePlaceholder?: string }>;
+      };
       nameLabel?: string;
       emailLabel?: string;
       phoneLabel?: string;
       deliveryDateLabel?: string;
-      quantityLabel?: string;
+      fulfillment?: {
+        label?: string;
+        options?: Array<{ label?: string; description?: string; requiresAddress?: boolean }>;
+        addressLabel?: string;
+      };
+      celebratingLabel?: string;
       instructionsLabel?: string;
       instructionsPlaceholder?: string;
-      ingredientsLabel?: string;
-      disclaimerAckLabel?: string;
+      hearAboutUs?: {
+        label?: string;
+        options?: Array<{ label?: string; showsNoteField?: boolean; notePlaceholder?: string }>;
+      };
+      submitDisclaimer?: string;
       submitLabel?: string;
       errorMessage?: string;
       successHeading?: string;
@@ -104,6 +128,7 @@ export interface SanityProductDoc {
   name?: string;
   slug?: { current?: string };
   price?: string | null;
+  glutenFreePrice?: string | null;
+  servingInfo?: string | null;
   description?: string | null;
-  ingredients?: string | null;
 }

@@ -23,6 +23,22 @@ const descriptions = pageDescriptions(site);
       <OrderForm site={site} products={products} />
     </div>
 
+    {
+      site.order.ingredients.sections.length > 0 && (
+        <div class="mt-10 max-w-2xl rounded-2xl border border-soft-blossom bg-frozen-water/70 p-6 sm:p-8">
+          <h2 class="mb-4 text-lg font-semibold text-blue-slate">{site.order.ingredients.heading}</h2>
+          <dl class="space-y-4">
+            {site.order.ingredients.sections.map((section) => (
+              <div>
+                <dt class="text-sm font-semibold text-blue-slate">{section.heading}</dt>
+                <dd class="mt-1 text-sm text-blue-slate/80">{section.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )
+    }
+
     <div class="mt-10 max-w-2xl rounded-2xl border border-soft-blossom bg-soft-blossom/20 p-6 sm:p-8">
       {
         site.order.message.map((paragraph, index) => (
