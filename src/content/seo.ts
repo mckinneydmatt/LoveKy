@@ -36,10 +36,8 @@ export function localBusinessSchema(site: SiteConfig, origin: string) {
     telephone: site.contact.phone,
     address: {
       "@type": "PostalAddress",
-      streetAddress: site.contact.address.street,
       addressLocality: site.contact.address.city,
       addressRegion: site.contact.address.state,
-      postalCode: site.contact.address.zip,
       addressCountry: "US",
     },
     areaServed: site.contact.location,

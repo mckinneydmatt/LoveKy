@@ -6,7 +6,8 @@ export function mapProduct(doc: SanityProductDoc): Product {
     id: doc.slug?.current ?? doc._id ?? "",
     name: doc.name ?? "",
     price: doc.price ?? null,
+    glutenFreePrice: doc.glutenFreePrice ?? null,
+    servingInfo: doc.servingInfo ?? null,
     description: doc.description ?? null,
-    ingredients: doc.ingredients ?? null,
   };
 }

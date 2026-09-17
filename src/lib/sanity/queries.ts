@@ -38,6 +38,7 @@ export const PRODUCTS_QUERY = `*[_type == "product" && active == true] | order(s
   name,
   slug,
   price,
-  description,
-  ingredients
+  glutenFreePrice,
+  servingInfo,
+  description
 }`;

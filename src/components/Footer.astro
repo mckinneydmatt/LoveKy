@@ -26,8 +26,7 @@ const { site } = Astro.props;
         <p class="tagline mb-2 text-base text-soft-blossom sm:text-lg">{site.tagline}</p>
       )}
       <address class="text-sm not-italic text-frozen-water/80">
-        {site.contact.address.street}<br />
-        {site.contact.address.city}, {site.contact.address.state} {site.contact.address.zip}
+        {site.contact.location}
       </address>
     </div>
 
@@ -52,7 +51,7 @@ const { site } = Astro.props;
             {site.contact.phone}
           </a>
         </li>
-        <li class="py-0.5 text-frozen-water/80">{site.contact.hours}</li>
+        <li class="py-0.5 text-frozen-water/80">Call or text Ky to order or get in touch.</li>
       </ul>
     </div>
 

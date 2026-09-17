@@ -4,8 +4,9 @@ export interface Product {
   id: string;
   name: string;
   price: string | null;
+  glutenFreePrice: string | null;
+  servingInfo: string | null;
   description: string | null;
-  ingredients: string | null;
 }
 
 export const defaultProducts: Product[] = [...sharedDefaultProducts];

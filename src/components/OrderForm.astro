@@ -13,6 +13,7 @@ const formAction = site.formEndpoints.order || undefined;
 const defaultProduct = products[0];
 const priceDisplay = defaultProduct?.price ?? "Price TBD";
 const multipleProducts = products.length > 1;
+const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.form;
 ---
 
 <div id="order-form-wrapper">
@@ -50,8 +51,9 @@ const multipleProducts = products.length > 1;
                   class="product-option block cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water p-4 transition has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30"
                   data-product-name={product.name}
                   data-product-price={productPrice}
+                  data-product-gluten-free-price={product.glutenFreePrice ?? ""}
+                  data-product-serving-info={product.servingInfo ?? ""}
                   data-product-description={product.description ?? ""}
-                  data-product-ingredients={product.ingredients ?? ""}
                 >
                   <div class="flex items-start gap-3">
                     <input
@@ -65,6 +67,9 @@ const multipleProducts = products.length > 1;
                     <span class="min-w-0">
                       <span class="block text-base font-semibold text-blue-slate">{product.name}</span>
                       <span class="mt-1 block text-sm text-vintage-berry">{productPrice}</span>
+                      {product.servingInfo && (
+                        <span class="mt-1 block text-xs text-blue-slate/70">{product.servingInfo}</span>
+                      )}
                     </span>
                   </div>
                 </label>
@@ -75,6 +80,89 @@ const multipleProducts = products.length > 1;
       </fieldset>
     )
   }
+
+  <fieldset class="space-y-3">
+    <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      {cakeType.label} <span aria-hidden="true">*</span>
+    </legend>
+    <div class="flex flex-wrap gap-3">
+      <label class="cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water px-4 py-2 text-sm has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30">
+        <input
+          type="radio"
+          name="cake-type"
+          value="regular"
+          data-cake-type="regular"
+          class="mr-2 align-middle text-vintage-berry focus:ring-vintage-berry"
+          checked
+          required
+        />
+        {cakeType.regularLabel}
+      </label>
+      <label class="cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water px-4 py-2 text-sm has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30">
+        <input
+          type="radio"
+          name="cake-type"
+          value="gluten-free"
+          data-cake-type="gluten-free"
+          class="mr-2 align-middle text-vintage-berry focus:ring-vintage-berry"
+          required
+        />
+        {cakeType.glutenFreeLabel}
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset class="space-y-3">
+    <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      {frosting.label} <span aria-hidden="true">*</span>
+    </legend>
+    <div class="flex flex-wrap gap-3">
+      {
+        frosting.options.map((option, index) => (
+          <label class="cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water px-4 py-2 text-sm has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30">
+            <input
+              type="radio"
+              name="frosting"
+              value={option}
+              class="mr-2 align-middle text-vintage-berry focus:ring-vintage-berry"
+              checked={index === 0}
+              required
+            />
+            {option}
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="space-y-3">
+    <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      {sprinkles.label} <span aria-hidden="true">*</span>
+    </legend>
+    <div class="flex flex-wrap gap-3">
+      {
+        sprinkles.options.map((option, index) => (
+          <label class="cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water px-4 py-2 text-sm has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30">
+            <input
+              type="radio"
+              name="sprinkles"
+              value={option.label}
+              data-shows-note={option.showsNoteField ? "true" : "false"}
+              data-note-placeholder={option.notePlaceholder}
+              class="sprinkles-option mr-2 align-middle text-vintage-berry focus:ring-vintage-berry"
+              checked={index === 0}
+              required
+            />
+            {option.label}
+          </label>
+        ))
+      }
+    </div>
+    <div id="sprinkles-note-wrapper" hidden>
+      <label for="sprinkles-note" class="sr-only">Sprinkles note</label>
+      <input type="text" id="sprinkles-note" name="sprinkles-note" class="form-input" />
+    </div>
+  </fieldset>
 
   <section
     id="selected-product-summary"
@@ -96,6 +184,10 @@ const multipleProducts = products.length > 1;
     <p id="selected-product-price" class="text-sm text-blue-slate/80">
       {priceDisplay}
     </p>
+    <p id="selected-product-serving-info" class:list={["mt-1 text-xs text-blue-slate/70", !defaultProduct?.servingInfo && "hidden"]}>
+      {defaultProduct?.servingInfo}
+    </p>
+    <p id="selected-product-details" class="mt-2 text-sm text-blue-slate/80"></p>
     <p
       id="selected-product-description"
       class:list={["mt-2 text-sm text-blue-slate/75", !defaultProduct?.description && "hidden"]}
@@ -158,23 +250,70 @@ const multipleProducts = products.length > 1;
         required
         class="form-input"
       />
+      <p id="delivery-date-error" role="alert" hidden class="mt-1 text-sm text-nail-polish">
+        We're closed Sundays — please choose a different date.
+      </p>
     </div>
   </div>
 
-  <div>
-    <label for="quantity" class="mb-1 block text-sm font-medium text-blue-slate">{site.order.form.quantityLabel}</label>
-    <input
-      type="number"
-      id="quantity"
-      name="quantity"
-      min="1"
-      value="1"
-      inputmode="numeric"
-      class="form-input max-w-xs"
-    />
-  </div>
-
   <input type="hidden" id="product" name="product" value={defaultProduct?.name ?? ""} />
+
+  <fieldset class="space-y-3">
+    <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      {fulfillment.label} <span aria-hidden="true">*</span>
+    </legend>
+    <div class="grid gap-3">
+      {
+        fulfillment.options.map((option, index) => (
+          <label
+            class="fulfillment-option block cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water p-4 transition has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30"
+            data-requires-address={option.requiresAddress ? "true" : "false"}
+          >
+            <div class="flex items-start gap-3">
+              <input
+                type="radio"
+                name="fulfillment"
+                value={option.label}
+                class="mt-1 h-5 w-5 shrink-0 border-soft-blossom text-vintage-berry focus:ring-vintage-berry"
+                checked={index === 0}
+                required
+              />
+              <span class="min-w-0">
+                <span class="block text-base font-semibold text-blue-slate">{option.label}</span>
+                <span class="mt-1 block text-sm text-blue-slate/75">{option.description}</span>
+              </span>
+            </div>
+          </label>
+        ))
+      }
+    </div>
+    <div id="delivery-address-fields" hidden class="grid gap-4 sm:grid-cols-2">
+      <p class="text-sm font-semibold text-blue-slate sm:col-span-2">{fulfillment.addressLabel}</p>
+      <div class="sm:col-span-2">
+        <label for="delivery-street" class="mb-1 block text-sm font-medium text-blue-slate">Street address</label>
+        <input type="text" id="delivery-street" name="delivery-street" autocomplete="street-address" class="form-input" />
+      </div>
+      <div>
+        <label for="delivery-city" class="mb-1 block text-sm font-medium text-blue-slate">City</label>
+        <input type="text" id="delivery-city" name="delivery-city" autocomplete="address-level2" class="form-input" />
+      </div>
+      <div>
+        <label for="delivery-state" class="mb-1 block text-sm font-medium text-blue-slate">State</label>
+        <input type="text" id="delivery-state" name="delivery-state" autocomplete="address-level1" class="form-input" />
+      </div>
+      <div>
+        <label for="delivery-zip" class="mb-1 block text-sm font-medium text-blue-slate">ZIP</label>
+        <input type="text" id="delivery-zip" name="delivery-zip" autocomplete="postal-code" class="form-input max-w-xs" />
+      </div>
+    </div>
+  </fieldset>
+
+  <div>
+    <label for="celebrating" class="mb-1 block text-sm font-medium text-blue-slate">
+      {site.order.form.celebratingLabel}
+    </label>
+    <input type="text" id="celebrating" name="celebrating" class="form-input" />
+  </div>
 
   <div>
     <label for="instructions" class="mb-1 block text-sm font-medium text-blue-slate">
@@ -189,39 +328,36 @@ const multipleProducts = products.length > 1;
     ></textarea>
   </div>
 
-  {
-    defaultProduct?.ingredients && (
-      <div id="selected-product-ingredients">
-        <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-slate">
-          {site.order.form.ingredientsLabel}
-        </h3>
-        <p class="text-sm text-blue-slate/80">{defaultProduct.ingredients}</p>
-      </div>
-    )
-  }
-
-  <div class="rounded-lg border border-blue-slate/10 bg-soft-blossom/20 p-4">
-    <p id="order-disclaimer" class="text-sm font-medium text-blue-slate">
-      {site.order.disclaimer}
-    </p>
-    <address class="mt-2 text-sm not-italic text-blue-slate/80">
-      {site.contact.address.street}<br />
-      {site.contact.address.city}, {site.contact.address.state} {site.contact.address.zip}
-    </address>
-    <div class="mt-3 flex items-start gap-3">
-      <input
-        type="checkbox"
-        id="disclaimer-ack"
-        name="disclaimer-ack"
-        required
-        aria-describedby="order-disclaimer"
-        class="mt-1 h-5 w-5 shrink-0 rounded border-soft-blossom text-vintage-berry focus:ring-vintage-berry"
-      />
-      <label for="disclaimer-ack" class="cursor-pointer text-sm text-blue-slate/90">
-        {site.order.form.disclaimerAckLabel} <span aria-hidden="true">*</span><span class="sr-only"> (required)</span>
-      </label>
+  <fieldset class="space-y-3">
+    <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-slate">
+      {hearAboutUs.label} <span aria-hidden="true">*</span>
+    </legend>
+    <div class="flex flex-wrap gap-3">
+      {
+        hearAboutUs.options.map((option, index) => (
+          <label class="cursor-pointer rounded-lg border border-vintage-berry/20 bg-frozen-water px-4 py-2 text-sm has-[:checked]:border-vintage-berry has-[:checked]:ring-2 has-[:checked]:ring-vintage-berry/30">
+            <input
+              type="radio"
+              name="hear-about-us"
+              value={option.label}
+              data-shows-note={option.showsNoteField ? "true" : "false"}
+              data-note-placeholder={option.notePlaceholder}
+              class="hear-about-us-option mr-2 align-middle text-vintage-berry focus:ring-vintage-berry"
+              checked={index === 0}
+              required
+            />
+            {option.label}
+          </label>
+        ))
+      }
     </div>
-  </div>
+    <div id="hear-about-us-note-wrapper" hidden>
+      <label for="hear-about-us-note" class="sr-only">Tell us more</label>
+      <input type="text" id="hear-about-us-note" name="hear-about-us-note" class="form-input" />
+    </div>
+  </fieldset>
+
+  <p class="text-sm text-blue-slate/80">{site.order.form.submitDisclaimer}</p>
 
   <p
     id="order-form-error"
@@ -270,61 +406,103 @@ const multipleProducts = products.length > 1;
 
 <script>
   const dateInput = document.getElementById("delivery-date") as HTMLInputElement | null;
+  const dateError = document.getElementById("delivery-date-error");
   if (dateInput) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.min = tomorrow.toISOString().split("T")[0];
+
+    const validateDate = () => {
+      const isSunday = Boolean(dateInput.value) && new Date(`${dateInput.value}T00:00:00`).getDay() === 0;
+      dateInput.setCustomValidity(isSunday ? "Closed Sundays" : "");
+      if (dateError) {
+        dateError.hidden = !isSunday;
+      }
+    };
+    dateInput.addEventListener("input", validateDate);
+    dateInput.addEventListener("blur", validateDate);
   }
+
+  const cakeTypeInputs = document.querySelectorAll<HTMLInputElement>('input[name="cake-type"]');
+  const frostingInputs = document.querySelectorAll<HTMLInputElement>('input[name="frosting"]');
+  const sprinklesInputs = document.querySelectorAll<HTMLInputElement>('input[name="sprinkles"]');
+  const sprinklesNoteWrapper = document.getElementById("sprinkles-note-wrapper") as HTMLElement | null;
+  const sprinklesNoteInput = document.getElementById("sprinkles-note") as HTMLInputElement | null;
+  const hearAboutUsInputs = document.querySelectorAll<HTMLInputElement>('input[name="hear-about-us"]');
+  const hearAboutUsNoteWrapper = document.getElementById("hear-about-us-note-wrapper") as HTMLElement | null;
+  const hearAboutUsNoteInput = document.getElementById("hear-about-us-note") as HTMLInputElement | null;
+  const fulfillmentInputs = document.querySelectorAll<HTMLInputElement>('input[name="fulfillment"]');
+  const deliveryAddressFields = document.getElementById("delivery-address-fields") as HTMLElement | null;
 
   const productInput = document.getElementById("product") as HTMLInputElement | null;
   const summaryHeading = document.getElementById("order-form-heading");
   const summaryPrice = document.getElementById("selected-product-price");
+  const summaryServingInfo = document.getElementById("selected-product-serving-info");
+  const summaryDetails = document.getElementById("selected-product-details");
   const summaryDescription = document.getElementById("selected-product-description");
-  const summaryIngredients = document.getElementById("selected-product-ingredients");
 
-  const updateSelectedProduct = (label: HTMLElement) => {
-    const name = label.dataset.productName ?? "";
-    const price = label.dataset.productPrice ?? "Price TBD";
-    const description = label.dataset.productDescription ?? "";
-    const ingredients = label.dataset.productIngredients ?? "";
+  const getSelectedProductLabel = () =>
+    document.querySelector<HTMLElement>('input[name="product-choice"]:checked')?.closest<HTMLElement>(".product-option") ??
+    document.querySelector<HTMLElement>(".product-option");
 
-    if (productInput) {
-      productInput.value = name;
-    }
-    if (summaryHeading) {
-      summaryHeading.textContent = name;
-    }
-    if (summaryPrice) {
-      summaryPrice.textContent = price;
+  const updateSummary = () => {
+    const label = getSelectedProductLabel();
+    const name = label?.dataset.productName ?? "";
+    const regularPrice = label?.dataset.productPrice ?? "Price TBD";
+    const glutenFreePrice = label?.dataset.productGlutenFreePrice ?? "";
+    const servingInfo = label?.dataset.productServingInfo ?? "";
+    const description = label?.dataset.productDescription ?? "";
+
+    const isGlutenFree = document.querySelector<HTMLInputElement>('input[name="cake-type"]:checked')?.value === "gluten-free";
+    const price = isGlutenFree && glutenFreePrice ? glutenFreePrice : regularPrice;
+
+    if (productInput) productInput.value = name;
+    if (summaryHeading) summaryHeading.textContent = name;
+    if (summaryPrice) summaryPrice.textContent = price;
+    if (summaryServingInfo) {
+      summaryServingInfo.textContent = servingInfo;
+      summaryServingInfo.classList.toggle("hidden", !servingInfo);
     }
     if (summaryDescription) {
-      if (description) {
-        summaryDescription.textContent = description;
-        summaryDescription.classList.remove("hidden");
-      } else {
-        summaryDescription.textContent = "";
-        summaryDescription.classList.add("hidden");
-      }
+      summaryDescription.textContent = description;
+      summaryDescription.classList.toggle("hidden", !description);
     }
-    if (summaryIngredients) {
-      const ingredientsText = summaryIngredients.querySelector("p");
-      if (ingredients && ingredientsText) {
-        ingredientsText.textContent = ingredients;
-        summaryIngredients.classList.remove("hidden");
-      } else if (!ingredients) {
-        summaryIngredients.classList.add("hidden");
-      }
+    if (summaryDetails) {
+      const cakeTypeLabel = document.querySelector<HTMLInputElement>('input[name="cake-type"]:checked + label, input[name="cake-type"]:checked')?.closest("label")?.textContent?.trim();
+      const frostingLabel = document.querySelector<HTMLInputElement>('input[name="frosting"]:checked')?.value;
+      const sprinklesLabel = document.querySelector<HTMLInputElement>('input[name="sprinkles"]:checked')?.value;
+      summaryDetails.textContent = [cakeTypeLabel, frostingLabel, sprinklesLabel].filter(Boolean).join(" • ");
     }
   };
 
   document.querySelectorAll<HTMLInputElement>('input[name="product-choice"]').forEach((radio) => {
-    radio.addEventListener("change", () => {
-      const label = radio.closest<HTMLElement>(".product-option");
-      if (label) {
-        updateSelectedProduct(label);
-      }
-    });
+    radio.addEventListener("change", updateSummary);
   });
+  cakeTypeInputs.forEach((radio) => radio.addEventListener("change", updateSummary));
+  frostingInputs.forEach((radio) => radio.addEventListener("change", updateSummary));
+  sprinklesInputs.forEach((radio) =>
+    radio.addEventListener("change", () => {
+      updateSummary();
+      const showsNote = radio.dataset.showsNote === "true";
+      if (sprinklesNoteWrapper) sprinklesNoteWrapper.hidden = !showsNote;
+      if (sprinklesNoteInput) sprinklesNoteInput.placeholder = showsNote ? radio.dataset.notePlaceholder ?? "" : "";
+    }),
+  );
+  hearAboutUsInputs.forEach((radio) =>
+    radio.addEventListener("change", () => {
+      const showsNote = radio.dataset.showsNote === "true";
+      if (hearAboutUsNoteWrapper) hearAboutUsNoteWrapper.hidden = !showsNote;
+      if (hearAboutUsNoteInput) hearAboutUsNoteInput.placeholder = showsNote ? radio.dataset.notePlaceholder ?? "" : "";
+    }),
+  );
+  fulfillmentInputs.forEach((radio) =>
+    radio.addEventListener("change", () => {
+      const requiresAddress = radio.closest<HTMLElement>(".fulfillment-option")?.dataset.requiresAddress === "true";
+      if (deliveryAddressFields) deliveryAddressFields.hidden = !requiresAddress;
+    }),
+  );
+
+  updateSummary();
 
   const orderForm = document.getElementById("order-form") as HTMLFormElement | null;
   const orderFormSuccess = document.getElementById("order-form-success");

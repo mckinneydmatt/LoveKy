@@ -80,23 +80,74 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
     order: {
       intro: doc.order?.intro ?? defaultSite.order.intro,
       deliveryNote: doc.order?.deliveryNote ?? defaultSite.order.deliveryNote,
-      disclaimer: doc.order?.disclaimer ?? defaultSite.order.disclaimer,
       message: doc.order?.message?.length ? doc.order.message : defaultSite.order.message,
+      ingredients: {
+        heading: doc.order?.ingredients?.heading ?? defaultSite.order.ingredients.heading,
+        sections: doc.order?.ingredients?.sections?.length
+          ? doc.order.ingredients.sections.map((section) => ({
+              heading: section.heading ?? "",
+              body: section.body ?? "",
+            }))
+          : defaultSite.order.ingredients.sections,
+      },
       form: {
         chooseCakeLabel: doc.order?.form?.chooseCakeLabel ?? defaultSite.order.form.chooseCakeLabel,
         selectedSummaryLabel:
           doc.order?.form?.selectedSummaryLabel ?? defaultSite.order.form.selectedSummaryLabel,
+        cakeType: {
+          label: doc.order?.form?.cakeType?.label ?? defaultSite.order.form.cakeType.label,
+          regularLabel:
+            doc.order?.form?.cakeType?.regularLabel ?? defaultSite.order.form.cakeType.regularLabel,
+          glutenFreeLabel:
+            doc.order?.form?.cakeType?.glutenFreeLabel ?? defaultSite.order.form.cakeType.glutenFreeLabel,
+        },
+        frosting: {
+          label: doc.order?.form?.frosting?.label ?? defaultSite.order.form.frosting.label,
+          options: doc.order?.form?.frosting?.options?.length
+            ? doc.order.form.frosting.options
+            : defaultSite.order.form.frosting.options,
+        },
+        sprinkles: {
+          label: doc.order?.form?.sprinkles?.label ?? defaultSite.order.form.sprinkles.label,
+          options: doc.order?.form?.sprinkles?.options?.length
+            ? doc.order.form.sprinkles.options.map((option) => ({
+                label: option.label ?? "",
+                showsNoteField: option.showsNoteField ?? false,
+                notePlaceholder: option.notePlaceholder ?? "",
+              }))
+            : defaultSite.order.form.sprinkles.options,
+        },
         nameLabel: doc.order?.form?.nameLabel ?? defaultSite.order.form.nameLabel,
         emailLabel: doc.order?.form?.emailLabel ?? defaultSite.order.form.emailLabel,
         phoneLabel: doc.order?.form?.phoneLabel ?? defaultSite.order.form.phoneLabel,
         deliveryDateLabel: doc.order?.form?.deliveryDateLabel ?? defaultSite.order.form.deliveryDateLabel,
-        quantityLabel: doc.order?.form?.quantityLabel ?? defaultSite.order.form.quantityLabel,
+        fulfillment: {
+          label: doc.order?.form?.fulfillment?.label ?? defaultSite.order.form.fulfillment.label,
+          options: doc.order?.form?.fulfillment?.options?.length
+            ? doc.order.form.fulfillment.options.map((option) => ({
+                label: option.label ?? "",
+                description: option.description ?? "",
+                requiresAddress: option.requiresAddress ?? false,
+              }))
+            : defaultSite.order.form.fulfillment.options,
+          addressLabel:
+            doc.order?.form?.fulfillment?.addressLabel ?? defaultSite.order.form.fulfillment.addressLabel,
+        },
+        celebratingLabel: doc.order?.form?.celebratingLabel ?? defaultSite.order.form.celebratingLabel,
         instructionsLabel: doc.order?.form?.instructionsLabel ?? defaultSite.order.form.instructionsLabel,
         instructionsPlaceholder:
           doc.order?.form?.instructionsPlaceholder ?? defaultSite.order.form.instructionsPlaceholder,
-        ingredientsLabel: doc.order?.form?.ingredientsLabel ?? defaultSite.order.form.ingredientsLabel,
-        disclaimerAckLabel:
-          doc.order?.form?.disclaimerAckLabel ?? defaultSite.order.form.disclaimerAckLabel,
+        hearAboutUs: {
+          label: doc.order?.form?.hearAboutUs?.label ?? defaultSite.order.form.hearAboutUs.label,
+          options: doc.order?.form?.hearAboutUs?.options?.length
+            ? doc.order.form.hearAboutUs.options.map((option) => ({
+                label: option.label ?? "",
+                showsNoteField: option.showsNoteField ?? false,
+                notePlaceholder: option.notePlaceholder ?? "",
+              }))
+            : defaultSite.order.form.hearAboutUs.options,
+        },
+        submitDisclaimer: doc.order?.form?.submitDisclaimer ?? defaultSite.order.form.submitDisclaimer,
         submitLabel: doc.order?.form?.submitLabel ?? defaultSite.order.form.submitLabel,
         errorMessage: doc.order?.form?.errorMessage ?? defaultSite.order.form.errorMessage,
         successHeading: doc.order?.form?.successHeading ?? defaultSite.order.form.successHeading,
