@@ -3,7 +3,7 @@ export const defaultSite = {
   name: 'Love, Ky Cakes',
   tagline: 'For people with good taste',
   description:
-    'Home-based bakery in Carmel, Indiana specializing in cakes, made with personal care and a signature heart.',
+    'Carmel, Indiana bakery built around one unforgettable chocolate cake — made from scratch with personal care and a signature heart.',
   contact: {
     email: 'lovekycakes@gmail.com',
     phone: '317-771-0627',
@@ -62,13 +62,13 @@ export const defaultSite = {
       },
     ],
     spotlight: {
-      title: 'The Cake',
+      title: 'The Signature Cake',
       subhead: 'One Cake. Made for You.',
-      text: "A two-layer chocolate cake with whipped icing — made from scratch, to order, in my own kitchen. Every single one. No shortcuts, no assembly lines, just me and a recipe I've been perfecting for over a decade. The kind of cake people remember.",
+      text: "Signature two-layer chocolate cake with whipped chocolate frosting — made from scratch with real ingredients and a recipe I've been perfecting for over a decade. Every cake is made with the same personal care that started Love, Ky Cakes. The kind of cake people remember.",
       ingredientNote:
         "Real ingredients. Sugar, flour, cocoa, eggs, milk, vanilla, heavy cream — nothing you can't pronounce.",
       ctaLabel: 'Order Yours',
-      secondaryLine: 'Made to order | Home-baked in Carmel, Indiana',
+      secondaryLine: 'Made from scratch | Carmel, Indiana',
       image: '/images/chocolate-cake-spotlight.png',
     },
   },
@@ -189,7 +189,7 @@ export const defaultSite = {
   },
   about: {
     title: "Hi, I'm Kylee.",
-    subhead: 'One-woman kitchen. One really good chocolate cake.',
+    subhead: 'One woman. One really good chocolate cake.',
     image: null,
     signatureImage: '/signature/signature-powder-blush.png',
     paragraphs: [
@@ -198,9 +198,9 @@ export const defaultSite = {
       "I'd smile, say thank you, and move on. I had a career in accounting. I had a plan. I had a routine.",
       'Then something happened that way too many people can relate to: my company eliminated my position.',
       "For the first time in my adult life, I didn't have a job. And I found myself asking: <em>What do I actually want to do?</em>",
-      'The answer surprised me: I want to share my chocolate cake with people. The support I instantly got from loved ones gave me more confidence than 20 years at a desk ever could. And so here we are.',
+      'The answer surprised me: I want to share my chocolate cake with people. The support that followed — first from the people I loved, and then from complete strangers — gave me more confidence than 20 years at a desk ever could. And so here we are.',
       'The name means something.',
-      "<em>Love, Ky</em> is how I've been signing notes for as long as I can remember, and a friend pointed out that I always sign with a heart. Genuine love and care goes into everything I do. Every cake that leaves my kitchen goes out the same way – signed <em>Love, Ky</em> with a heart – because that's not branding. That's just how I do things.",
+      "<em>Love, Ky</em> is how I've been signing notes for as long as I can remember, and a friend pointed out that I always sign with a heart. Genuine love and care goes into everything I do. Every cake goes out the same way – signed <em>Love, Ky</em> with a heart – because that's not branding. That's just how I do things.",
       'And food is how I show love.',
       "There's something irreplaceable about making something from scratch for someone else. I believe people can taste the time and care that goes into it. Food has a way of making people feel seen, remembered, and cared for without a single word.",
       "That's how I want every one of my cakes to make people feel. Whether it's for a milestone birthday or just because someone needs a little sweetness in their week – I want what's in that box to feel like it was made just for you.",
