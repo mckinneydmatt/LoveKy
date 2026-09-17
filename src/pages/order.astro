@@ -14,9 +14,7 @@ const descriptions = pageDescriptions(site);
   <section class="container-page section-pad">
     <div class="mb-10 max-w-2xl">
       <h1 class="section-heading mb-4">Good Taste Awaits...</h1>
-      <p class="text-blue-slate/80">
-        {site.order.intro}
-      </p>
+      {site.order.intro && <p class="text-blue-slate/80">{site.order.intro}</p>}
     </div>
 
     <div class="max-w-2xl">

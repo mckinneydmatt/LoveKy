@@ -74,15 +74,8 @@ export const siteSettings = defineType({
           title: 'Address (for SEO)',
           type: 'object',
           description:
-            'Not shown on the site — city and state feed local-search structured data (Google, etc). Street and ZIP are optional and unused.',
+            'Not shown on the site — city and state feed local-search structured data (Google, etc).',
           fields: [
-            defineField({
-              name: 'street',
-              title: 'Street',
-              type: 'string',
-              description: 'Optional, currently unused on the site.',
-              placeholder: siteFallback(site.contact.address.street),
-            }),
             defineField({
               name: 'city',
               title: 'City',
@@ -98,13 +91,6 @@ export const siteSettings = defineType({
               description: 'State abbreviation. Used in SEO structured data.',
               placeholder: siteFallback(site.contact.address.state),
               validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'zip',
-              title: 'ZIP',
-              type: 'string',
-              description: 'Optional, currently unused on the site.',
-              placeholder: siteFallback(site.contact.address.zip),
             }),
           ],
         }),
@@ -278,9 +264,8 @@ export const siteSettings = defineType({
           title: 'Order intro',
           type: 'text',
           rows: 2,
-          description: `Paragraph under the "Good Taste Awaits..." heading on the Order page. ${fallbackHint}`,
-          placeholder: siteFallback(site.order.intro),
-          validation: (rule) => rule.required(),
+          description:
+            'Optional paragraph under the "Good Taste Awaits..." heading on the Order page. Leave empty to hide this paragraph entirely.',
         }),
         defineField({
           name: 'deliveryNote',
@@ -374,7 +359,8 @@ export const siteSettings = defineType({
               name: 'cakeType',
               title: 'Cake type',
               type: 'object',
-              description: 'Regular vs. gluten-free toggle. Prices come from each product’s Price fields.',
+              description:
+                "Regular vs. Gluten-Free toggle. Uses each product's \"Price (regular)\" and \"Price (gluten-free)\" fields — if a product has no gluten-free price set, selecting Gluten-Free won't change the price.",
               options: {collapsible: true, collapsed: true},
               fields: [
                 defineField({
@@ -500,7 +486,7 @@ export const siteSettings = defineType({
               name: 'deliveryDateLabel',
               title: 'Delivery date field label',
               type: 'string',
-              description: `${fallbackHint} Sundays are always blocked on the calendar (no order slot).`,
+              description: `${fallbackHint} Sundays are rejected with a validation message if selected (native date pickers can't grey out specific days).`,
               placeholder: siteFallback(site.order.form.deliveryDateLabel),
             }),
             defineField({

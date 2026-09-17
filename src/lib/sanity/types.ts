@@ -25,10 +25,8 @@ export interface SanitySiteSettingsDoc {
     hours?: string;
     location?: string;
     address?: {
-      street?: string;
       city?: string;
       state?: string;
-      zip?: string;
     };
   };
   social?: {

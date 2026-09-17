@@ -54,10 +54,8 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
       hours: doc.contact?.hours ?? defaultSite.contact.hours,
       location: doc.contact?.location ?? defaultSite.contact.location,
       address: {
-        street: doc.contact?.address?.street ?? defaultSite.contact.address.street,
         city: doc.contact?.address?.city ?? defaultSite.contact.address.city,
         state: doc.contact?.address?.state ?? defaultSite.contact.address.state,
-        zip: doc.contact?.address?.zip ?? defaultSite.contact.address.zip,
       },
     },
     social: {
