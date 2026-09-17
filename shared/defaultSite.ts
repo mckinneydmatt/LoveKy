@@ -118,7 +118,7 @@ export const defaultSite = {
       },
       frosting: {
         label: 'Frosting',
-        options: ['Signature Whipped Chocolate', 'Whipped Vanilla Bean'],
+        options: ['Signature Whipped Chocolate Frosting', 'Whipped Vanilla Bean Frosting'],
       },
       sprinkles: {
         label: 'Sprinkles',
