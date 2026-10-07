@@ -72,11 +72,13 @@ export interface SanitySiteSettingsDoc {
       sprinkles?: {
         label?: string;
         options?: Array<{ label?: string; showsNoteField?: boolean; notePlaceholder?: string }>;
+        glutenFreeNote?: string;
       };
       nameLabel?: string;
       emailLabel?: string;
       phoneLabel?: string;
       deliveryDateLabel?: string;
+      blockedDates?: string[];
       fulfillment?: {
         label?: string;
         options?: Array<{ label?: string; description?: string; requiresAddress?: boolean }>;

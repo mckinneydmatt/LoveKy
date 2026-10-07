@@ -75,11 +75,13 @@ export interface SiteConfig {
       sprinkles: {
         label: string;
         options: { label: string; showsNoteField: boolean; notePlaceholder: string }[];
+        glutenFreeNote: string;
       };
       nameLabel: string;
       emailLabel: string;
       phoneLabel: string;
       deliveryDateLabel: string;
+      blockedDates: string[];
       fulfillment: {
         label: string;
         options: { label: string; description: string; requiresAddress: boolean }[];

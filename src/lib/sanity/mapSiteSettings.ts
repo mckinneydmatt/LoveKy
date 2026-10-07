@@ -114,11 +114,16 @@ export function mapSiteSettings(doc: SanitySiteSettingsDoc): SiteConfig {
                 notePlaceholder: option.notePlaceholder ?? "",
               }))
             : defaultSite.order.form.sprinkles.options,
+          glutenFreeNote:
+            doc.order?.form?.sprinkles?.glutenFreeNote ?? defaultSite.order.form.sprinkles.glutenFreeNote,
         },
         nameLabel: doc.order?.form?.nameLabel ?? defaultSite.order.form.nameLabel,
         emailLabel: doc.order?.form?.emailLabel ?? defaultSite.order.form.emailLabel,
         phoneLabel: doc.order?.form?.phoneLabel ?? defaultSite.order.form.phoneLabel,
         deliveryDateLabel: doc.order?.form?.deliveryDateLabel ?? defaultSite.order.form.deliveryDateLabel,
+        blockedDates: doc.order?.form?.blockedDates?.length
+          ? doc.order.form.blockedDates
+          : defaultSite.order.form.blockedDates,
         fulfillment: {
           label: doc.order?.form?.fulfillment?.label ?? defaultSite.order.form.fulfillment.label,
           options: doc.order?.form?.fulfillment?.options?.length

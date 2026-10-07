@@ -129,11 +129,13 @@ export const defaultSite = {
             notePlaceholder: 'Any colors in mind? (Pink, blue, rainbow, etc.)',
           },
         ],
+        glutenFreeNote: "Sprinkles aren't available on Gluten-Free cakes right now.",
       },
       nameLabel: 'Name',
       emailLabel: 'Email',
       phoneLabel: 'Phone',
       deliveryDateLabel: 'Preferred date',
+      blockedDates: [],
       fulfillment: {
         label: 'Pickup or Delivery',
         options: [

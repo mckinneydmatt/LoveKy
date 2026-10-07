@@ -459,6 +459,14 @@ export const siteSettings = defineType({
                   ],
                   validation: (rule) => rule.min(1),
                 }),
+                defineField({
+                  name: 'glutenFreeNote',
+                  title: 'Note shown when Gluten-Free is selected',
+                  type: 'string',
+                  description:
+                    'Shown next to Sprinkles, and used as the tooltip on the disabled options, when Gluten-Free is selected. The "No Sprinkles" option is always forced and the others are disabled while this applies.',
+                  placeholder: siteFallback(site.order.form.sprinkles.glutenFreeNote),
+                }),
               ],
             }),
             defineField({
@@ -488,6 +496,14 @@ export const siteSettings = defineType({
               type: 'string',
               description: `${fallbackHint} Sundays are rejected with a validation message if selected (native date pickers can't grey out specific days).`,
               placeholder: siteFallback(site.order.form.deliveryDateLabel),
+            }),
+            defineField({
+              name: 'blockedDates',
+              title: 'Blocked order dates',
+              type: 'array',
+              description:
+                'Dates customers cannot select for pickup/delivery (e.g. days off, fully booked days). Add or remove dates anytime — Sundays are always blocked separately, regardless of this list.',
+              of: [defineArrayMember({type: 'date'})],
             }),
             defineField({
               name: 'fulfillment',

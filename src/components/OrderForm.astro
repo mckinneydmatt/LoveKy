@@ -162,6 +162,7 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
       <label for="sprinkles-note" class="sr-only">Sprinkles note</label>
       <input type="text" id="sprinkles-note" name="sprinkles-note" class="form-input" />
     </div>
+    <p id="sprinkles-gf-note" hidden class="text-xs text-blue-slate/70">{sprinkles.glutenFreeNote}</p>
   </fieldset>
 
   <section
@@ -249,10 +250,9 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
         name="delivery-date"
         required
         class="form-input"
+        data-blocked-dates={JSON.stringify(site.order.form.blockedDates)}
       />
-      <p id="delivery-date-error" role="alert" hidden class="mt-1 text-sm text-nail-polish">
-        We're closed Sundays — please choose a different date.
-      </p>
+      <p id="delivery-date-error" role="alert" hidden class="mt-1 text-sm text-nail-polish"></p>
     </div>
   </div>
 
@@ -412,11 +412,22 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.min = tomorrow.toISOString().split("T")[0];
 
+    let blockedDates: string[] = [];
+    try {
+      blockedDates = JSON.parse(dateInput.dataset.blockedDates ?? "[]");
+    } catch {
+      blockedDates = [];
+    }
+
     const validateDate = () => {
       const isSunday = Boolean(dateInput.value) && new Date(`${dateInput.value}T00:00:00`).getDay() === 0;
-      dateInput.setCustomValidity(isSunday ? "Closed Sundays" : "");
+      const isBlocked = blockedDates.includes(dateInput.value);
+      dateInput.setCustomValidity(isSunday || isBlocked ? "Unavailable date" : "");
       if (dateError) {
-        dateError.hidden = !isSunday;
+        dateError.hidden = !(isSunday || isBlocked);
+        dateError.textContent = isSunday
+          ? "We're closed Sundays — please choose a different date."
+          : "That date isn't available — please choose a different date.";
       }
     };
     dateInput.addEventListener("input", validateDate);
@@ -428,6 +439,7 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
   const sprinklesInputs = document.querySelectorAll<HTMLInputElement>('input[name="sprinkles"]');
   const sprinklesNoteWrapper = document.getElementById("sprinkles-note-wrapper") as HTMLElement | null;
   const sprinklesNoteInput = document.getElementById("sprinkles-note") as HTMLInputElement | null;
+  const sprinklesGlutenFreeNote = document.getElementById("sprinkles-gf-note") as HTMLElement | null;
   const hearAboutUsInputs = document.querySelectorAll<HTMLInputElement>('input[name="hear-about-us"]');
   const hearAboutUsNoteWrapper = document.getElementById("hear-about-us-note-wrapper") as HTMLElement | null;
   const hearAboutUsNoteInput = document.getElementById("hear-about-us-note") as HTMLInputElement | null;
@@ -475,10 +487,44 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
     }
   };
 
+  const updateSprinklesAvailability = () => {
+    const isGlutenFree = document.querySelector<HTMLInputElement>('input[name="cake-type"]:checked')?.value === "gluten-free";
+    const note = sprinklesGlutenFreeNote?.textContent ?? "";
+
+    sprinklesInputs.forEach((radio) => {
+      const isNoSprinkles = radio.value === "No Sprinkles";
+      const disable = isGlutenFree && !isNoSprinkles;
+      radio.disabled = disable;
+      radio.title = disable ? note : "";
+      const label = radio.closest("label");
+      if (label) {
+        label.classList.toggle("opacity-40", disable);
+        label.classList.toggle("cursor-not-allowed", disable);
+        label.title = disable ? note : "";
+      }
+    });
+
+    if (isGlutenFree) {
+      const noSprinklesRadio = Array.from(sprinklesInputs).find((radio) => radio.value === "No Sprinkles");
+      if (noSprinklesRadio && !noSprinklesRadio.checked) {
+        noSprinklesRadio.checked = true;
+        noSprinklesRadio.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
+
+    if (sprinklesGlutenFreeNote) sprinklesGlutenFreeNote.hidden = !isGlutenFree;
+  };
+
   document.querySelectorAll<HTMLInputElement>('input[name="product-choice"]').forEach((radio) => {
     radio.addEventListener("change", updateSummary);
   });
-  cakeTypeInputs.forEach((radio) => radio.addEventListener("change", updateSummary));
+  cakeTypeInputs.forEach((radio) =>
+    radio.addEventListener("change", () => {
+      updateSummary();
+      updateSprinklesAvailability();
+    }),
+  );
+  updateSprinklesAvailability();
   frostingInputs.forEach((radio) => radio.addEventListener("change", updateSummary));
   sprinklesInputs.forEach((radio) =>
     radio.addEventListener("change", () => {
