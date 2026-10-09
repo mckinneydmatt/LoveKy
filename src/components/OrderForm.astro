@@ -66,7 +66,7 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
                     />
                     <span class="min-w-0">
                       <span class="block text-base font-semibold text-blue-slate">{product.name}</span>
-                      <span class="mt-1 block text-sm text-vintage-berry">{productPrice}</span>
+                      <span class="product-option-price mt-1 block text-sm text-vintage-berry">{productPrice}</span>
                       {product.servingInfo && (
                         <span class="mt-1 block text-xs text-blue-slate/70">{product.servingInfo}</span>
                       )}
@@ -467,6 +467,14 @@ const { cakeType, frosting, sprinkles, fulfillment, hearAboutUs } = site.order.f
 
     const isGlutenFree = document.querySelector<HTMLInputElement>('input[name="cake-type"]:checked')?.value === "gluten-free";
     const price = isGlutenFree && glutenFreePrice ? glutenFreePrice : regularPrice;
+
+    document.querySelectorAll<HTMLElement>(".product-option").forEach((option) => {
+      const optionPrice = option.querySelector(".product-option-price");
+      if (!optionPrice) return;
+      const optionGlutenFreePrice = option.dataset.productGlutenFreePrice ?? "";
+      optionPrice.textContent =
+        isGlutenFree && optionGlutenFreePrice ? optionGlutenFreePrice : option.dataset.productPrice ?? "";
+    });
 
     if (productInput) productInput.value = name;
     if (summaryHeading) summaryHeading.textContent = name;
